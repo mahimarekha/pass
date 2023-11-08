@@ -240,6 +240,7 @@ const Page = () => {
     }, []);
     const handleClickOpen = () => {
         setOpen(true);
+        formReset();
     };
 
     const handleClose = () => {
@@ -262,7 +263,7 @@ const Page = () => {
     );
     const editPass = (pass) => {
         setPass(pass);
-        handleClickOpen();
+        setOpen(true);
     }
     const deletePass = (passdelete) => {
         if (passdelete) {
@@ -286,6 +287,15 @@ const Page = () => {
             // setError(err.message);
         });
     }
+    const formReset=()=>{
+      
+        setPass({
+            PassCode: '',
+        PassName: '',
+        PassId: '',
+        PassStatus: '',
+        })
+    }
     const formik = useFormik({
         initialValues: pass,
         enableReinitialize: true,
@@ -295,6 +305,7 @@ const Page = () => {
                 PassesService.upadePasses(values).then((res) => {
                     handleClose();
                     getPassList();
+                    formReset();
                     resetForm()
                     alert(" Pass Updated Successfully.");
                 }).catch((err) => {
@@ -306,6 +317,7 @@ const Page = () => {
                     getPassList();
                     resetForm();
                     handleClose();
+                    formReset();
                     alert(" Pass Added Successfully.");
                     // props.history.push('/app/vendor');
                 })
@@ -446,7 +458,7 @@ const Page = () => {
                                                 <Grid xs={12} md={12}>
 
                                                     <Button onClick={handleClose}>Cancel</Button>
-                                                    <Button type="submit">Add</Button>
+                                                    <Button type="submit">{pass.PassId?'Update':'Add'}</Button>
 
                                                 </Grid>
 

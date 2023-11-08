@@ -243,6 +243,7 @@ const Page = () => {
     }, []);
     const handleClickOpen = () => {
         setOpen(true);
+        formReset();
     };
 
     const handleClose = () => {
@@ -265,7 +266,7 @@ const Page = () => {
     );
     const editRole = (role) => {
         setRole(role);
-        handleClickOpen();
+        setOpen(true);
     }
     const deleteRole = (roledelete) => {
         if (roledelete) {
@@ -289,6 +290,15 @@ const Page = () => {
             // setError(err.message);
         });
     }
+    const formReset=()=>{
+        setRole({
+            RoleCode: '',
+            RoleName: '',
+            RoleId: '',
+            RoleStatus: '',
+            description: '',
+        })
+    }
     const formik = useFormik({
         initialValues: role,
         enableReinitialize: true,
@@ -298,7 +308,8 @@ const Page = () => {
                 RoleService.upadeRole(values).then((res) => {
                     handleClose();
                     getRoleList();
-                    resetForm()
+                    resetForm();
+                    formReset();
                     alert(" Role Updated Successfully.");
                 }).catch((err) => {
                 });
@@ -309,6 +320,7 @@ const Page = () => {
                     getRoleList();
                     resetForm();
                     handleClose();
+                    formReset();
                     alert(" Role Added Successfully.");
                     // props.history.push('/app/vendor');
                 })
@@ -464,7 +476,7 @@ const Page = () => {
                                                 <Grid xs={12} md={12}>
 
                                                     <Button onClick={handleClose}>Cancel</Button>
-                                                    <Button type="submit">Add</Button>
+                                                    <Button type="submit">{role.RoleId?'Update':'Add'}</Button>
 
                                                 </Grid>
 

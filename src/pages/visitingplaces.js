@@ -266,11 +266,13 @@ const Page = () => {
     }, []);
     const handleClickOpen = () => {
         setOpen(true);
+        formReset();
     };
 
     const handleClose = () => {
         setOpen(false);
     };
+  
     const customersSelection = useSelection(customersIds);
 
     const handlePageChange = useCallback(
@@ -288,7 +290,7 @@ const Page = () => {
     );
     const editVisitingPlaces = (visitingPlaces) => {
         setVisitingPlaces(visitingPlaces);
-        handleClickOpen();
+       setOpen(true);
     }
     const deleteVisitingPlaces = (visitingPlacesdelete) => {
         if (visitingPlacesdelete) {
@@ -312,16 +314,30 @@ const Page = () => {
             // setError(err.message);
         });
     }
+    const formReset=()=>{
+      
+        setVisitingPlaces({
+            VisitingPlacesCode: '',
+            VisitingPlace: '',
+            VisitingPlacesId: '',
+            VisitingPlacesStatus: '',
+            Description: '',
+            SecurityType:'',
+            ColorOfPass:'',
+        })
+    }
     const formik = useFormik({
         initialValues: visitingPlaces,
         enableReinitialize: true,
+        
         validationSchema: validationSchema,
         onSubmit: (values, { resetForm }) => {
             if (visitingPlaces.VisitingPlacesId) {
                 VisitingPlacesService.upadeVisitingPlaces(values).then((res) => {
                     handleClose();
                     getVisitingPlacesList();
-                    resetForm()
+                    resetForm();
+                    formReset();
                     alert(" VisitingPlaces Updated Successfully.");
                 }).catch((err) => {
                 });
@@ -331,6 +347,7 @@ const Page = () => {
                 VisitingPlacesService.creteVisitingPlaces(values).then((res) => {
                     getVisitingPlacesList();
                     resetForm();
+                    formReset();
                     handleClose();
                     alert(" VisitingPlaces Added Successfully.");
                     // props.history.push('/app/vendor');
@@ -407,10 +424,11 @@ const Page = () => {
                                     variant="contained" onClick={handleClickOpen}
                                 >
                                     Add
+                                    
                                 </Button>
                                 <Dialog open={open} onClose={handleClose}>
                                     <DialogTitle>Role</DialogTitle>
-                                    <form onSubmit={formik.handleSubmit} >
+                                    <form onSubmit={formik.handleSubmit}  >
                                         <DialogContent style={{ width: 308 }}>
                                             <DialogContentText>
 
@@ -501,35 +519,25 @@ const Page = () => {
                                                     />
                                         </Grid>
                                         <Grid xs={12} md={12}>
-                                                <FormControl
-                                       
-                                            fullWidth="true" >
-                                            <InputLabel id="demo-simple-select-label">Color Of Pass</InputLabel>
-                                            <Select
-                                                labelId="demo-simple-select-label"
-                                                id="ColorOfPass"
-                                                name="ColorOfPass"
-                                                label="Color Of Pass"
-                                                onChange={formik.handleChange}
-                                                value={formik.values.ColorOfPass}
-                                                error={formik.touched.ColorOfPass && Boolean(formik.errors.ColorOfPass)}
-                                                helperText={formik.touched.ColorOfPass && formik.errors.ColorOfPass}
-                                            >
-                                                <MenuItem value="">
-                                                    <em>None</em>
-                                                </MenuItem>
-                                                {ColorOfPass.map((ColorOfPass) => (
-                                                    <MenuItem key={ColorOfPass} selected={ColorOfPass === 'Nursery'} value={ColorOfPass}  >
-                                                        {ColorOfPass}
-                                                    </MenuItem>
-                                                ))}
-                                            </Select>
-                                        </FormControl>
+                                        <TextField
+                                                        InputProps={{ style: { width: 258 } }}
+                                                        autoFocus
+                                                        margin="dense"
+                                                        id="ColorOfPass"
+                                                        name="ColorOfPass"
+                                                        label="ColorOfPass"
+                                                        type="text"
+                                                        variant="standard"
+                                                        value={formik.values.ColorOfPass}
+                                                        onChange={formik.handleChange}
+                                                        error={formik.touched.ColorOfPass && Boolean(formik.errors.ColorOfPass)}
+                                                        helperText={formik.touched.ColorOfPass && formik.errors.ColorOfPass}
+                                                    />
                                         </Grid>
                                                 <Grid xs={12} md={12}>
 
                                                     <Button onClick={handleClose}>Cancel</Button>
-                                                    <Button type="submit">Add</Button>
+                                                    <Button type="submit">{visitingPlaces.VisitingPlacesId?'Update':'Add'}</Button>
 
                                                 </Grid>
 

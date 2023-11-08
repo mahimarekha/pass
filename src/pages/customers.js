@@ -245,6 +245,7 @@ const Page = () => {
   }, []);
   const handleClickOpen = () => {
     setOpen(true);
+    formReset();
   };
 
   const handleClose = () => {
@@ -267,7 +268,7 @@ const Page = () => {
   );
   const editDepartment = (department) => {
     setDepartment(department);
-    handleClickOpen();
+    setOpen(true);
   }
   const deleteDepartment = (departmentdelete) => {
     if (departmentdelete) {
@@ -295,6 +296,15 @@ const Page = () => {
       // setError(err.message);
     });
   }
+  const formReset=()=>{
+      
+    setDepartment({
+      DepartmentCode: '',
+      DepartmentName: '',
+       Depid:'',
+      DepartmentStatus: '',
+    })
+}
   const formik = useFormik({
     initialValues: department,
     enableReinitialize: true,
@@ -307,7 +317,8 @@ const Page = () => {
         DepartmentService.upadeDepartment(values).then((res) => {
           handleClose();
           getDepartmentList();
-          resetForm()
+          resetForm();
+          formReset();
           alert(" Department Updated Successfully.");
         }).catch((err) => {
         });
@@ -318,6 +329,7 @@ const Page = () => {
           getDepartmentList();
           resetForm();
           handleClose();
+          formReset();
           alert(" Department Added Successfully.");
           // props.history.push('/app/vendor');
         })
@@ -466,7 +478,7 @@ const Page = () => {
   <Grid xs={12} md={12}>
 
                     <Button onClick={handleClose}>Cancel</Button>
-                    <Button type="submit">Add</Button>
+                    <Button type="submit">{department.Depid?'Update':'Add'}</Button>
                 
   </Grid>
 
