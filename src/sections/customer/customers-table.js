@@ -47,8 +47,9 @@ export const CustomersTable = (props) => {
           <Table>
             <TableHead>
               <TableRow>
-                {headersList.map((headers) => {
-                  return  (<TableCell>
+                {headersList.map((headers, index) => {
+                  return  (<TableCell
+                    key={index} >
                   {headers.name}
                 </TableCell>)
                 })}
@@ -66,22 +67,25 @@ export const CustomersTable = (props) => {
                     // selected={isSelected}
                   >
                   
-                     {headersList.map((headers) => {
+                     {headersList.map((headers, index) => {
                       if(headers.property === 'Edit'){
-                        return (<TableCell>
+                        return (<TableCell
+                          key={index}>
                      <EditIcon style={{ cursor: 'pointer' }} onClick={() => editDetails(customer)} >
                               </EditIcon >
                         </TableCell>);
                       }
 
                       if(headers.property === 'Delete'){
-                        return (<TableCell>
+                        return (<TableCell
+                          key={index}>
                     <DeleteIcon style={{ cursor: 'pointer' }} onClick={() => deleteContact(customer)} />
 
                         </TableCell>);
                       }
 
-                  return  (<TableCell>
+                  return  (<TableCell
+                    key={index}>
                     
                   {customer[headers.property]}
                 </TableCell>);
