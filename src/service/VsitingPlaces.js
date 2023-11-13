@@ -10,9 +10,9 @@ return requests.post(`/GetVisitingPlaces`,{});
   deleteVisitingPlacesRole(body){
     return requests.delete(`/department/${body._id}`); 
   },
-  findRoleList(body){
-    return requests.post(`/department/find`,body); 
-  },
+  // findRoleList(body){
+  //   return requests.post(`/department/find`,body); 
+  // },
   upadeVisitingPlaces(body) {
     return requests.post(`/PutVisitingPlaces`,body); 
   },

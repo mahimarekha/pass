@@ -128,4 +128,8 @@ CustomersTable.propTypes = {
   editRole:PropTypes.func,
   editVisitingPlaces:PropTypes.func,
   editPass:PropTypes.func,
+  editDesignations:PropTypes.func,
+  editUsers:PropTypes.func,
+  editVisitingPasses:PropTypes.func,
+
 };

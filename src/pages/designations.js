@@ -17,7 +17,8 @@ import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
 import { CustomersTable } from 'src/sections/customer/customers-table';
 import { CustomersSearch } from 'src/sections/customer/customers-search';
 import { applyPagination } from 'src/utils/apply-pagination';
-import RoleService from "../service/RoleService";
+import DesignationsService from "../service/DesignationsService";
+import VisitingPlacesService from "../service/VsitingPlaces";
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import FormControl from '@mui/material/FormControl';
@@ -25,6 +26,9 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import FormGroup from '@mui/material/FormGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
 import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
 const now = new Date();
 
@@ -193,26 +197,21 @@ const Page = () => {
     const [page, setPage] = useState(0);
     const [open, setOpen] = React.useState(false);
     const headersList = [{
-        name: 'Role Code',
-        property: 'RoleCode'
+        name: 'Designation Code',
+        property: 'DesignationCode'
     },
     {
-        
-        name: 'Role Name',
-        property: 'RoleName'
+
+        name: 'Designation',
+        property: 'Designation'
     },
     {
-        name: 'Role Status',
+        name: 'DesignationStatus',
         property: 'status'
     },
     {
-        name: 'Visiting Passes Status',
-        property: 'VisitingPassesStatus'
-    },
-    
-    {
-        name: 'description',
-        property: 'description'
+        name: 'Description',
+        property: 'Description'
     },
     {
         name: 'Edit',
@@ -222,30 +221,32 @@ const Page = () => {
     const [rowsPerPage, setRowsPerPage] = useState(5);
     const customers = useCustomers(page, rowsPerPage);
     const customersIds = useCustomerIds(customers);
-    const [roleList, setRoleList] = useState([]);
-    const [role, setRole] = useState({
-        RoleCode: '',
-        RoleName: '',
-        RoleId: '',
-        RoleStatus: '',
-        VisitingPassesStatus:'',
-        description: '',
-        // status: true,
+    const [designationsList, setDesignationList] = useState([]);
+    const [visitingPlacesList, setVisitingPlacesList] = useState([]);
+    const [designation, setDesignation] = useState({
+        DesignationCode: '',
+        Designation: '',
+        DesignationId: '',
+        DesignationStatus: '',
+        Description: '',
+        DesignationWisePlaces:''
     });
+    const [checkboxValues, setCheckboxValues] = useState([]);
+
     const validationSchema = Yup.object().shape({
-        RoleCode: Yup.string().required('Role Code is required'),
-        RoleName: Yup.string().required('Role Name is required'),
-        RoleStatus: Yup.string().required('Role Status is required'),
-        VisitingPassesStatus: Yup.string().required('Visiting Passes Status is required'),
-        description: Yup.string().required('description is required'),
-        // count: Yup.string(),
+        DesignationCode: Yup.string().required('Designation Code is required'),
+        Designation: Yup.string().required('Designation is required'),
+        DesignationStatus: Yup.string().required('Designation Status is required'),
+        Description: Yup.string().required('description is required'),
+        DesignationWisePlaces: Yup.string(),
     });
     useEffect(() => {
 
-        getRoleList();
-
+        getDesignationList();
+        getVisitingPlacesList()
         return () => {
-            setRoleList([]);
+            setDesignationList([]);
+            setVisitingPlacesList([]);
         }
     }, []);
     const handleClickOpen = () => {
@@ -271,66 +272,91 @@ const Page = () => {
         },
         []
     );
-    const editRole = (role) => {
-        setRole(role);
+    const editDesignation = (designation) => {
+        setDesignation(designation);
         setOpen(true);
     }
-    const deleteRole = (roledelete) => {
-        if (roledelete) {
-            RoleService.deleteRole(roledelete).then((res) => {
-                getRoleList();
+    const deleteDesignation = (designationdelete) => {
+        if (designationdelete) {
+            DesignationsService.deleteDesignations(Designationdelete).then((res) => {
+                getDesignationList();
             }).catch((err) => {
             });
         }
     };
 
-    const getRoleList = () => {
-        RoleService.getAllRole().then((res) => {
-            const result = res.map((response) => {
-                return {
-                    ...response,
-                    "status": response.RoleStatus ? 'Active' : 'Inactive',
-                }
+    const getVisitingPlacesList = () => {
+        VisitingPlacesService.getAllVisitingPlaces().then((res) => {
+          const result =  res.map((result)=>{
+                return {...result,isSelected:false}
             })
-            setRoleList(result);
+            setVisitingPlacesList(result);
         }).catch((err) => {
             // setError(err.message);
         });
     }
-    const formReset=()=>{
-        setRole({
-            RoleCode: '',
-            RoleName: '',
-            RoleId: '',
-            RoleStatus: '',
-            description: '',
-        VisitingPassesStatus:'',
-
+    const getDesignationList = () => {
+        DesignationsService.getAllDesignations().then((res) => {
+            const result = res.map((response) => {
+                return {
+                    ...response,
+                    "status": response.DesignationStatus ? 'Active' : 'Inactive',
+                }
+            })
+            setDesignationList(result);
+        }).catch((err) => {
+            // setError(err.message);
+        });
+    }
+    const formReset = () => {
+        setDesignation({
+            DesignationCode: '',
+            Designation: '',
+            DesignationId: '',
+            DesignationStatus: '',
+            Description: '',
+            DesignationWisePlaces:''
         })
     }
+    const handleChange = (value) => {
+        
+        if (checkboxValues.includes(value)) {
+            // If the value is already in the array, remove it
+            setCheckboxValues((prevValues) => prevValues.filter((item) => item !== value));
+          } else {
+            // If the value is not in the array, add it
+            setCheckboxValues((prevValues) => [...prevValues, value]);
+          }
+      };
     const formik = useFormik({
-        initialValues: role,
+        initialValues: designation,
         enableReinitialize: true,
         validationSchema: validationSchema,
         onSubmit: (values, { resetForm }) => {
-            if (role.RoleId) {
-                RoleService.upadeRole(values).then((res) => {
+            if (designation.DesignationId) {
+                values.DesignationWisePlaces = checkboxValues.map(value=>{
+                    return {VisitingPlacesId:value};
+                });
+                DesignationsService.upadeDesignations(values).then((res) => {
                     handleClose();
-                    getRoleList();
+                    getDesignationList();
                     resetForm();
                     formReset();
-                    alert(" Role Updated Successfully.");
+                    alert(" Designation Updated Successfully.");
                 }).catch((err) => {
                 });
             }
             else {
-                delete values.RoleId;
-                RoleService.creteRole(values).then((res) => {
-                    getRoleList();
+                delete values.DesignationId;
+                 values.DesignationWisePlaces = checkboxValues.map(value=>{
+                    return {VisitingPlacesId:value};
+                });
+                DesignationsService.creteDesignations(values).then((res) => {
+                    getDesignationList();
                     resetForm();
                     handleClose();
                     formReset();
-                    alert(" Role Added Successfully.");
+                    alert(" Designation Added Successfully.");
                     // props.history.push('/app/vendor');
                 })
                     .catch((err) => {
@@ -365,7 +391,7 @@ const Page = () => {
                         >
                             <Stack spacing={1}>
                                 <Typography variant="h4">
-                                    Roles
+                                    Designations
                                 </Typography>
                                 <Stack
                                     alignItems="center"
@@ -419,65 +445,44 @@ const Page = () => {
                                                     <TextField
                                                         autoFocus
                                                         style={{ width: 258 }}
-                                                        id="RoleCode"
-                                                        name="RoleCode"
-                                                        label="Role Code"
+                                                        id="DesignationCode"
+                                                        name="DesignationCode"
+                                                        label="Designation Code"
                                                         type="text"
                                                         variant="standard"
                                                         onChange={formik.handleChange}
-                                                        value={formik.values.RoleCode}
-                                                        error={formik.touched.RoleCode && Boolean(formik.errors.RoleCode)}
-                                                        helperText={formik.touched.RoleCode && formik.errors.RoleCode}
+                                                        value={formik.values.DesignationCode}
+                                                        error={formik.touched.DesignationCode && Boolean(formik.errors.DesignationCode)}
+                                                        helperText={formik.touched.DesignationCode && formik.errors.DesignationCode}
                                                     />
                                                 </Grid>
                                                 <Grid xs={12} md={12}>
                                                     <TextField
 
                                                         style={{ width: 258 }}
-                                                        id="RoleName"
-                                                        name="RoleName"
-                                                        label="RoleName"
+                                                        id="Designation"
+                                                        name="Designation"
+                                                        label="Designation"
                                                         type="text"
                                                         variant="standard"
                                                         onChange={formik.handleChange}
-                                                        value={formik.values.RoleName}
-                                                        error={formik.touched.RoleName && Boolean(formik.errors.RoleName)}
-                                                        helperText={formik.touched.RoleName && formik.errors.RoleName}
+                                                        value={formik.values.Designation}
+                                                        error={formik.touched.Designation && Boolean(formik.errors.Designation)}
+                                                        helperText={formik.touched.Designation && formik.errors.Designation}
                                                     />
                                                 </Grid>
                                                 <Grid xs={12} md={12}>
                                                     <FormControl variant="standard" fullWidth>
-                                                        <InputLabel id="demo-simple-select-standard-label"> Status</InputLabel>
+                                                        <InputLabel id="demo-simple-select-standard-label">Status</InputLabel>
                                                         <Select
                                                             labelId="demo-simple-select-standard-label"
                                                             id="demo-simple-select-standard"
-                                                            label="Role Status"
-                                                            name="RoleStatus"
-                                                            value={formik.values.RoleStatus}
+                                                            label="Designation Status"
+                                                            name="DesignationStatus"
+                                                            value={formik.values.DesignationStatus}
                                                             onChange={formik.handleChange}
-                                                            error={formik.touched.RoleStatus && Boolean(formik.errors.RoleStatus)}
-                                                            helperText={formik.touched.RoleStatus && formik.errors.RoleStatus}
-                                                        >
-                                                            <MenuItem value="">
-                                                                <em>None</em>
-                                                            </MenuItem>
-                                                            <MenuItem value={true}>Active</MenuItem>
-                                                            <MenuItem value={false}>In Active</MenuItem>
-                                                        </Select>
-                                                    </FormControl>
-                                                </Grid>
-                                                <Grid xs={12} md={12}>
-                                                    <FormControl variant="standard" fullWidth>
-                                                        <InputLabel id="demo-simple-select-standard-label">Visiting Passes Status</InputLabel>
-                                                        <Select
-                                                            labelId="demo-simple-select-standard-label"
-                                                            id="demo-simple-select-standard"
-                                                            label="Visiting Passes Status"
-                                                            name="VisitingPassesStatus"
-                                                            value={formik.values.VisitingPassesStatus}
-                                                            onChange={formik.handleChange}
-                                                            error={formik.touched.VisitingPassesStatus && Boolean(formik.errors.VisitingPassesStatus)}
-                                                            helperText={formik.touched.VisitingPassesStatus && formik.errors.VisitingPassesStatus}
+                                                            error={formik.touched.DesignationStatus && Boolean(formik.errors.DesignationStatus)}
+                                                            helperText={formik.touched.DesignationStatus && formik.errors.DesignationStatus}
                                                         >
                                                             <MenuItem value="">
                                                                 <em>None</em>
@@ -492,27 +497,50 @@ const Page = () => {
                                                         InputProps={{ style: { width: 258 } }}
                                                         autoFocus
                                                         margin="dense"
-                                                        id="description"
-                                                        name="description"
+                                                        id="Description"
+                                                        name="Description"
                                                         label="Description"
                                                         type="text"
                                                         variant="standard"
-                                                        value={formik.values.description}
+                                                        value={formik.values.Description}
                                                         onChange={formik.handleChange}
-                                                        error={formik.touched.description && Boolean(formik.errors.description)}
-                                                        helperText={formik.touched.description && formik.errors.description}
+                                                        error={formik.touched.Description && Boolean(formik.errors.Description)}
+                                                        helperText={formik.touched.Description && formik.errors.Description}
                                                     />
+                                                </Grid>
+                                                <Grid item xs={12} style={{ marginTop: '30px' }}>
+                                    <span style={{ fontSize: '17px', color: 'rgb(16 182 128)' }} >Visiting Place Name:</span>
+                                </Grid>
+                                                <Grid xs={12} md={12}>
+
+                                                    <FormGroup>
+
+                                                        {/* <FormControlLabel control={<Checkbox defaultChecked />} 
+                                                        label="Label" /> */}
+                                                      
+                                                      {visitingPlacesList.map((val,index)=>{
+                                                        console.log(val.isSelected);
+                                                      return (<FormControlLabel  control={<Checkbox
+                                                       //value={formik.values.DesignationWisePlaces}
+                                                       // onChange={formik.handleChange}
+                                                       // error={formik.touched.DesignationWisePlaces && Boolean(formik.errors.DesignationWisePlaces)}
+                                                       // helperText={formik.touched.DesignationWisePlaces && formik.errors.DesignationWisePlaces}
+                                                       
+                                                        checked={checkboxValues.includes(val.VisitingPlacesId)}
+                                                        onChange={(event)=>{
+                                                            handleChange(val.VisitingPlacesId)
+                                                        }} 
+                                                          name="DesignationWisePlaces" />} label={val.VisitingPlace} /> );
+                                                      })}
+                                                       
+                                                    </FormGroup>
                                                 </Grid>
                                                 <Grid xs={12} md={12}>
 
                                                     <Button onClick={handleClose}>Cancel</Button>
-                                                    <Button type="submit">{role.RoleId?'Update':'Add'}</Button>
-
+                                                    <Button type="submit">{designation.DesignationId ? 'Update' : 'Add'}</Button>
                                                 </Grid>
-
                                             </Grid>
-
-
                                         </DialogContent>
                                     </form>
                                 </Dialog>
@@ -521,10 +549,9 @@ const Page = () => {
                         {/* <CustomersSearch /> */}
                         <CustomersTable
                             headersList={headersList}
-                            count={roleList.length}
-                            items={roleList}
-                            editDetails={editRole}
-
+                            count={designationsList.length}
+                            items={designationsList}
+                            editDetails={editDesignation}
                             onDeselectAll={customersSelection.handleDeselectAll}
                             onDeselectOne={customersSelection.handleDeselectOne}
                             onPageChange={handlePageChange}
