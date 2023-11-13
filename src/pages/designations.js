@@ -520,7 +520,7 @@ const Page = () => {
                                                       
                                                       {visitingPlacesList.map((val,index)=>{
                                                         console.log(val.isSelected);
-                                                      return (<FormControlLabel  control={<Checkbox
+                                                      return (<FormControlLabel key={index} control={<Checkbox  key={index}
                                                        //value={formik.values.DesignationWisePlaces}
                                                        // onChange={formik.handleChange}
                                                        // error={formik.touched.DesignationWisePlaces && Boolean(formik.errors.DesignationWisePlaces)}
