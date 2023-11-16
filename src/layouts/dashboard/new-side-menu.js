@@ -78,7 +78,7 @@ export const NewSideNavItem = (props) => {
     <Collapse in={open} timeout="auto" unmountOnExit>
 
       <List component="div" disablePadding>
-        {child?.map((item) => {
+        {child?.map((item,index) => {
             const { active = false, disabled, external, icon, path, title } = item;
             const sublinkProps = path
             ? external
@@ -93,7 +93,7 @@ export const NewSideNavItem = (props) => {
               }
             : {};
               const subactive = item.path ? (pathname === item.path) : false;
-             return ( <ListItemButton sx={{ pl: 4 }}  {...sublinkProps}>
+             return ( <ListItemButton key={index} sx={{ pl: 4 }}  {...sublinkProps}>
               <ListItemIcon>
               {icon}
               </ListItemIcon>
