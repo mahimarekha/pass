@@ -18,7 +18,9 @@ return requests.post(`/GetRoles`,{});
   upadeRole(body) {
     return requests.post(`/PutRoles`,body); 
   },
-
+  getRoleById(id) {
+    return requests.get(`/GetRole/${id}`,); 
+  },
   userLogin(body){
     return requests.post(`/UserLogin`,body); 
   },

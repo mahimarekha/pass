@@ -49,14 +49,22 @@ const Page = () => {
           }).then(async (res) => {
           if(res.Code == '201'){
             router.push('/auth/register');
-            await auth.signIn(res);
+            
           }else if(res.Code == '401'){
             helpers.setStatus({ success: false });
             helpers.setErrors({ submit: res.Message });
             helpers.setSubmitting(false);
           }else if(res.Code == '200'){
-            router.push('/');
-            await auth.signIn(res);
+           
+       try {
+        const result =  await RoleService.getRoleById(res.RoleId);
+        res.RoleName =result.RoleName;
+        await auth.signIn(res);
+        router.push('/');
+        
+       } catch (error) {
+        
+       }
           }
       }).catch((err) => {
         helpers.setStatus({ success: false });

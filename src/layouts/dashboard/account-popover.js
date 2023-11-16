@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback,useEffect,useState } from 'react';
 import { useRouter } from 'next/navigation';
 import PropTypes from 'prop-types';
 import { Box, Divider, MenuItem, MenuList, Popover, Typography } from '@mui/material';
@@ -7,8 +7,15 @@ import { useAuth } from 'src/hooks/use-auth';
 export const AccountPopover = (props) => {
   const { anchorEl, onClose, open } = props;
   const router = useRouter();
-  const auth = useAuth();
+  const [userDet, setuserDetails] = useState(false);
 
+  const auth = useAuth();
+ 
+  useEffect(() => {
+    const  userDetails=JSON.parse(window.sessionStorage.getItem('userDetails'));
+    setuserDetails(userDetails);
+
+}, []);
   const handleSignOut = useCallback(
     () => {
       onClose?.();
@@ -42,7 +49,7 @@ export const AccountPopover = (props) => {
           color="text.secondary"
           variant="body2"
         >
-          Anika Visser
+          {userDet?.FullName}
         </Typography>
       </Box>
       <Divider />

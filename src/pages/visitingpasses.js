@@ -482,13 +482,13 @@ const Page = () => {
                                 <Dialog open={open} onClose={handleClose}>
                                     <DialogTitle>Visiting Passes</DialogTitle>
                                     <form onSubmit={formik.handleSubmit}  >
-                                        <DialogContent style={{ width: 308 }}>
+                                        <DialogContent style={{ width: 530 }}>
                                             <DialogContentText>
 
                                             </DialogContentText>
 
                                             <Grid container spacing={2}>
-                                                <Grid xs={12} md={12} >
+                                                <Grid xs={6} md={6} >
                                                     <FormControl variant="standard" fullWidth>
                                                         <InputLabel id="studentName">User Id</InputLabel>
                                                         <Select
@@ -511,7 +511,7 @@ const Page = () => {
                                                         </Select>
                                                     </FormControl>
                                                 </Grid>
-                                                <Grid xs={12} md={12}>
+                                                <Grid xs={6} md={6}>
                                                     <FormControl variant="standard" fullWidth>
                                                         <InputLabel id="studentName">Department Id</InputLabel>
                                                         <Select
@@ -533,7 +533,7 @@ const Page = () => {
                                                         </Select>
                                                     </FormControl>
                                                 </Grid>
-                                                <Grid xs={12} md={12}>
+                                                <Grid xs={6} md={6}>
                                                     <FormControl variant="standard" fullWidth>
                                                         <InputLabel id="studentName">VisitingPlaces Id</InputLabel>
                                                         <Select
@@ -555,9 +555,9 @@ const Page = () => {
                                                         </Select>
                                                     </FormControl>
                                                 </Grid>
-                                                <Grid xs={12} md={12}>
+                                                <Grid xs={6} md={6}>
                                                     <TextField
-                                                        InputProps={{ style: { width: 258 } }}
+                                                        InputProps={{ style: { width: 245 } }}
                                                         
                                                         margin="dense"
                                                         id="FirstName"
@@ -571,9 +571,9 @@ const Page = () => {
                                                         helperText={formik.touched.FirstName && formik.errors.FirstName}
                                                     />
                                                 </Grid>
-                                                <Grid xs={12} md={12}>
+                                                <Grid xs={6} md={6}>
                                                     <TextField
-                                                        InputProps={{ style: { width: 258 } }}
+                                                        InputProps={{ style: { width: 245 } }}
                                                         
                                                         margin="dense"
                                                         id="MiddleName"
@@ -587,9 +587,9 @@ const Page = () => {
                                                         helperText={formik.touched.MiddleName && formik.errors.MiddleName}
                                                     />
                                                 </Grid>
-                                                <Grid xs={12} md={12}>
+                                                <Grid xs={6} md={6}>
                                                     <TextField
-                                                        InputProps={{ style: { width: 258 } }}
+                                                        InputProps={{ style: { width: 245 } }}
                                                         
                                                         margin="dense"
                                                         id="LastName"
@@ -603,9 +603,9 @@ const Page = () => {
                                                         helperText={formik.touched.LastName && formik.errors.LastName}
                                                     />
                                                 </Grid>
-                                                <Grid xs={12} md={12}>
+                                                <Grid xs={6} md={6}>
                                                     <TextField
-                                                        InputProps={{ style: { width: 258 } }}
+                                                        InputProps={{ style: { width: 245 } }}
                                                         
                                                         margin="dense"
                                                         id="FullName"
@@ -619,9 +619,9 @@ const Page = () => {
                                                         helperText={formik.touched.FullName && formik.errors.FullName}
                                                     />
                                                 </Grid>
-                                                <Grid xs={12} md={12}>
+                                                <Grid xs={6} md={6}>
                                                     <TextField
-                                                        InputProps={{ style: { width: 258 } }}
+                                                        InputProps={{ style: { width: 245 } }}
                                                         
                                                         margin="dense"
                                                         id="MobileNumber"
@@ -635,9 +635,9 @@ const Page = () => {
                                                         helperText={formik.touched.MobileNumber && formik.errors.MobileNumber}
                                                     />
                                                 </Grid>
-                                                <Grid xs={12} md={12}>
+                                                <Grid xs={6} md={6}>
                                                     <TextField
-                                                        InputProps={{ style: { width: 258 } }}
+                                                        InputProps={{ style: { width: 245 } }}
                                                         
                                                         margin="dense"
                                                         id="VisitorAddress"
@@ -651,9 +651,9 @@ const Page = () => {
                                                         helperText={formik.touched.VisitorAddress && formik.errors.VisitorAddress}
                                                     />
                                                 </Grid>
-                                                <Grid xs={12} md={12}>
+                                                <Grid xs={6} md={6}>
                                                 <TextField
-                                                        InputProps={{ style: { width: 258 } }}
+                                                        InputProps={{ style: { width: 245 } }}
                                                         
                                                         margin="dense"
                                                         id="VisitorPhotoPath"
@@ -667,8 +667,8 @@ const Page = () => {
                                                         helperText={formik.touched.VisitorPhotoPath && formik.errors.VisitorPhotoPath}
                                                     />
                                                 </Grid>
-                                                <Grid xs={12} md={12}>
-                                                    <TextField InputProps={{ style: { width: 258 } }}
+                                                <Grid xs={6} md={6}>
+                                                    <TextField InputProps={{ style: { width: 245 } }}
                                                         onChange={formik.handleChange}
                                                         id="FromDate"
                                                         name="FromDate"
@@ -683,8 +683,8 @@ const Page = () => {
                                                         helperText={formik.touched.FromDate && formik.errors.FromDate}
                                                     />
                                                 </Grid>
-                                                <Grid xs={12} md={12}>
-                                                    <TextField InputProps={{ style: { width: 258 } }}
+                                                <Grid xs={6} md={6}>
+                                                    <TextField InputProps={{ style: { width: 245 } }}
                                                         onChange={formik.handleChange}
                                                         id="ToDate"
                                                         name="ToDate"
@@ -699,9 +699,9 @@ const Page = () => {
                                                         helperText={formik.touched.ToDate && formik.errors.ToDate}
                                                     />
                                                 </Grid>
-                                                <Grid xs={12} md={12}>
+                                                <Grid xs={6} md={6}>
                                                     <TextField
-                                                        InputProps={{ style: { width: 258 } }}
+                                                        InputProps={{ style: { width: 245 } }}
                                                         
                                                         margin="dense"
                                                         id="PurposeVisting"
@@ -715,7 +715,7 @@ const Page = () => {
                                                         helperText={formik.touched.PurposeVisting && formik.errors.PurposeVisting}
                                                     />
                                                 </Grid>
-                                                <Grid xs={12} md={12}>
+                                                <Grid xs={6} md={6}>
                                                     <FormControl variant="standard" fullWidth>
                                                         <InputLabel id="demo-simple-select-standard-label">Status</InputLabel>
                                                         <Select
@@ -740,7 +740,7 @@ const Page = () => {
                                                 </Grid>
                                                 <Grid xs={12} md={12}>
                                                     <TextField
-                                                        InputProps={{ style: { width: 258 } }}
+                                                        InputProps={{ style: { width: 500 } }}
                                                         
                                                         margin="dense"
                                                         id="Remarks"
