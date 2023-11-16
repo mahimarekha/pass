@@ -222,13 +222,14 @@ const Page = () => {
         PassCode: '',
         PassName: '',
         PassId: '',
-        PassStatus: '',
+        PassStatus: true,
         
     });
     const validationSchema = Yup.object().shape({
-        PassCode: Yup.string().required('Pass Code is required'),
+        PassCode: Yup.string().required('Pass Code is required')
+        .max(2, 'Must be exactly 2 digits'),
         PassName: Yup.string().required('Pass Name is required'),
-        PassStatus: Yup.string().required('Pass Status is required'),
+        PassStatus: Yup.string(true).required('Pass Status is required'),
     });
     useEffect(() => {
 
@@ -293,7 +294,7 @@ const Page = () => {
             PassCode: '',
         PassName: '',
         PassId: '',
-        PassStatus: '',
+        PassStatus: true,
         })
     }
     const formik = useFormik({
@@ -395,7 +396,7 @@ const Page = () => {
                                     Add
                                 </Button>
                                 <Dialog open={open} onClose={handleClose}>
-                                    <DialogTitle>Role</DialogTitle>
+                                    <DialogTitle>passes</DialogTitle>
                                     <form onSubmit={formik.handleSubmit} >
                                         <DialogContent style={{ width: 308 }}>
                                             <DialogContentText>

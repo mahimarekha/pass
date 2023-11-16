@@ -224,14 +224,16 @@ const Page = () => {
     DepartmentCode: '',
     DepartmentName: '',
      Depid:'',
-    DepartmentStatus: '',
+    DepartmentStatus: true,
     // count: '',
     // status: true,
   });
   const validationSchema = Yup.object().shape({
-    DepartmentCode: Yup.string().required('Department Code is required'),
+ 
+    DepartmentCode: Yup.string().required('Department Code is required')
+    .max(2, 'Must be exactly 2 digits'),
     DepartmentName: Yup.string().required('Department Name is required'),
-    DepartmentStatus: Yup.string().required('Department Status is required'),
+    DepartmentStatus: Yup.string(true).required('Department Status is required'),
     // count: Yup.string().required('count is required'),
     // count: Yup.string(),
   });
@@ -302,7 +304,7 @@ const Page = () => {
       DepartmentCode: '',
       DepartmentName: '',
        Depid:'',
-      DepartmentStatus: '',
+      DepartmentStatus: true,
     })
 }
   const formik = useFormik({

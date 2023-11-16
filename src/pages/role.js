@@ -227,15 +227,16 @@ const Page = () => {
         RoleCode: '',
         RoleName: '',
         RoleId: '',
-        RoleStatus: '',
+        RoleStatus: true,
         VisitingPassesStatus:'',
         description: '',
         // status: true,
     });
     const validationSchema = Yup.object().shape({
-        RoleCode: Yup.string().required('Role Code is required'),
+        RoleCode: Yup.string().required('Role Code is required')
+        .max(2, 'Must be exactly 2 digits'),
         RoleName: Yup.string().required('Role Name is required'),
-        RoleStatus: Yup.string().required('Role Status is required'),
+        RoleStatus: Yup.string(true).required('Role Status is required'),
         VisitingPassesStatus: Yup.string().required('Visiting Passes Status is required'),
         description: Yup.string().required('description is required'),
         // count: Yup.string(),
@@ -302,7 +303,7 @@ const Page = () => {
             RoleCode: '',
             RoleName: '',
             RoleId: '',
-            RoleStatus: '',
+            RoleStatus: true,
             description: '',
         VisitingPassesStatus:'',
 

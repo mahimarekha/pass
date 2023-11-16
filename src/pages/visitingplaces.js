@@ -231,7 +231,7 @@ const Page = () => {
         VisitingPlacesCode: '',
         VisitingPlace: '',
         VisitingPlacesId: '',
-        VisitingPlacesStatus: '',
+        VisitingPlacesStatus: true,
         Description: '',
         SecurityType:'',
         ColorOfPass:'',
@@ -248,9 +248,10 @@ const Page = () => {
         'Yellow',
     ];
     const validationSchema = Yup.object().shape({
-        VisitingPlacesCode: Yup.string().required('Role Code is required'),
+        VisitingPlacesCode: Yup.string().required('visiting place code is required')
+        .max(2, 'Must be exactly 2 digits'),
         VisitingPlace: Yup.string().required('Visiting Place is required'),
-        VisitingPlacesStatus: Yup.string().required('Visiting Places Status is required'),
+        VisitingPlacesStatus: Yup.string(true).required('Visiting Places Status is required'),
         Description: Yup.string().required('description is required'),
         SecurityType: Yup.string().required('Security Type is required'),
         ColorOfPass: Yup.string().required('Color Of Pass is required'),
@@ -320,7 +321,7 @@ const Page = () => {
             VisitingPlacesCode: '',
             VisitingPlace: '',
             VisitingPlacesId: '',
-            VisitingPlacesStatus: '',
+            VisitingPlacesStatus: true,
             Description: '',
             SecurityType:'',
             ColorOfPass:'',
@@ -427,7 +428,7 @@ const Page = () => {
                                     
                                 </Button>
                                 <Dialog open={open} onClose={handleClose}>
-                                    <DialogTitle>Role</DialogTitle>
+                                    <DialogTitle>Visiting Places</DialogTitle>
                                     <form onSubmit={formik.handleSubmit}  >
                                         <DialogContent style={{ width: 308 }}>
                                             <DialogContentText>

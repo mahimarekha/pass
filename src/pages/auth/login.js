@@ -18,6 +18,7 @@ import {
 } from '@mui/material';
 import { useAuth } from 'src/hooks/use-auth';
 import { Layout as AuthLayout } from 'src/layouts/auth/layout';
+import RoleService from "../../service/RoleService";
 
 const Page = () => {
   const router = useRouter();
@@ -25,14 +26,13 @@ const Page = () => {
   const [method, setMethod] = useState('email');
   const formik = useFormik({
     initialValues: {
-      email: 'demo@devias.io',
-      password: 'Password123!',
+      email: '',
+      password: '',
       submit: null
     },
     validationSchema: Yup.object({
       email: Yup
         .string()
-        .email('Must be a valid email')
         .max(255)
         .required('Email is required'),
       password: Yup
@@ -42,8 +42,29 @@ const Page = () => {
     }),
     onSubmit: async (values, helpers) => {
       try {
-        await auth.signIn(values.email, values.password);
-        router.push('/');
+        //await auth.signIn(values.email, values.password);
+        RoleService.userLogin({
+          "LoginId":values.email,
+          "PASSWORD": values.password
+          }).then(async (res) => {
+          if(res.Code == '201'){
+            router.push('/auth/register');
+            await auth.signIn(res);
+          }else if(res.Code == '401'){
+            helpers.setStatus({ success: false });
+            helpers.setErrors({ submit: res.Message });
+            helpers.setSubmitting(false);
+          }else if(res.Code == '200'){
+            router.push('/');
+            await auth.signIn(res);
+          }
+      }).catch((err) => {
+        helpers.setStatus({ success: false });
+        helpers.setErrors({ submit: err.message });
+        helpers.setSubmitting(false);
+      });
+
+       
       } catch (err) {
         helpers.setStatus({ success: false });
         helpers.setErrors({ submit: err.message });
@@ -139,11 +160,11 @@ const Page = () => {
                     error={!!(formik.touched.email && formik.errors.email)}
                     fullWidth
                     helperText={formik.touched.email && formik.errors.email}
-                    label="Email Address"
+                    label="User Name"
                     name="email"
                     onBlur={formik.handleBlur}
                     onChange={formik.handleChange}
-                    type="email"
+                    type="text"
                     value={formik.values.email}
                   />
                   <TextField
@@ -179,23 +200,8 @@ const Page = () => {
                 >
                   Continue
                 </Button>
-                <Button
-                  fullWidth
-                  size="large"
-                  sx={{ mt: 3 }}
-                  onClick={handleSkip}
-                >
-                  Skip authentication
-                </Button>
-                <Alert
-                  color="primary"
-                  severity="info"
-                  sx={{ mt: 3 }}
-                >
-                  <div>
-                    You can use <b>demo@devias.io</b> and password <b>Password123!</b>
-                  </div>
-                </Alert>
+              
+               
               </form>
             )}
             {method === 'phoneNumber' && (

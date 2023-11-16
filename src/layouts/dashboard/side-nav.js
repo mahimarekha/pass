@@ -17,6 +17,9 @@ import { Logo } from 'src/components/logo';
 import { Scrollbar } from 'src/components/scrollbar';
 import { items } from './config';
 import { SideNavItem } from './side-nav-item';
+import {NewSideNavItem} from './new-side-menu';
+import List from '@mui/material/List';
+import ListSubheader from '@mui/material/ListSubheader';
 
 export const SideNav = (props) => {
   const { open, onClose } = props;
@@ -106,21 +109,35 @@ export const SideNav = (props) => {
               m: 0
             }}
           >
-            {items.map((item) => {
+               
+            
+               <List
+    sx={{ width: '100%', maxWidth: 360, }}
+    component="nav"
+    aria-labelledby="nested-list-subheader"
+    
+  >
+           {items.map((item) => {
               const active = item.path ? (pathname === item.path) : false;
 
               return (
-                <SideNavItem
+                <NewSideNavItem
                   active={active}
+                  child={item.child}
                   disabled={item.disabled}
                   external={item.external}
                   icon={item.icon}
                   key={item.title}
                   path={item.path}
                   title={item.title}
+                  pathname={item.pathname}
                 />
               );
-            })}
+
+             
+             // return (<NestedList/>);
+            })} 
+             </List>
           </Stack>
         </Box>
         <Divider sx={{ borderColor: 'neutral.700' }} />

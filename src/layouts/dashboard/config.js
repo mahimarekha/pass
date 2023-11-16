@@ -9,42 +9,71 @@ import XCircleIcon from '@heroicons/react/24/solid/XCircleIcon';
 import { SvgIcon } from '@mui/material';
 
 export const items = [
-  // {
-  //   title: 'Overview',
-  //   path: '/',
-  //   icon: (
-  //     <SvgIcon fontSize="small">
-  //       <ChartBarIcon />
-  //     </SvgIcon>
-  //   )
-  // },
   {
-    title: 'Department',
-    path: '/customers',
+    title: 'Master',
+    path: '/',
+    child:[  {
+      title: 'Department',
+      path: '/customers',
+      icon: (
+        <SvgIcon fontSize="small">
+          <UsersIcon />
+        </SvgIcon>
+      )
+    },
+    {
+      title: 'Roles',
+      path: '/role',
+      icon: (
+        <SvgIcon fontSize="small">
+          <ShoppingBagIcon />
+        </SvgIcon>
+      )
+    },
+    {
+      title: 'Visiting Places',
+      path: '/visitingplaces',
+      icon: (
+        <SvgIcon fontSize="small">
+          <UserIcon />
+        </SvgIcon>
+      )
+    } ,{
+      title: 'Passes',
+      path: '/passes',
+      icon: (
+        <SvgIcon fontSize="small">
+          <LockClosedIcon />
+        </SvgIcon>
+      )
+    },
+    {
+      title: 'Designations',
+      path: '/designations',
+      icon: (
+        <SvgIcon fontSize="small">
+          <CogIcon />
+        </SvgIcon>
+      )
+    },
+    {
+      title: 'Users',
+      path: '/users',
+      icon: (
+        <SvgIcon fontSize="small">
+          <CogIcon />
+        </SvgIcon>
+      )
+    },
+    ],
     icon: (
       <SvgIcon fontSize="small">
-        <UsersIcon />
+        <ChartBarIcon />
       </SvgIcon>
-    )
+    ),
+    
   },
-  {
-    title: 'Roles',
-    path: '/role',
-    icon: (
-      <SvgIcon fontSize="small">
-        <ShoppingBagIcon />
-      </SvgIcon>
-    )
-  },
-  {
-    title: 'Visiting Places',
-    path: '/visitingplaces',
-    icon: (
-      <SvgIcon fontSize="small">
-        <UserIcon />
-      </SvgIcon>
-    )
-  },
+ 
   // {
   //   title: 'Companies'
   //   path: '/companies',
@@ -54,33 +83,7 @@ export const items = [
   //     </SvgIcon>
   //   )
   // },
-  {
-    title: 'Passes',
-    path: '/passes',
-    icon: (
-      <SvgIcon fontSize="small">
-        <LockClosedIcon />
-      </SvgIcon>
-    )
-  },
-  {
-    title: 'Designations',
-    path: '/designations',
-    icon: (
-      <SvgIcon fontSize="small">
-        <CogIcon />
-      </SvgIcon>
-    )
-  },
-  {
-    title: 'Users',
-    path: '/users',
-    icon: (
-      <SvgIcon fontSize="small">
-        <CogIcon />
-      </SvgIcon>
-    )
-  },
+
   {
     title: 'Visiting Passes',
     path: '/visitingpasses',

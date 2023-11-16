@@ -18,6 +18,16 @@ return requests.post(`/GetRoles`,{});
   upadeRole(body) {
     return requests.post(`/PutRoles`,body); 
   },
+
+  userLogin(body){
+    return requests.post(`/UserLogin`,body); 
+  },
+  userPasswordUpdate(body){
+    return requests.post(`/PostUserLogin`,body); 
+  },
+  userNameCheck(body){
+    return requests.post(`/CheckUserLogin`,body); 
+  }
   
 
 };

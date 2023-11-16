@@ -227,7 +227,7 @@ const Page = () => {
         DesignationCode: '',
         Designation: '',
         DesignationId: '',
-        DesignationStatus: '',
+        DesignationStatus: true,
         Description: '',
         DesignationWisePlaces:''
     });
@@ -235,8 +235,9 @@ const Page = () => {
 
     const validationSchema = Yup.object().shape({
         DesignationCode: Yup.string().required('Designation Code is required'),
-        Designation: Yup.string().required('Designation is required'),
-        DesignationStatus: Yup.string().required('Designation Status is required'),
+        Designation: Yup.string().required('Designation is required')
+        .max(2, 'Must be exactly 2 digits'),
+        DesignationStatus: Yup.string(true).required('Designation Status is required'),
         Description: Yup.string().required('description is required'),
         DesignationWisePlaces: Yup.string(),
     });
@@ -313,7 +314,7 @@ const Page = () => {
             DesignationCode: '',
             Designation: '',
             DesignationId: '',
-            DesignationStatus: '',
+            DesignationStatus: true,
             Description: '',
             DesignationWisePlaces:''
         })
@@ -433,9 +434,9 @@ const Page = () => {
                                     Add
                                 </Button>
                                 <Dialog open={open} onClose={handleClose}>
-                                    <DialogTitle>Role</DialogTitle>
+                                    <DialogTitle>Designation</DialogTitle>
                                     <form onSubmit={formik.handleSubmit} >
-                                        <DialogContent style={{ width: 308 }}>
+                                        <DialogContent style={{ width: 800}}>
                                             <DialogContentText>
 
                                             </DialogContentText>
@@ -444,7 +445,7 @@ const Page = () => {
                                                 <Grid xs={12} md={12} >
                                                     <TextField
                                                         autoFocus
-                                                        style={{ width: 258 }}
+                                                        style={{ width: 745 }}
                                                         id="DesignationCode"
                                                         name="DesignationCode"
                                                         label="Designation Code"
@@ -459,7 +460,7 @@ const Page = () => {
                                                 <Grid xs={12} md={12}>
                                                     <TextField
 
-                                                        style={{ width: 258 }}
+                                                        style={{ width: 745 }}
                                                         id="Designation"
                                                         name="Designation"
                                                         label="Designation"
@@ -494,7 +495,7 @@ const Page = () => {
                                                 </Grid>
                                                 <Grid xs={12} md={12}>
                                                     <TextField
-                                                        InputProps={{ style: { width: 258 } }}
+                                                        InputProps={{ style: { width: 745 } }}
                                                         autoFocus
                                                         margin="dense"
                                                         id="Description"
@@ -520,7 +521,9 @@ const Page = () => {
                                                       
                                                       {visitingPlacesList.map((val,index)=>{
                                                         console.log(val.isSelected);
-                                                      return (<FormControlLabel key={index} control={<Checkbox  key={index}
+                                                      return (
+                                                        
+                                                      <FormControlLabel key={index} control={<Checkbox  key={index}
                                                        //value={formik.values.DesignationWisePlaces}
                                                        // onChange={formik.handleChange}
                                                        // error={formik.touched.DesignationWisePlaces && Boolean(formik.errors.DesignationWisePlaces)}
@@ -530,9 +533,11 @@ const Page = () => {
                                                         onChange={(event)=>{
                                                             handleChange(val.VisitingPlacesId)
                                                         }} 
-                                                          name="DesignationWisePlaces" />} label={val.VisitingPlace} /> );
+                                                          name="DesignationWisePlaces" />} label={val.VisitingPlace} />
+                                                            
+                                                             );
                                                       })}
-                                                       
+                                                     
                                                     </FormGroup>
                                                 </Grid>
                                                 <Grid xs={12} md={12}>

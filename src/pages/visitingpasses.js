@@ -257,7 +257,7 @@ const Page = () => {
         FromDate: '',
         ToDate: '',
         PurposeVisting: '',
-        VisitingStatus: '',
+        VisitingStatus: true,
         Remarks: '',
     });
     const validationSchema = Yup.object().shape({
@@ -277,7 +277,7 @@ const Page = () => {
         FromDate: Yup.string().required('From Date is required'),
         ToDate: Yup.string().required('To Date is required'),
         PurposeVisting: Yup.string().required('Purpose Visting is required'),
-        VisitingStatus: Yup.string().required('Visiting Status is required'),
+        VisitingStatus: Yup.string(true).required('Visiting Status is required'),
         Remarks: Yup.string().required('Remarks Status is required'),
 
     });
@@ -376,7 +376,7 @@ const Page = () => {
             FromDate: '',
             ToDate: '',
             PurposeVisting: '',
-            VisitingStatus: '',
+            VisitingStatus: true,
             Remarks: '',
         })
     }

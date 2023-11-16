@@ -233,6 +233,7 @@ const Page = () => {
     const customers = useCustomers(page, rowsPerPage);
     const customersIds = useCustomerIds(customers);
     const [usersList, setUsersList] = useState([]);
+   
     const [users, setUsers] = useState({
         FullName: '',
         MobileNo: '',
@@ -240,7 +241,7 @@ const Page = () => {
         RoleId: '',
         Depid: '',
         DesignationId: '',
-        UserStatus: '',
+        UserStatus: true,
         UserId:'',
     });
     var [roleId, setRoleId] = useState("");
@@ -251,7 +252,6 @@ const Page = () => {
     const [designationList, setDesignationList] = useState([]);
     const validationSchema = Yup.object().shape({
         FullName: Yup.string().required('FullName is required'),
-        // MobileNo: Yup.string().required('MobileNo is required'),
         MobileNo: Yup.string().required()
         .matches(/^[0-9]+$/, "Must be only digits")
         .min(10, 'Must be exactly 10 digits')
@@ -260,7 +260,7 @@ const Page = () => {
         RoleId: Yup.string().required('Role Id is required'),
         Depid: Yup.string().required('Department Id is required'),
         DesignationId: Yup.string().required('Designation Id is required'),
-        UserStatus: Yup.string().required('User Status is required'),
+        UserStatus: Yup.string(true).required('User Status is required'),
     });
     useEffect(() => {
         getRoleList();
@@ -341,7 +341,7 @@ const Page = () => {
             const result = res.map((response) => {
                 return {
                     ...response,
-                    "status": response.UsersStatus ? 'Active' : 'Inactive',
+                    "status": response.UserStatus ? 'Active' : 'Inactive',
                 }
             })
             setUsersList(result);
@@ -357,7 +357,7 @@ const Page = () => {
             RoleId: '',
             Depid: '',
             DesignationId: '',
-            UserStatus: '',
+            UserStatus: true,
             UserId:'',
         })
     }
@@ -419,7 +419,7 @@ const Page = () => {
                         >
                             <Stack spacing={1}>
                                 <Typography variant="h4">
-                                    Roles
+                                    Users
                                 </Typography>
                                 <Stack
                                     alignItems="center"
@@ -581,6 +581,7 @@ const Page = () => {
                                                     </FormControl>
                                                 </Grid>
                                                 <Grid xs={12} md={12}>
+                                                    
                                                     <FormControl variant="standard" fullWidth>
                                                         <InputLabel id="demo-simple-select-standard-label">Status</InputLabel>
                                                         <Select

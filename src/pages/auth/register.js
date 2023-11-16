@@ -6,23 +6,30 @@ import * as Yup from 'yup';
 import { Box, Button, Link, Stack, TextField, Typography } from '@mui/material';
 import { useAuth } from 'src/hooks/use-auth';
 import { Layout as AuthLayout } from 'src/layouts/auth/layout';
+import RoleService from "../../service/RoleService";
+
 
 const Page = () => {
   const router = useRouter();
   const auth = useAuth();
   const formik = useFormik({
     initialValues: {
-      email: '',
+      // email: '',
       name: '',
+      loginId:'',
       password: '',
       submit: null
     },
     validationSchema: Yup.object({
-      email: Yup
-        .string()
-        .email('Must be a valid email')
-        .max(255)
-        .required('Email is required'),
+      // email: Yup
+      //   .string()
+      //   .email('Must be a valid email')
+      //   .max(255)
+      //   .required('Email is required'),
+      loginId: Yup
+      .string()
+      .max(255)
+      .required('LoginId is required'),
       name: Yup
         .string()
         .max(255)
@@ -34,11 +41,40 @@ const Page = () => {
     }),
     onSubmit: async (values, helpers) => {
       try {
-        await auth.signUp(values.email, values.name, values.password);
-        router.push('/');
-      } catch (err) {
+        // await auth.signUp(values.loginId, values.name, values.password);
+        // router.push('/');
+       const result =  await  RoleService.userNameCheck({"LoginId":values.loginId});
+
+       if(result && result.Code=='303' && result.Message == "Allredy exsits this Login id/ User Id  ! please use another Login id/User id"){
         helpers.setStatus({ success: false });
-        helpers.setErrors({ submit: err.message });
+        helpers.setErrors({ submit: result.Message });
+        helpers.setSubmitting(false);
+        return;
+       }
+        RoleService.userPasswordUpdate({
+          "LoginId":values.loginId,
+          "password":values.password,
+          "UserName":values.name
+      }).then(async (res) => {
+          if(res.Code == '201'){
+            router.push('/auth/login');
+            helpers.setStatus({ success: true });
+            helpers.setErrors({ submit: res.Message });
+            helpers.setSubmitting(true);
+          }else{
+            helpers.setStatus({ success: false });
+            helpers.setErrors({ submit: res.Message });
+            helpers.setSubmitting(false);
+          }
+        }).catch(err=>{
+          helpers.setStatus({ success: false });
+          helpers.setErrors({ submit: "Registration Failed" });
+          helpers.setSubmitting(false);
+        })
+      } catch (err) {
+        
+        helpers.setStatus({ success: false });
+        helpers.setErrors({ submit: "Registration Failed" });
         helpers.setSubmitting(false);
       }
     }
@@ -100,24 +136,23 @@ const Page = () => {
                   error={!!(formik.touched.name && formik.errors.name)}
                   fullWidth
                   helperText={formik.touched.name && formik.errors.name}
-                  label="Name"
+                  label="User Name"
                   name="name"
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
                   value={formik.values.name}
                 />
-                <TextField
-                  error={!!(formik.touched.email && formik.errors.email)}
+                 <TextField
+                  error={!!(formik.touched.loginId && formik.errors.loginId)}
                   fullWidth
-                  helperText={formik.touched.email && formik.errors.email}
-                  label="Email Address"
-                  name="email"
+                  helperText={formik.touched.loginId && formik.errors.loginId}
+                  label="Login Id"
+                  name="loginId"
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
-                  type="email"
-                  value={formik.values.email}
+                  value={formik.values.loginId}
                 />
-                <TextField
+                 <TextField
                   error={!!(formik.touched.password && formik.errors.password)}
                   fullWidth
                   helperText={formik.touched.password && formik.errors.password}
@@ -128,6 +163,46 @@ const Page = () => {
                   type="password"
                   value={formik.values.password}
                 />
+                {/* <div class="form-group">
+            <label for="password">Confirm Password:</label>
+            <input
+              type="password"
+              name="confirm_password"
+              value={this.state.input.confirm_password}
+              onChange={this.handleChange}
+              class="form-control"
+              placeholder="Enter confirm password"
+              id="confirm_password"
+            />
+            <div className="text-danger">
+              {this.state.errors.confirm_password}
+            </div> */}
+                {/* <TextField
+                  error={!!(formik.touched.email && formik.errors.email)}
+                  fullWidth
+                  helperText={formik.touched.email && formik.errors.email}
+                  label="Email Address"
+                  name="email"
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  type="email"
+                  value={formik.values.email}
+                /> */}
+                 {/* <TextField
+                            id="password"
+                            InputProps={{ style: { width: 258 } }}
+                            margin="normal"
+                            label=" Set Password  "
+                            // placeholder="Password"
+                            type="password"
+                            name="password"
+                            value={formik.values.password}
+                            onChange={formik.handleChange}
+                            error={formik.touched.password && Boolean(formik.errors.password)}
+                            helperText={formik.touched.password && formik.errors.password}
+
+                        /> */}
+               
               </Stack>
               {formik.errors.submit && (
                 <Typography
