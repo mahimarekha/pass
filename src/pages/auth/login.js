@@ -132,7 +132,7 @@ const Page = () => {
                 color="text.secondary"
                 variant="body2"
               >
-                Don&apos;t have an account?
+                First time login?
                 &nbsp;
                 <Link
                   component={NextLink}
@@ -149,14 +149,14 @@ const Page = () => {
               sx={{ mb: 3 }}
               value={method}
             >
-              <Tab
+              {/* <Tab
                 label="Email"
                 value="email"
-              />
-              <Tab
+              /> */}
+              {/* <Tab
                 label="Phone Number"
                 value="phoneNumber"
-              />
+              /> */}
             </Tabs>
             {method === 'email' && (
               <form
@@ -187,9 +187,9 @@ const Page = () => {
                     value={formik.values.password}
                   />
                 </Stack>
-                <FormHelperText sx={{ mt: 1 }}>
+                {/* <FormHelperText sx={{ mt: 1 }}>
                   Optionally you can skip.
-                </FormHelperText>
+                </FormHelperText> */}
                 {formik.errors.submit && (
                   <Typography
                     color="error"
@@ -206,13 +206,13 @@ const Page = () => {
                   type="submit"
                   variant="contained"
                 >
-                  Continue
+                  Login
                 </Button>
               
                
               </form>
             )}
-            {method === 'phoneNumber' && (
+            {/* {method === 'phoneNumber' && (
               <div>
                 <Typography
                   sx={{ mb: 1 }}
@@ -224,7 +224,7 @@ const Page = () => {
                   To prevent unnecessary costs we disabled this feature in the demo.
                 </Typography>
               </div>
-            )}
+            )} */}
           </div>
         </Box>
       </Box>
