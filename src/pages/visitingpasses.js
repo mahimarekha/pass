@@ -14,6 +14,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
 import VisitingPlacesService from "../service/VsitingPlaces";
+import DesignationsService from "../service/DesignationsService";
 import DepartmentService from "../service/DepartmentService";
 import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
 import { CustomersTable } from 'src/sections/customer/customers-table';
@@ -209,10 +210,10 @@ const Page = () => {
         name: 'Mobile Number',
         property: 'MobileNumber'
     },
-    {
-        name: 'Visitor Address',
-        property: 'VisitorAddress'
-    },
+    // {
+    //     name: 'Visitor Address',
+    //     property: 'VisitorAddress'
+    // },
     {
         name: 'From Date',
         property: 'FromDate'
@@ -235,7 +236,7 @@ const Page = () => {
     },
     ];
     const userDetails =JSON.parse(window.sessionStorage.getItem('userDetails'));
-
+    const [designationsList, setDesignationList] = useState([]);
     const [rowsPerPage, setRowsPerPage] = useState(5);
     const customers = useCustomers(page, rowsPerPage);
     const customersIds = useCustomerIds(customers);
@@ -249,12 +250,11 @@ const Page = () => {
         DepId:'',
         VisitingPassesId: '',
         VisitingPlacesId: '',
-        FirstName: '',
-        MiddleName: '',
-        LastName: '',
+        DesignationId:'',
+      
         FullName: '',
         MobileNumber: '',
-        VisitorAddress: '',
+       
         VisitorPhotoPath: '',
         FromDate: '',
         ToDate: '',
@@ -265,16 +265,15 @@ const Page = () => {
     const validationSchema = Yup.object().shape({
         //UserId: Yup.string().required('User Id is required'),
         DepId: Yup.string().required('Department Id is required'),
+        DesignationId:Yup.string().required('Designation Id is required'),
         VisitingPlacesId: Yup.string().required('VisitingPlacesId Status is required'),
-        FirstName: Yup.string().required('Firs tName is required'),
-        MiddleName: Yup.string().required('Middle Name is required'),
-        LastName: Yup.string().required('Last Name is required'),
+       
         FullName: Yup.string().required('Full Name is required'),
         MobileNumber: Yup.string().required()
         .matches(/^[0-9]+$/, "Must be only digits")
         .min(10, 'Must be exactly 10 digits')
         .max(10, 'Must be exactly 10 digits'),
-        VisitorAddress: Yup.string().required('Visitor Address Status is required'),
+       
         VisitorPhotoPath: Yup.string().required('Visitor Photo Path is required'),
         FromDate: Yup.string().required('From Date is required'),
         ToDate: Yup.string().required('To Date is required'),
@@ -288,13 +287,28 @@ const Page = () => {
         getVisitingPassesList();
         getUsersList();
         getVisitingPlacesList();
+        getDesignationList();
         return () => {
             setVisitingPassesList([]);
             setUsersList([]);
             setDepartmentList([]);
             setVisitingPlacesList([]);
+            setDesignationList([]);
         }
     }, []);
+    const getDesignationList = () => {
+        DesignationsService.getAllDesignations().then((res) => {
+            const result = res.map((response) => {
+                return {
+                    ...response,
+                    "status": response.DesignationStatus ? 'Active' : 'Inactive',
+                }
+            })
+            setDesignationList(result);
+        }).catch((err) => {
+            // setError(err.message);
+        });
+    }
     const handleClickOpen = () => {
         setOpen(true);
         formReset();
@@ -367,12 +381,10 @@ const Page = () => {
             DepId:  userDetails? userDetails.Depid :'',
             VisitingPassesId: '',
             VisitingPlacesId: '',
-            FirstName: '',
-            MiddleName: '',
-            LastName: '',
+            DesignationId:'',
             FullName: '',
             MobileNumber: '',
-            VisitorAddress: '',
+          //  VisitorAddress: '',
             VisitorPhotoPath: '',
             FromDate: '',
             ToDate: '',
@@ -388,31 +400,31 @@ const Page = () => {
         onSubmit: (values, { resetForm }) => {
             values.UserId =userDetails?userDetails.UserId:'';
             
-            // if (visitingPasses.VisitingPassesId) {
-            //     VisitingPassesService.upadeVisitingPasses(values).then((res) => {
-            //         handleClose();
-            //         getVisitingPassesList();
-            //         resetForm();
-            //         formReset();
-            //         alert(" VisitingPasses Updated Successfully.");
-            //     }).catch((err) => {
-            //     });
-            // }
-            // else {
-            //     delete values.VisitingPassesId;
-            //     VisitingPassesService.creteVisitingPasses(values).then((res) => {
-            //         getVisitingPassesList();
-            //         resetForm();
-            //         formReset();
-            //         handleClose();
-            //         alert(" VisitingPasses Added Successfully.");
-            //         // props.history.push('/app/vendor');
-            //     })
-            //         .catch((err) => {
+            if (visitingPasses.VisitingPassesId) {
+                VisitingPassesService.upadeVisitingPasses(values).then((res) => {
+                    handleClose();
+                    getVisitingPassesList();
+                    resetForm();
+                    formReset();
+                    alert(" VisitingPasses Updated Successfully.");
+                }).catch((err) => {
+                });
+            }
+            else {
+                delete values.VisitingPassesId;
+                VisitingPassesService.creteVisitingPasses(values).then((res) => {
+                    getVisitingPassesList();
+                    resetForm();
+                    formReset();
+                    handleClose();
+                    alert(" VisitingPasses Added Successfully.");
+                    // props.history.push('/app/vendor');
+                })
+                    .catch((err) => {
 
-            //             alert(err)
-            //         })
-            // }
+                        alert(err)
+                    })
+            }
 
         },
     });
@@ -538,6 +550,28 @@ const Page = () => {
                                                 </Grid>
                                                 <Grid xs={6} md={6}>
                                                     <FormControl variant="standard" fullWidth>
+                                                        <InputLabel id="studentName">Designation</InputLabel>
+                                                        <Select
+                                                            labelId="DesignationId"
+                                                            id="DesignationId"
+                                                            label="Designation Id"
+                                                            name="DesignationId"
+                                                            value={formik.values.DesignationId}
+                                                            onChange={e => { formik.handleChange(e); }}
+                                                        // onChange={e => { setDepartmentId(e.target.value) }}
+                                                        >
+                                                            <MenuItem value="">
+                                                                <em>None</em>
+                                                            </MenuItem>
+                                                            {designationsList.map(({ index, DesignationId, Designation }) => (
+                                                                <MenuItem key={index} value={DesignationId}>{Designation}
+                                                                </MenuItem>
+                                                            ))}
+                                                        </Select>
+                                                    </FormControl>
+                                                </Grid>
+                                                <Grid xs={6} md={6}>
+                                                    <FormControl variant="standard" fullWidth>
                                                         <InputLabel id="studentName">VisitingPlaces Id</InputLabel>
                                                         <Select
                                                             labelId="VisitingPlacesId"
@@ -558,54 +592,7 @@ const Page = () => {
                                                         </Select>
                                                     </FormControl>
                                                 </Grid>
-                                                <Grid xs={6} md={6}>
-                                                    <TextField
-                                                        InputProps={{ style: { width: 245 } }}
-                                                        
-                                                        margin="dense"
-                                                        id="FirstName"
-                                                        name="FirstName"
-                                                        label="First Name"
-                                                        type="text"
-                                                        variant="standard"
-                                                        value={formik.values.FirstName}
-                                                        onChange={formik.handleChange}
-                                                        error={formik.touched.FirstName && Boolean(formik.errors.FirstName)}
-                                                        helperText={formik.touched.FirstName && formik.errors.FirstName}
-                                                    />
-                                                </Grid>
-                                                <Grid xs={6} md={6}>
-                                                    <TextField
-                                                        InputProps={{ style: { width: 245 } }}
-                                                        
-                                                        margin="dense"
-                                                        id="MiddleName"
-                                                        name="MiddleName"
-                                                        label="MiddleName"
-                                                        type="text"
-                                                        variant="standard"
-                                                        value={formik.values.MiddleName}
-                                                        onChange={formik.handleChange}
-                                                        error={formik.touched.MiddleName && Boolean(formik.errors.MiddleName)}
-                                                        helperText={formik.touched.MiddleName && formik.errors.MiddleName}
-                                                    />
-                                                </Grid>
-                                                <Grid xs={6} md={6}>
-                                                    <TextField
-                                                        InputProps={{ style: { width: 245 } }}
-                                                        
-                                                        margin="dense"
-                                                        id="LastName"
-                                                        name="LastName"
-                                                        label="Last Name"
-                                                        type="text"
-                                                        variant="standard"
-                                                        value={formik.values.LastName}
-                                                        onChange={formik.handleChange}
-                                                        error={formik.touched.LastName && Boolean(formik.errors.LastName)}
-                                                        helperText={formik.touched.LastName && formik.errors.LastName}
-                                                    />
-                                                </Grid>
+                                               
                                                 <Grid xs={6} md={6}>
                                                     <TextField
                                                         InputProps={{ style: { width: 245 } }}
@@ -639,19 +626,19 @@ const Page = () => {
                                                     />
                                                 </Grid>
                                                 <Grid xs={6} md={6}>
-                                                    <TextField
+                                                <TextField
                                                         InputProps={{ style: { width: 245 } }}
                                                         
                                                         margin="dense"
-                                                        id="VisitorAddress"
-                                                        name="VisitorAddress"
-                                                        label="Visitor Address"
+                                                        id="VisitorPhotoPath"
+                                                        name="VisitorPhotoPath"
+                                                        label="VisitorPhotoPath"
                                                         type="text"
                                                         variant="standard"
-                                                        value={formik.values.VisitorAddress}
+                                                        value={formik.values.VisitorPhotoPath}
                                                         onChange={formik.handleChange}
-                                                        error={formik.touched.VisitorAddress && Boolean(formik.errors.VisitorAddress)}
-                                                        helperText={formik.touched.VisitorAddress && formik.errors.VisitorAddress}
+                                                        error={formik.touched.VisitorPhotoPath && Boolean(formik.errors.VisitorPhotoPath)}
+                                                        helperText={formik.touched.VisitorPhotoPath && formik.errors.VisitorPhotoPath}
                                                     />
                                                 </Grid>
                                                
@@ -687,22 +674,7 @@ const Page = () => {
                                                         helperText={formik.touched.ToDate && formik.errors.ToDate}
                                                     />
                                                 </Grid>
-                                                <Grid xs={6} md={6}>
-                                                <TextField
-                                                        InputProps={{ style: { width: 245 } }}
-                                                        
-                                                        margin="dense"
-                                                        id="VisitorPhotoPath"
-                                                        name="VisitorPhotoPath"
-                                                        label="VisitorPhotoPath"
-                                                        type="text"
-                                                        variant="standard"
-                                                        value={formik.values.VisitorPhotoPath}
-                                                        onChange={formik.handleChange}
-                                                        error={formik.touched.VisitorPhotoPath && Boolean(formik.errors.VisitorPhotoPath)}
-                                                        helperText={formik.touched.VisitorPhotoPath && formik.errors.VisitorPhotoPath}
-                                                    />
-                                                </Grid>
+                                               
                                                 <Grid xs={6} md={6}>
                                                     <TextField
                                                         InputProps={{ style: { width: 245 } }}
@@ -744,7 +716,7 @@ const Page = () => {
                                                 </Grid>
                                                 <Grid xs={6} md={6}>
                                                     <TextField
-                                                        InputProps={{ style: { width: 245 } }}
+                                                        InputProps={{ style: { width: 500 } }}
                                                         
                                                         margin="dense"
                                                         id="Remarks"
