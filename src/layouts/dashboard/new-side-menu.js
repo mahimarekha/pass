@@ -50,7 +50,26 @@ export const NewSideNavItem = (props) => {
         <>
      
          
-         <ListItemButton onClick={handleClick} {...linkProps}>
+         <ListItemButton onClick={handleClick} {...linkProps} 
+                   sx={{
+            alignItems: 'center',
+            borderRadius: 1,
+            display: 'flex',
+            justifyContent: 'flex-start',
+            pl: '16px',
+            pr: '16px',
+            py: '6px',
+            textAlign: 'left',
+            width: '100%',
+            ...(active && {
+              backgroundColor: 'rgba(255, 255, 255, 0.04)'
+            }),
+            '&:hover': {
+              backgroundColor: 'rgba(255, 255, 255, 0.04)'
+            }
+          }}
+        
+>
            <ListItemIcon>
              {icon}
            </ListItemIcon>
@@ -93,7 +112,27 @@ export const NewSideNavItem = (props) => {
               }
             : {};
               const subactive = item.path ? (pathname === item.path) : false;
-             return ( <ListItemButton key={index} sx={{ pl: 4 }}  {...sublinkProps}>
+              debugger
+             return ( <ListItemButton key={index} 
+              sx={{
+                pl: 4,
+                alignItems: 'center',
+                borderRadius: 1,
+                display: 'flex',
+                justifyContent: 'flex-start',
+                pl: '16px',
+                pr: '16px',
+                py: '6px',
+                textAlign: 'left',
+                width: '100%',
+                ...(subactive && {
+                  backgroundColor: 'rgba(255, 255, 255, 0.04)'
+                }),
+                '&:hover': {
+                  backgroundColor: 'rgba(255, 255, 255, 0.04)'
+                }
+              }}
+             {...sublinkProps}>
               <ListItemIcon>
               {icon}
               </ListItemIcon>
