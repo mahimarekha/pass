@@ -234,15 +234,14 @@ const Page = () => {
     const [checkboxValues, setCheckboxValues] = useState([]);
 
     const validationSchema = Yup.object().shape({
-        DesignationCode: Yup.string().required('Designation Code is required'),
-        Designation: Yup.string().required('Designation is required')
+        DesignationCode: Yup.string().required('Designation Code is required')
         .max(2, 'Must be exactly 2 digits'),
+        Designation: Yup.string().required('Designation is required'),
         DesignationStatus: Yup.string(true).required('Designation Status is required'),
         Description: Yup.string().required('description is required'),
         DesignationWisePlaces: Yup.string(),
     });
     useEffect(() => {
-
         getDesignationList();
         getVisitingPlacesList()
         return () => {
@@ -436,7 +435,7 @@ const Page = () => {
                                 <Dialog open={open} onClose={handleClose}>
                                     <DialogTitle>Designation</DialogTitle>
                                     <form onSubmit={formik.handleSubmit} >
-                                        <DialogContent style={{ width: 800}}>
+                                        <DialogContent style={{ width: 500}}>
                                             <DialogContentText>
 
                                             </DialogContentText>
@@ -445,7 +444,7 @@ const Page = () => {
                                                 <Grid xs={12} md={12} >
                                                     <TextField
                                                         autoFocus
-                                                        style={{ width: 745 }}
+                                                        style={{ width: 445 }}
                                                         id="DesignationCode"
                                                         name="DesignationCode"
                                                         label="Designation Code"
@@ -460,7 +459,7 @@ const Page = () => {
                                                 <Grid xs={12} md={12}>
                                                     <TextField
 
-                                                        style={{ width: 745 }}
+                                                        style={{ width: 445 }}
                                                         id="Designation"
                                                         name="Designation"
                                                         label="Designation"
@@ -473,7 +472,7 @@ const Page = () => {
                                                     />
                                                 </Grid>
                                                 <Grid xs={12} md={12}>
-                                                    <FormControl variant="standard" fullWidth>
+                                                    <FormControl variant="standard" style={{ width: 445 }}>
                                                         <InputLabel id="demo-simple-select-standard-label">Status</InputLabel>
                                                         <Select
                                                             labelId="demo-simple-select-standard-label"
@@ -495,7 +494,7 @@ const Page = () => {
                                                 </Grid>
                                                 <Grid xs={12} md={12}>
                                                     <TextField
-                                                        InputProps={{ style: { width: 745 } }}
+                                                        InputProps={{ style: { width: 445 } }}
                                                         autoFocus
                                                         margin="dense"
                                                         id="Description"

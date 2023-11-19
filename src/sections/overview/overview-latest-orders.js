@@ -15,9 +15,11 @@ import {
   TableHead,
   TableRow
 } from '@mui/material';
+import { useEffect } from 'react';
+import {  useState } from 'react';
 import { Scrollbar } from 'src/components/scrollbar';
 import { SeverityPill } from 'src/components/severity-pill';
-
+import VisitingPassesService from "../../service/VisitingPassService";
 const statusMap = {
   pending: 'warning',
   delivered: 'success',
@@ -25,62 +27,75 @@ const statusMap = {
 };
 
 export const OverviewLatestOrders = (props) => {
-  const { orders = [], sx } = props;
+  // const { orders = [], sx } = props;
+  const [orders, setOrders] = useState([]);
+  const [visitingPassesList, setVisitingPassesList] = useState([]);
+  useEffect(() => {
+    getVisitingPassesList();
+    return () => {
+        setVisitingPassesList([]);
+        setOrders([]);
+    }
+}, []);
 
+  const getVisitingPassesList = () => {
+    VisitingPassesService.getAllVisitingPasses().then((res) => {
+      debugger
+        setVisitingPassesList(res);
+    }).catch((err) => {
+        // setError(err.message);
+    });
+}
   return (
-    <Card sx={sx}>
-      <CardHeader title="Latest Orders" />
+    <Card >
+      <CardHeader title="Visiting Passes" />
       <Scrollbar sx={{ flexGrow: 1 }}>
         <Box sx={{ minWidth: 800 }}>
           <Table>
             <TableHead>
               <TableRow>
                 <TableCell>
-                  Order
+                VISITING PASSESID
                 </TableCell>
                 <TableCell>
-                  Customer
+                FULLNAME
                 </TableCell>
-                <TableCell sortDirection="desc">
-                  Date
-                </TableCell>
+                
                 <TableCell>
                   Status
                 </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {orders.map((order) => {
-                const createdAt = format(order.createdAt, 'dd/MM/yyyy');
-
+              {visitingPassesList.map((order) => {
                 return (
                   <TableRow
                     hover
-                    key={order.id}
+                    key={order._id}
                   >
                     <TableCell>
-                      {order.ref}
+                      {order.VisitingPassesId}
                     </TableCell>
                     <TableCell>
-                      {order.customer.name}
+                      {order.FullName}
                     </TableCell>
+                   
                     <TableCell>
-                      {createdAt}
-                    </TableCell>
-                    <TableCell>
-                      <SeverityPill color={statusMap[order.status]}>
-                        {order.status}
+                      <SeverityPill color={statusMap[order.VisitingStatus]}>
+                        {order.VisitingStatus}
                       </SeverityPill>
                     </TableCell>
                   </TableRow>
                 );
+                
               })}
+               
             </TableBody>
           </Table>
         </Box>
       </Scrollbar>
       <Divider />
-      <CardActions sx={{ justifyContent: 'flex-end' }}>
+      {/* <CardActions sx={{ justifyContent: 'flex-end' }}>
         <Button
           color="inherit"
           endIcon={(
@@ -93,7 +108,7 @@ export const OverviewLatestOrders = (props) => {
         >
           View all
         </Button>
-      </CardActions>
+      </CardActions> */}
     </Card>
   );
 };

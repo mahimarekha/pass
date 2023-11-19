@@ -483,8 +483,9 @@ const Page = () => {
                                                             <MenuItem value="">
                                                                 <em>None</em>
                                                             </MenuItem>
-                                                            <MenuItem value={true}>Active</MenuItem>
-                                                            <MenuItem value={false}>In Active</MenuItem>
+                                                            <MenuItem value="Approved">Approved</MenuItem>
+                                                            <MenuItem value="Rejected">Rejected</MenuItem>
+                                                            <MenuItem value="Pending">Pending</MenuItem>
                                                         </Select>
                                                     </FormControl>
                                                 </Grid>

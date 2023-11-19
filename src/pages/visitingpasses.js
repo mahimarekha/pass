@@ -251,10 +251,8 @@ const Page = () => {
         VisitingPassesId: '',
         VisitingPlacesId: '',
         DesignationId:'',
-      
         FullName: '',
         MobileNumber: '',
-       
         VisitorPhotoPath: '',
         FromDate: '',
         ToDate: '',

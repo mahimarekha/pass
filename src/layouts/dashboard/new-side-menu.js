@@ -112,7 +112,7 @@ export const NewSideNavItem = (props) => {
               }
             : {};
               const subactive = item.path ? (pathname === item.path) : false;
-              debugger
+              
              return ( <ListItemButton key={index} 
               sx={{
                 pl: 4,
