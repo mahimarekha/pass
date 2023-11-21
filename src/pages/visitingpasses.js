@@ -196,6 +196,9 @@ const useCustomerIds = (customers) => {
 const Page = () => {
     const [page, setPage] = useState(0);
     const [open, setOpen] = React.useState(false);
+    const [openQR, setOpenQR] = React.useState(false);
+
+    const [getQR, setQR] = React.useState('');
     const headersList = [{
         name: 'Visiting PassesId',
         property: 'VisitingPassesId'
@@ -234,6 +237,10 @@ const Page = () => {
         name: 'Edit',
         property: 'Edit'
     },
+    {
+        name: 'QrCode',
+        property: 'QrCode'
+    },
     ];
     const userDetails =JSON.parse(window.sessionStorage.getItem('userDetails'));
     const [designationsList, setDesignationList] = useState([]);
@@ -244,6 +251,7 @@ const Page = () => {
     var [departmentId, setDepartmentId] = useState("");
     const [departmentList, setDepartmentList] = useState([]);
     const [visitingPassesList, setVisitingPassesList] = useState([]);
+    const [qrCodeList, setQrCodeList] = useState([]);
     const [visitingPlacesList, setVisitingPlacesList] = useState([]);
     const [visitingPasses, setVisitingPasses] = useState({
         //UserId: '',
@@ -314,6 +322,9 @@ const Page = () => {
     const handleClose = () => {
         setOpen(false);
     };
+    const handleCloseQR = () => {
+        setOpenQR(false);
+    };
     const customersSelection = useSelection(customersIds);
     const handlePageChange = useCallback(
         (event, value) => {
@@ -370,6 +381,28 @@ const Page = () => {
                 }
             })
             setVisitingPassesList(result);
+        }).catch((err) => {
+            // setError(err.message);
+        });
+    }
+    const getQrCodeList = (data) => {
+        
+        VisitingPassesService.getQrCode(data.QRCodeNumber).then((res) => {
+            if(res.length){
+                const base64Data = "data:image/png;base64, "+res[0].QRCode;
+                setQR(base64Data);
+                setOpenQR(true);
+                // const imageBuffer = Buffer.from(base64Data, 'base64');
+                // const blob = new Blob([imageBuffer]);
+                // const blobUrl = URL.createObjectURL(blob);
+                // const link = document.createElement('a');
+                // link.href = blobUrl;
+                // link.click();
+                // URL.revokeObjectURL(blobUrl);
+                
+
+            }
+            setQrCodeList(res);
         }).catch((err) => {
             // setError(err.message);
         });
@@ -745,15 +778,48 @@ const Page = () => {
                                         </DialogContent>
                                     </form>
                                 </Dialog>
-                            </div>
+
+                                <Dialog open={openQR} onClose={handleCloseQR}>
+                                    <DialogTitle>Scan QR code</DialogTitle>
+                                    <DialogContent >
+                                            <DialogContentText>
+
+                                            </DialogContentText>
+
+                                            <Grid container spacing={2}>
+                                            <img src={getQR} alt='qrcode'/>
+                                               
+                                               
+                                               
+                                            
+                                                
+                                               
+                                          
+
+
+
+                                                <Grid xs={12} md={12}>
+
+                                                    <Button onClick={handleCloseQR}>Close</Button>
+
+                                                </Grid>
+
+                                            </Grid>
+
+
+                                        </DialogContent>
+                                                 
+                                  
+                                </Dialog>               
+                                             </div>
                         </Stack>
                         {/* <CustomersSearch /> */}
                         <CustomersTable
                             headersList={headersList}
                             count={visitingPassesList.length}
                             items={visitingPassesList}
-                            editDetails={editVisitingPasses}
-
+                            editDetails={editVisitingPasses}                         
+                            qrCode={getQrCodeList}
                             onDeselectAll={customersSelection.handleDeselectAll}
                             onDeselectOne={customersSelection.handleDeselectOne}
                             onPageChange={handlePageChange}

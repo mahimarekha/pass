@@ -16,7 +16,7 @@ import {
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-
+import DownloadIcon from '@mui/icons-material/Download';
 import { Scrollbar } from 'src/components/scrollbar';
 import { getInitials } from 'src/utils/get-initials';
 
@@ -32,6 +32,7 @@ export const CustomersTable = (props) => {
     onSelectAll,
     onSelectOne,
     editDetails,
+    qrCode,
     page = 0,
     rowsPerPage = 0,
     selected = []
@@ -83,6 +84,13 @@ export const CustomersTable = (props) => {
 
                         </TableCell>);
                       }
+                      if(headers.property === 'QrCode'){
+                        return (<TableCell
+                          key={index}>
+                    <DownloadIcon style={{ cursor: 'pointer' }} onClick={() => qrCode(customer)} />
+
+                        </TableCell>);
+                      }
 
                   return  (<TableCell
                     key={index}>
@@ -131,5 +139,5 @@ CustomersTable.propTypes = {
   editDesignations:PropTypes.func,
   editUsers:PropTypes.func,
   editVisitingPasses:PropTypes.func,
-
+  getQrCodeList:PropTypes.func,
 };

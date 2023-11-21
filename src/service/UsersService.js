@@ -19,7 +19,9 @@ return requests.post(`/GetUsers`,{});
   upadeUsers(body) {
     return requests.post(`/PutUsers`,body); 
   },
-  
+  getDepartmentWiseUsers(body) {
+    return requests.post(`/GetDepartmentWiseUsers`,body); 
+  },
 
 };
 export default UsersService;

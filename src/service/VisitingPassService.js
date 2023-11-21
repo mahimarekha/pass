@@ -7,6 +7,9 @@ return requests.post(`/GetVisitingPasses`,{});
   getVisitingPassesById(id) {
     return requests.get(`/VisitingPasses/${id}`);
   },
+  getQrCode(id) {
+    return requests.get(`/GetQrCode/${id}`);
+  },
   creteVisitingPasses(body){
     return requests.post('/PostVisitingPasses',body); 
   },

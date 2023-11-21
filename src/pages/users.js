@@ -233,7 +233,6 @@ const Page = () => {
     const customers = useCustomers(page, rowsPerPage);
     const customersIds = useCustomerIds(customers);
     const [usersList, setUsersList] = useState([]);
-   
     const [users, setUsers] = useState({
         FullName: '',
         MobileNo: '',
@@ -262,11 +261,12 @@ const Page = () => {
         DesignationId: Yup.string().required('Designation Id is required'),
         UserStatus: Yup.string(true).required('User Status is required'),
     });
+   
     useEffect(() => {
         getRoleList();
         getDepartmentList();
         getDesignationList();
-        getUsersList();
+        getUsersByRole();
 
         return () => {
             setUsersList([]);
@@ -275,7 +275,17 @@ const Page = () => {
             setDesignationList([])
         }
     }, []);
- 
+   
+   const  getUsersByRole=()=>{
+    const userDetails =JSON.parse(window.sessionStorage.getItem('userDetails'));
+    if(userDetails.RoleName.toLowerCase() == 'admin'){
+        getUsersList();
+    }
+    else{
+        getDepartmentWiseUsers(userDetails);
+    }
+   } ;
+
     const getRoleList = () => {
         RoleService.getAllRole().then((res) => {
             // const result = res.map((response) => {
@@ -349,6 +359,13 @@ const Page = () => {
             // setError(err.message);
         });
     }
+    const getDepartmentWiseUsers= (userDet) => {
+        UsersService.getDepartmentWiseUsers(userDet).then((res) => {
+            setUsersList(res);
+        }).catch((err) => {
+            // setError(err.message);
+        });
+    }
     const formReset = () => {
         setUsers({
             FullName: '',
@@ -370,7 +387,8 @@ const Page = () => {
             if (users.UserId) {
                 UsersService.upadeUsers(values).then((res) => {
                     handleClose();
-                    getUsersList();
+                   
+                    getUsersByRole();
                     resetForm();
                     formReset();
                     alert(" Users Updated Successfully.");
@@ -380,7 +398,8 @@ const Page = () => {
             else {
                 delete values.UserId;
                 UsersService.creteUsers(values).then((res) => {
-                    getUsersList();
+                  
+                    getUsersByRole();
                     resetForm();
                     handleClose();
                     formReset();
