@@ -204,6 +204,11 @@ const Page = () => {
     property: 'DepartmentName'
   },
   {
+    name: 'Quota',
+    property: 'Quota'
+  },
+  
+  {
     name: 'Department Status',
     property: 'status'
   },
@@ -225,6 +230,7 @@ const Page = () => {
     DepartmentName: '',
      Depid:'',
     DepartmentStatus: true,
+    Quota:'',
     // count: '',
     // status: true,
   });
@@ -236,6 +242,7 @@ const Page = () => {
     DepartmentStatus: Yup.string(true).required('Department Status is required'),
     // count: Yup.string().required('count is required'),
     // count: Yup.string(),
+    Quota: Yup.string(true).required('Quota is required'),
   });
   useEffect(() => {
 
@@ -305,6 +312,7 @@ const Page = () => {
       DepartmentName: '',
        Depid:'',
       DepartmentStatus: true,
+      Quota:'',
     })
 }
   const formik = useFormik({
@@ -454,6 +462,21 @@ const Page = () => {
                     value={formik.values.DepartmentName}
                     error={formik.touched.DepartmentName && Boolean(formik.errors.DepartmentName)}
                     helperText={formik.touched.DepartmentName && formik.errors.DepartmentName}
+                    />
+  </Grid>
+  <Grid xs={12} md={12}>
+  <TextField
+                      
+                       style={{ width: 258 }}
+                      id="Quota"
+                      name="Quota"
+                      label="Quota"
+                      type="text"
+                      variant="standard"
+                    onChange={formik.handleChange}
+                    value={formik.values.Quota}
+                    error={formik.touched.Quota && Boolean(formik.errors.Quota)}
+                    helperText={formik.touched.Quota && formik.errors.Quota}
                     />
   </Grid>
   <Grid xs={12} md={12}>

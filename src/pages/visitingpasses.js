@@ -328,6 +328,8 @@ const Page = (props) => {
         setOpen(true);
         formReset();
         setStatus("");
+        setFromDate("");
+        setToDate("");
     };
     const handleClose = () => {
         setOpen(false);
@@ -349,6 +351,9 @@ const Page = (props) => {
         []
     );
     const editVisitingPasses = (visitingPasses) => {
+        setToDate(dayjs(visitingPasses.ToDate))
+       setFromDate(dayjs(visitingPasses.FromDate))
+        
         setVisitingPasses(visitingPasses);
         setOpen(true);
     }
@@ -690,6 +695,7 @@ const Page = (props) => {
                                                             label="FromDate"
                                                             disablePast
                                                             onChange={(value) => {
+                                                                
                                                                 formik.setFieldValue("date", value, true);
                                                                 const dayDifference = value.diff(currentDate, 'day');
                                                                 setFromDate(value.format('YYYY-MM-DD'));
@@ -699,7 +705,7 @@ const Page = (props) => {
                                                             InputLabelProps={{
                                                                 shrink: true,
                                                             }}
-                                                            value={formik.values.FromDate}
+                                                            value={fromDate}
                                                             error={formik.touched.FromDate && Boolean(formik.errors.FromDate)}
                                                             helperText={formik.touched.FromDate && formik.errors.FromDate} />
                                                     </LocalizationProvider>
@@ -722,7 +728,7 @@ const Page = (props) => {
                                                             InputLabelProps={{
                                                                 shrink: true,
                                                             }}
-                                                            value={formik.values.ToDate}
+                                                            value={toDate}
                                                             error={formik.touched.ToDate && Boolean(formik.errors.ToDate)}
                                                             helperText={formik.touched.ToDate && formik.errors.ToDate}
                                                         />
@@ -762,13 +768,15 @@ const Page = (props) => {
                                                         helperText={formik.touched.PurposeVisting && formik.errors.PurposeVisting}
                                                     />
                                                 </Grid>
-
-                                                <Grid xs={4} md={4}>
+{!visitingPasses?.VisitingPassesId ? <>
+    <Grid xs={4} md={4}>
                                                     <Button variant={status == "Accepted" ? "contained" : "outlined"} type="submit" color='success' onClick={() => setStatus("Accepted")} >Accepted</Button>
                                                 </Grid>
                                                 <Grid xs={4} md={4}>
                                                     <Button variant={status == "Rejected" ? "contained" : "outlined"} type="submit" color='error' onClick={() => setStatus("Rejected")}>Rejected</Button>
                                                 </Grid>
+</>:''}
+                                                
                                                 <Grid xs={4} md={4}>
                                                     <Button variant={status == "Cancel" ? "contained" : "outlined"} color='info' onClick={() => { setStatus("Cancel"); handleClose() }}
                                                     >Cancel</Button>

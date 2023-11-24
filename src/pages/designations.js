@@ -435,7 +435,7 @@ const Page = () => {
                                 <Dialog open={open} onClose={handleClose}>
                                     <DialogTitle>Designation</DialogTitle>
                                     <form onSubmit={formik.handleSubmit} >
-                                        <DialogContent style={{ width: 500}}>
+                                        <DialogContent style={{ width: 308}}>
                                             <DialogContentText>
 
                                             </DialogContentText>
@@ -444,7 +444,7 @@ const Page = () => {
                                                 <Grid xs={12} md={12} >
                                                     <TextField
                                                         autoFocus
-                                                        style={{ width: 445 }}
+                                                        style={{ width: 258 }}
                                                         id="DesignationCode"
                                                         name="DesignationCode"
                                                         label="Designation Code"
@@ -459,7 +459,7 @@ const Page = () => {
                                                 <Grid xs={12} md={12}>
                                                     <TextField
 
-                                                        style={{ width: 445 }}
+                                                        style={{ width: 258 }}
                                                         id="Designation"
                                                         name="Designation"
                                                         label="Designation"
@@ -472,7 +472,7 @@ const Page = () => {
                                                     />
                                                 </Grid>
                                                 <Grid xs={12} md={12}>
-                                                    <FormControl variant="standard" style={{ width: 445 }}>
+                                                    <FormControl variant="standard" style={{ width: 258 }}>
                                                         <InputLabel id="demo-simple-select-standard-label">Status</InputLabel>
                                                         <Select
                                                             labelId="demo-simple-select-standard-label"
@@ -494,7 +494,7 @@ const Page = () => {
                                                 </Grid>
                                                 <Grid xs={12} md={12}>
                                                     <TextField
-                                                        InputProps={{ style: { width: 445 } }}
+                                                        InputProps={{ style: { width: 258 } }}
                                                         autoFocus
                                                         margin="dense"
                                                         id="Description"
