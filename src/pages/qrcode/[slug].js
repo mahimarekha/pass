@@ -5,45 +5,22 @@ import * as Yup from 'yup';
 import { subDays, subHours } from 'date-fns';
 import { useRouter } from 'next/router'
 
-import ArrowDownOnSquareIcon from '@heroicons/react/24/solid/ArrowDownOnSquareIcon';
-import ArrowUpOnSquareIcon from '@heroicons/react/24/solid/ArrowUpOnSquareIcon';
-import PlusIcon from '@heroicons/react/24/solid/PlusIcon';
 import { Box, Button, Container, Stack, SvgIcon, Typography } from '@mui/material';
 import { useSelection } from 'src/hooks/use-selection';
-import { useFormik } from 'formik';
+
 import { useEffect } from 'react';
-import MenuItem from '@mui/material/MenuItem';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import InputLabel from '@mui/material/InputLabel';
-import VisitingPlacesService from "../../service/VsitingPlaces";
-import DesignationsService from "../../service/DesignationsService";
-import DepartmentService from "../../service/DepartmentService";
+
 import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
 import UsersService from "../../service/UsersService";
 import { CustomersSearch } from 'src/sections/customer/customers-search';
 import { applyPagination } from 'src/utils/apply-pagination';
 import VisitingPassesService from "../../service/VisitingPassService";
-import TextField from '@mui/material/TextField';
-import Dialog from '@mui/material/Dialog';
-import FormControl from '@mui/material/FormControl';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import { CardHeader } from '@mui/material';
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    Link,
-    useParams
-  } from "react-router-dom";
+
 import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
  import dayjs from 'dayjs';
  const bull = (
@@ -229,29 +206,11 @@ const Page = () => {
     const [departmentList, setDepartmentList] = useState([]);
     const [visitingPassesList, setVisitingPassesList] = useState([]);
    
-    const [visitingPlacesList, setVisitingPlacesList] = useState([]);
-    const [visitingPasses, setVisitingPasses] = useState({
-        //UserId: '',
-        DepId:'',
-        VisitingPassesId: '',
-        VisitingPlacesId: '',
-        DesignationId:'',
-        FullName: '',
-        MobileNumber: '',
-        // VisitorPhotoPath: '',
-        FromDate: '',
-        ToDate: '',
-        PurposeVisting: '',
-        // VisitingStatus: true,
-        // Remarks: '',
-    });
-    const [validToDate, setValidToDate] = useState('');
-    const [fromDate, setFromDate] = useState('');
-    const [toDate, setToDate] = useState('');
-    let { qrcodeId } = useParams();
+
+ 
+  
     const router = useRouter()
-    const currentDate = dayjs();
-const tomorrow = dayjs().add(3, 'day');
+
 const handleCloseQR = () => {
     setOpenQR(false);
 };
