@@ -32,13 +32,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    Link,
-    useParams
-} from "react-router-dom";
+
 import { useRouter } from 'next/navigation';
 
 import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
@@ -278,7 +272,6 @@ const Page = (props) => {
     const [validToDate, setValidToDate] = useState('');
     const [fromDate, setFromDate] = useState('');
     const [toDate, setToDate] = useState('');
-    let { qrcodeId } = useParams();
     const router = useRouter();
     const currentDate = dayjs();
 
@@ -305,7 +298,7 @@ const Page = (props) => {
     });
     useEffect(() => {
         getDepartmentList();
-        getQrCodeList();
+       
         getVisitingPassesList();
         getUsersList();
         getVisitingPlacesList();
