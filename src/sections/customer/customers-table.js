@@ -33,6 +33,7 @@ export const CustomersTable = (props) => {
     onSelectOne,
     editDetails,
     qrCode,
+    qrcode,
     page = 0,
     rowsPerPage = 0,
     selected = []
@@ -40,7 +41,6 @@ export const CustomersTable = (props) => {
 
   const selectedSome = (selected.length > 0) && (selected.length < items.length);
   const selectedAll = (items.length > 0) && (selected.length === items.length);
-
   return (
     <Card>
       <Scrollbar>
@@ -87,7 +87,8 @@ export const CustomersTable = (props) => {
                       if(headers.property === 'QrCode'){
                         return (<TableCell
                           key={index}>
-                    <DownloadIcon style={{ cursor: 'pointer' }} onClick={() => qrCode(customer)} />
+                            <DownloadIcon style={{ cursor: 'pointer' }} onClick={() => qrCode(customer)} />
+                    {customer.VisitingStatus==='Approved'?<DownloadIcon style={{ cursor: 'pointer' }} onClick={() => qrCode(customer)} />:'Not Avilable'}
 
                         </TableCell>);
                       }
