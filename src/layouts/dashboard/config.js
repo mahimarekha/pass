@@ -15,55 +15,55 @@ export const items = [
     child:[  {
       title: 'Department',
       path: '/customers',
-      icon: (
-        <SvgIcon fontSize="small">
-          <UsersIcon />
-        </SvgIcon>
-      )
+      // icon: (
+      //   <SvgIcon fontSize="small">
+      //     <UsersIcon />
+      //   </SvgIcon>
+      // )
     },
     {
       title: 'Roles',
       path: '/role',
-      icon: (
-        <SvgIcon fontSize="small">
-          <ShoppingBagIcon />
-        </SvgIcon>
-      )
+      // icon: (
+      //   <SvgIcon fontSize="small">
+      //     <ShoppingBagIcon />
+      //   </SvgIcon>
+      // )
     },
     {
       title: 'Visiting Places',
       path: '/visitingplaces',
-      icon: (
-        <SvgIcon fontSize="small">
-          <UserIcon />
-        </SvgIcon>
-      )
+      // icon: (
+      //   <SvgIcon fontSize="small">
+      //     <UserIcon />
+      //   </SvgIcon>
+      // )
     } ,{
       title: 'Passes',
       path: '/passes',
-      icon: (
-        <SvgIcon fontSize="small">
-          <LockClosedIcon />
-        </SvgIcon>
-      )
+      // icon: (
+      //   <SvgIcon fontSize="small">
+      //     <LockClosedIcon />
+      //   </SvgIcon>
+      // )
     },
     {
       title: 'Designations',
       path: '/designations',
-      icon: (
-        <SvgIcon fontSize="small">
-          <CogIcon />
-        </SvgIcon>
-      )
+      // icon: (
+      //   <SvgIcon fontSize="small">
+      //     <CogIcon />
+      //   </SvgIcon>
+      // )
     },
     {
       title: 'Users',
       path: '/users',
-      icon: (
-        <SvgIcon fontSize="small">
-          <CogIcon />
-        </SvgIcon>
-      )
+      // icon: (
+      //   <SvgIcon fontSize="small">
+      //     <CogIcon />
+      //   </SvgIcon>
+      // )
     },
     ],
     icon: (
@@ -96,11 +96,11 @@ export const items = [
   {
     title: 'Counter Pass',
     path: '/counterpass',
-    icon: (
-      <SvgIcon fontSize="small">
-        <CogIcon />
-      </SvgIcon>
-    )
+   icon: (
+        <SvgIcon fontSize="small">
+          <ShoppingBagIcon />
+        </SvgIcon>
+      )
   },
   // {
   //   title: 'Login',

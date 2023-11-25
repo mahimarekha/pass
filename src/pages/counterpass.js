@@ -224,10 +224,10 @@ const Page = (props) => {
         name: 'From Date',
         property: 'FromDate'
     },
-    {
-        name: 'ToDate',
-        property: 'ToDate'
-    },
+    // {
+    //     name: 'ToDate',
+    //     property: 'ToDate'
+    // },
     {
         name: 'PurposeVisting',
         property: 'PurposeVisting'
@@ -256,15 +256,15 @@ const Page = (props) => {
     const [visitingPlacesList, setVisitingPlacesList] = useState([]);
     const [visitingPasses, setVisitingPasses] = useState({
         //UserId: '',
-        DepId: '',
+        // DepId: '',
         VisitingPassesId: '',
         VisitingPlacesId: '',
-        DesignationId: '',
+        // DesignationId: '',
         FullName: '',
         MobileNumber: '',
         // VisitorPhotoPath: '',
         FromDate: '',
-        ToDate: '',
+        // ToDate: '',
         PurposeVisting: '',
         // VisitingStatus: true,
         // Remarks: '',
@@ -278,8 +278,8 @@ const Page = (props) => {
     const tomorrow = dayjs().add(3, 'day');
     const validationSchema = Yup.object().shape({
         //UserId: Yup.string().required('User Id is required'),
-        DepId: Yup.string().required('Department Id is required'),
-        DesignationId: Yup.string().required('Designation Id is required'),
+        // DepId: Yup.string().required('Department Id is required'),
+        // DesignationId: Yup.string().required('Designation Id is required'),
         VisitingPlacesId: Yup.string().required('VisitingPlacesId  is required'),
 
         FullName: Yup.string().required('Full Name is required'),
@@ -290,7 +290,7 @@ const Page = (props) => {
 
         // VisitorPhotoPath: Yup.string().required('Visitor Photo Path is required'),
         FromDate: Yup.string(),
-        ToDate: Yup.string(),
+        // ToDate: Yup.string(),
         PurposeVisting: Yup.string().required('Purpose Visting is required'),
         // VisitingStatus: Yup.string(true).required('Visiting Status is required'),
         // Remarks: Yup.string().required('Remarks Status is required'),
@@ -329,7 +329,7 @@ const Page = (props) => {
         formReset();
         setStatus("");
         setFromDate(dayjs());
-        setToDate(dayjs());
+        // setToDate(dayjs());
     };
     const handleClose = () => {
         setOpen(false);
@@ -351,7 +351,7 @@ const Page = (props) => {
         []
     );
     const editVisitingPasses = (visitingPasses) => {
-        setToDate(dayjs(visitingPasses.ToDate))
+        // setToDate(dayjs(visitingPasses.ToDate))
         setFromDate(dayjs(visitingPasses.FromDate))
 
         setVisitingPasses(visitingPasses);
@@ -401,23 +401,23 @@ const Page = (props) => {
         });
     }
 
-    const getQrCodeList = (data) => {
-        if (data && data.QRCodeNumber) {
-            router.push('/qrcode/' + data.QRCodeNumber);
-        }
-    }
+    // const getQrCodeList = (data) => {
+    //     if (data && data.QRCodeNumber) {
+    //         router.push('/qrcode/' + data.QRCodeNumber);
+    //     }
+    // }
     const formReset = () => {
         setVisitingPasses({
-            DepId: userDetails ? userDetails.Depid : '',
+            // DepId: userDetails ? userDetails.Depid : '',
             VisitingPassesId: '',
             VisitingPlacesId: '',
-            DesignationId: '',
+            // DesignationId: '',
             FullName: '',
             MobileNumber: '',
             //  VisitorAddress: '',
             // VisitorPhotoPath: '',
             FromDate: "",
-            ToDate: '',
+            // ToDate: '',
             PurposeVisting: '',
             // VisitingStatus: true,
             // Remarks: '',
@@ -430,13 +430,13 @@ const Page = (props) => {
         onSubmit: (values, { resetForm }) => {
             values.UserId = userDetails ? userDetails.UserId : '';
             values.FromDate = fromDate;
-            values.ToDate = toDate;
+            // values.ToDate = toDate;
             values.VisitingStatus = status;
 
-            if (!fromDate || !toDate) {
-                alert("Please select start date and end date");
-                return;
-            }
+            // if (!fromDate || !toDate) {
+            //     alert("Please select start date and end date");
+            //     return;
+            // }
             if (visitingPasses.VisitingPassesId) {
                 VisitingPassesService.upadeVisitingPasses(values).then((res) => {
                     handleClose();
@@ -451,9 +451,9 @@ const Page = (props) => {
                 delete values.VisitingPassesId;
                 VisitingPassesService.creteVisitingPasses(values).then((res) => {
                     const data = res.length > 0 ? res[res.length - 1] : null
-                    if (data) {
-                        getQrCodeList(data);
-                    }
+                    // if (data) {
+                    //     getQrCodeList(data);
+                    // }
                     getVisitingPassesList();
                     resetForm();
                     formReset();
@@ -567,7 +567,7 @@ const Page = (props) => {
                                                         </Select>
                                                     </FormControl>
                                                 </Grid> */}
-                                                <Grid xs={6} md={6}>
+                                                {/* <Grid xs={6} md={6}>
                                                     <FormControl variant="standard" fullWidth>
                                                         <InputLabel id="studentName">Department Id</InputLabel>
                                                         <Select
@@ -589,8 +589,8 @@ const Page = (props) => {
                                                             ))}
                                                         </Select>
                                                     </FormControl>
-                                                </Grid>
-                                                <Grid xs={6} md={6}>
+                                                </Grid> */}
+                                                {/* <Grid xs={6} md={6}>
                                                     <FormControl variant="standard" fullWidth>
                                                         <InputLabel id="studentName">Designation</InputLabel>
                                                         <Select
@@ -611,7 +611,7 @@ const Page = (props) => {
                                                             ))}
                                                         </Select>
                                                     </FormControl>
-                                                </Grid>
+                                                </Grid> */}
                                                 <Grid xs={6} md={6}>
                                                     <FormControl variant="standard" fullWidth>
                                                         <InputLabel id="studentName">VisitingPlaces Id</InputLabel>
@@ -687,28 +687,10 @@ const Page = (props) => {
                                                 </Grid> */}
 
                                                 <Grid xs={6} md={6}>
-                                                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                                        <DatePicker InputProps={{ style: { width: 245 } }}
-                                                            id="FromDate"
-                                                            slotProps={{ textField: { size: "small", error: false } }}
-                                                            name="FromDate"
-                                                            label="date"
-                                                            disablePast
-                                                            onChange={(value) => {
+                                                <LocalizationProvider dateAdapter={AdapterDayjs} >
+    <DatePicker defaultValue={dayjs(new Date())} />
 
-                                                                formik.setFieldValue("date", value, true);
-                                                                const dayDifference = value.diff(currentDate, 'day');
-                                                                setFromDate(value.format('YYYY-MM-DD'));
-                                                                setValidToDate(dayjs().add(dayDifference + 1, 'day'));
-                                                            }}
-                                                            sx={{ width: 250 }}
-                                                            InputLabelProps={{
-                                                                shrink: true,
-                                                            }}
-                                                            value={fromDate}
-                                                            error={formik.touched.FromDate && Boolean(formik.errors.FromDate)}
-                                                            helperText={formik.touched.FromDate && formik.errors.FromDate} />
-                                                    </LocalizationProvider>
+</LocalizationProvider>
                                                 </Grid>
                                                 {/* <Grid xs={6} md={6}>
                                                     <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -857,7 +839,7 @@ const Page = (props) => {
                             count={visitingPassesList.length}
                             items={visitingPassesList}
                             editDetails={editVisitingPasses}
-                            qrCode={getQrCodeList}
+                            // qrCode={getQrCodeList}
                             onDeselectAll={customersSelection.handleDeselectAll}
                             onDeselectOne={customersSelection.handleDeselectOne}
                             onPageChange={handlePageChange}

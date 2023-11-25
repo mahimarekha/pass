@@ -484,7 +484,7 @@ const Page = () => {
                                                                 <em>None</em>
                                                             </MenuItem>
                                                             <MenuItem value="Approved">Approved</MenuItem>
-                                                            <MenuItem value="Rejected">Rejected</MenuItem>
+                                                            {/* <MenuItem value="Rejected">Rejected</MenuItem> */}
                                                             <MenuItem value="Pending">Pending</MenuItem>
                                                         </Select>
                                                     </FormControl>

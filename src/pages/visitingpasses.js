@@ -401,11 +401,11 @@ const Page = (props) => {
         });
     }
 
-    const getQrCodeList = (data) => {
-        if (data && data.QRCodeNumber) {
-            router.push('/qrcode/' + data.QRCodeNumber);
-        }
-    }
+    // const getQrCodeList = (data) => {
+    //     if (data && data.QRCodeNumber) {
+    //         router.push('/qrcode/' + data.QRCodeNumber);
+    //     }
+    // }
     const formReset = () => {
         setVisitingPasses({
             DepId: userDetails ? userDetails.Depid : '',
@@ -451,9 +451,9 @@ const Page = (props) => {
                 delete values.VisitingPassesId;
                 VisitingPassesService.creteVisitingPasses(values).then((res) => {
                     const data = res.length > 0 ? res[res.length - 1] : null
-                    if (data) {
-                        getQrCodeList(data);
-                    }
+                    // if (data) {
+                    //     getQrCodeList(data);
+                    // }
                     getVisitingPassesList();
                     resetForm();
                     formReset();
@@ -532,7 +532,7 @@ const Page = (props) => {
                                     )}
                                     variant="contained" onClick={handleClickOpen}
                                 >
-                                    Add
+                                    Apply For New Pass
 
                                 </Button>
                                 <Dialog open={open} onClose={handleClose}>
@@ -569,7 +569,7 @@ const Page = (props) => {
                                                 </Grid> */}
                                                 <Grid xs={6} md={6}>
                                                     <FormControl variant="standard" fullWidth>
-                                                        <InputLabel id="studentName">Department Id</InputLabel>
+                                                        <InputLabel id="studentName">Department Name</InputLabel>
                                                         <Select
                                                             labelId="Depid"
                                                             id="Depid"
@@ -590,35 +590,14 @@ const Page = (props) => {
                                                         </Select>
                                                     </FormControl>
                                                 </Grid>
+                                               
                                                 <Grid xs={6} md={6}>
                                                     <FormControl variant="standard" fullWidth>
-                                                        <InputLabel id="studentName">Designation</InputLabel>
-                                                        <Select
-                                                            labelId="DesignationId"
-                                                            id="DesignationId"
-                                                            label="Designation Id"
-                                                            name="DesignationId"
-                                                            value={formik.values.DesignationId}
-                                                            onChange={e => { formik.handleChange(e); }}
-                                                        // onChange={e => { setDepartmentId(e.target.value) }}
-                                                        >
-                                                            <MenuItem value="">
-                                                                <em>None</em>
-                                                            </MenuItem>
-                                                            {designationsList.map(({ index, DesignationId, Designation }) => (
-                                                                <MenuItem key={index} value={DesignationId}>{Designation}
-                                                                </MenuItem>
-                                                            ))}
-                                                        </Select>
-                                                    </FormControl>
-                                                </Grid>
-                                                <Grid xs={6} md={6}>
-                                                    <FormControl variant="standard" fullWidth>
-                                                        <InputLabel id="studentName">VisitingPlaces Id</InputLabel>
+                                                        <InputLabel id="studentName">VisitingPlaces Name</InputLabel>
                                                         <Select
                                                             labelId="VisitingPlacesId"
                                                             id="VisitingPlacesId"
-                                                            label="VisitingPlaces Id"
+                                                            label="VisitingPlaces Name"
                                                             name="VisitingPlacesId"
                                                             value={formik.values.VisitingPlacesId}
                                                             onChange={e => { formik.handleChange(e); }}
@@ -650,6 +629,28 @@ const Page = (props) => {
                                                         error={formik.touched.FullName && Boolean(formik.errors.FullName)}
                                                         helperText={formik.touched.FullName && formik.errors.FullName}
                                                     />
+                                                </Grid>
+                                                <Grid xs={6} md={6}>
+                                                    <FormControl variant="standard" fullWidth>
+                                                        <InputLabel id="studentName">Designation Name</InputLabel>
+                                                        <Select
+                                                            labelId="DesignationId"
+                                                            id="DesignationId"
+                                                            label="Designation Name"
+                                                            name="DesignationId"
+                                                            value={formik.values.DesignationId}
+                                                            onChange={e => { formik.handleChange(e); }}
+                                                        // onChange={e => { setDepartmentId(e.target.value) }}
+                                                        >
+                                                            <MenuItem value="">
+                                                                <em>None</em>
+                                                            </MenuItem>
+                                                            {designationsList.map(({ index, DesignationId, Designation }) => (
+                                                                <MenuItem key={index} value={DesignationId}>{Designation}
+                                                                </MenuItem>
+                                                            ))}
+                                                        </Select>
+                                                    </FormControl>
                                                 </Grid>
                                                 <Grid xs={6} md={6}>
                                                     <TextField
@@ -857,7 +858,7 @@ const Page = (props) => {
                             count={visitingPassesList.length}
                             items={visitingPassesList}
                             editDetails={editVisitingPasses}
-                            qrCode={getQrCodeList}
+                            // qrCode={getQrCodeList}
                             onDeselectAll={customersSelection.handleDeselectAll}
                             onDeselectOne={customersSelection.handleDeselectOne}
                             onPageChange={handlePageChange}
