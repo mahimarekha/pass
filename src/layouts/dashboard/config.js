@@ -85,8 +85,17 @@ export const items = [
   // },
 
   {
-    title: 'Visiting Passes',
+    title: 'Request Pass',
     path: '/visitingpasses',
+    icon: (
+      <SvgIcon fontSize="small">
+        <CogIcon />
+      </SvgIcon>
+    )
+  },
+  {
+    title: 'Counter Pass',
+    path: '/counterpass',
     icon: (
       <SvgIcon fontSize="small">
         <CogIcon />

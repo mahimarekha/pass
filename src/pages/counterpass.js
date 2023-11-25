@@ -328,8 +328,8 @@ const Page = (props) => {
         setOpen(true);
         formReset();
         setStatus("");
-        setFromDate("");
-        setToDate("");
+        setFromDate(dayjs());
+        setToDate(dayjs());
     };
     const handleClose = () => {
         setOpen(false);
@@ -493,7 +493,7 @@ const Page = (props) => {
                         >
                             <Stack spacing={1}>
                                 <Typography variant="h4">
-                                    Request Pass
+                                    Counter Pass
                                 </Typography>
                                 <Stack
                                     alignItems="center"
@@ -536,7 +536,7 @@ const Page = (props) => {
 
                                 </Button>
                                 <Dialog open={open} onClose={handleClose}>
-                                    <DialogTitle>Request Pass</DialogTitle>
+                                    <DialogTitle>Counter Pass</DialogTitle>
                                     <form onSubmit={formik.handleSubmit}  >
                                         <DialogContent style={{ width: 530 }}>
                                             <DialogContentText>
@@ -692,7 +692,7 @@ const Page = (props) => {
                                                             id="FromDate"
                                                             slotProps={{ textField: { size: "small", error: false } }}
                                                             name="FromDate"
-                                                            label="From Date"
+                                                            label="date"
                                                             disablePast
                                                             onChange={(value) => {
 
@@ -710,7 +710,7 @@ const Page = (props) => {
                                                             helperText={formik.touched.FromDate && formik.errors.FromDate} />
                                                     </LocalizationProvider>
                                                 </Grid>
-                                                <Grid xs={6} md={6}>
+                                                {/* <Grid xs={6} md={6}>
                                                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                                                         <DatePicker InputProps={{ style: { width: 245 } }}
                                                             disablePast
@@ -736,7 +736,7 @@ const Page = (props) => {
                                                     </LocalizationProvider>
 
                                                    
-                                                </Grid>
+                                                </Grid> */}
 
                                                 <Grid xs={6} md={6}>
                                                     <TextField
