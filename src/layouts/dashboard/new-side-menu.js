@@ -18,7 +18,11 @@ import StarBorder from '@mui/icons-material/StarBorder';
 // import useStyles from "./styles";
 
 export const NewSideNavItem = (props) => {
-  const { active = false, disabled, external, icon, path, title,child,pathname } = props;
+  const { active = false, disabled, external, icon, path, title,child,pathname, role } = props;
+
+  const userDetails =JSON.parse(window.sessionStorage.getItem('userDetails'));
+  const loginRole = role.includes(userDetails.RoleName);
+ 
   // var classes = useStyles();
   const [open, setOpen] = React.useState(true);
 
@@ -45,7 +49,7 @@ export const NewSideNavItem = (props) => {
     }
   }
 
-  if(!child){
+  if(!child ){
     return (
         <>
      
@@ -82,6 +86,8 @@ export const NewSideNavItem = (props) => {
       
        );
   }
+
+  if(loginRole ){
   return (
    <>
 
@@ -146,6 +152,7 @@ export const NewSideNavItem = (props) => {
   
  
   );
+}
 };
 
 NewSideNavItem.propTypes = {

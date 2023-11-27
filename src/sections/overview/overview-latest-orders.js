@@ -40,7 +40,7 @@ export const OverviewLatestOrders = (props) => {
 
   const getVisitingPassesList = () => {
     VisitingPassesService.getAllVisitingPasses().then((res) => {
-      debugger
+     
         setVisitingPassesList(res);
     }).catch((err) => {
         // setError(err.message);

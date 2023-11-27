@@ -131,6 +131,7 @@ export const SideNav = (props) => {
                   path={item.path}
                   title={item.title}
                   pathname={pathname}
+                  role={item.role}
                 />
               );
 

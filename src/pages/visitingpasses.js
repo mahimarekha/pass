@@ -202,44 +202,39 @@ const Page = (props) => {
     const [open, setOpen] = React.useState(false);
     const [openQR, setOpenQR] = React.useState(false);
     const [getQR, setQR] = React.useState('');
-    const headersList = [{
-        name: 'Visiting PassesId',
-        property: 'VisitingPassesId'
-    },
+    const headersList = [
+        {
+            name: 'Department Name',
+            property: 'DepId'
+        },
+        {
+            name: 'Designation Id',
+            property: 'DesignationId'
+        },
+        {
+            name: 'FullName ',
+            property: 'FullName'
+        },
+        
+        {
+            name: 'From Date',
+            property: 'FromDate'
+        },
+        {
+            name: 'Visiting PassesId',
+            property: 'VisitingPassesId'
+        },
+       
+        {
+            name: 'Visiting Places Name ',
+            property: 'VisitingPlacesId'
+        },
 
-    {
-        name: 'FullName ',
-        property: 'FullName'
-    },
-
-    {
-        name: 'Mobile Number',
-        property: 'MobileNumber'
-    },
-    // {
-    //     name: 'Visitor Address',
-    //     property: 'VisitorAddress'
-    // },
-    {
-        name: 'From Date',
-        property: 'FromDate'
-    },
-    {
-        name: 'ToDate',
-        property: 'ToDate'
-    },
-    {
-        name: 'PurposeVisting',
-        property: 'PurposeVisting'
-    },
-    // {
-    //     name: 'Remarks',
-    //     property: 'Remarks'
-    // },
-    {
-        name: 'Edit',
-        property: 'Edit'
-    },
+        
+        {
+            name: 'Edit',
+            property: 'Edit'
+        },
 
     ];
     const userDetails = JSON.parse(window.sessionStorage.getItem('userDetails'));
@@ -274,7 +269,7 @@ const Page = (props) => {
     const [toDate, setToDate] = useState('');
     const router = useRouter();
     const currentDate = dayjs();
-
+    var [designationId, setDesignationId] = useState("");
     const tomorrow = dayjs().add(3, 'day');
     const validationSchema = Yup.object().shape({
         //UserId: Yup.string().required('User Id is required'),
@@ -590,7 +585,7 @@ const Page = (props) => {
                                                         </Select>
                                                     </FormControl>
                                                 </Grid>
-                                               
+
                                                 <Grid xs={6} md={6}>
                                                     <FormControl variant="standard" fullWidth>
                                                         <InputLabel id="studentName">VisitingPlaces Name</InputLabel>
@@ -736,7 +731,7 @@ const Page = (props) => {
 
                                                     </LocalizationProvider>
 
-                                                   
+
                                                 </Grid>
 
                                                 <Grid xs={6} md={6}>

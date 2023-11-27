@@ -57,8 +57,8 @@ const Page = () => {
           }else if(res.Code == '200'){
            
        try {
-        const result =  await RoleService.getRoleById(res.RoleId);
-        res.RoleName =result.RoleName;
+        // const result =  await RoleService.getRoleById(res.RoleId);
+        // res.RoleName =result.RoleName;
         await auth.signIn(res);
         router.push('/');
         

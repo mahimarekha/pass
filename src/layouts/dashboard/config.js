@@ -12,9 +12,11 @@ export const items = [
   {
     title: 'Master',
     path: '/',
+    role:['Admin'],
     child:[  {
       title: 'Department',
       path: '/customers',
+      role:['Admin'],
       // icon: (
       //   <SvgIcon fontSize="small">
       //     <UsersIcon />
@@ -24,6 +26,7 @@ export const items = [
     {
       title: 'Roles',
       path: '/role',
+      role:['Admin'],
       // icon: (
       //   <SvgIcon fontSize="small">
       //     <ShoppingBagIcon />
@@ -33,6 +36,7 @@ export const items = [
     {
       title: 'Visiting Places',
       path: '/visitingplaces',
+      role:['Admin'],
       // icon: (
       //   <SvgIcon fontSize="small">
       //     <UserIcon />
@@ -41,6 +45,7 @@ export const items = [
     } ,{
       title: 'Passes',
       path: '/passes',
+      role:['Admin'],
       // icon: (
       //   <SvgIcon fontSize="small">
       //     <LockClosedIcon />
@@ -50,6 +55,7 @@ export const items = [
     {
       title: 'Designations',
       path: '/designations',
+      role:['Admin'],
       // icon: (
       //   <SvgIcon fontSize="small">
       //     <CogIcon />
@@ -59,6 +65,7 @@ export const items = [
     {
       title: 'Users',
       path: '/users',
+      role:['Admin'],
       // icon: (
       //   <SvgIcon fontSize="small">
       //     <CogIcon />
@@ -87,6 +94,7 @@ export const items = [
   {
     title: 'Request Pass',
     path: '/visitingpasses',
+    role:['Admin', "user"],
     icon: (
       <SvgIcon fontSize="small">
         <CogIcon />
@@ -96,6 +104,7 @@ export const items = [
   {
     title: 'Counter Pass',
     path: '/counterpass',
+    role:['Admin', "user"],
    icon: (
         <SvgIcon fontSize="small">
           <ShoppingBagIcon />
