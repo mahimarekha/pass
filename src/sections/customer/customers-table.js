@@ -23,6 +23,8 @@ import { Scrollbar } from 'src/components/scrollbar';
 import { getInitials } from 'src/utils/get-initials';
 
 export const CustomersTable = (props) => {
+  const userDetails = JSON.parse(window.sessionStorage.getItem('userDetails'));
+
   const {
     count = 0,
     items = [],
@@ -98,7 +100,7 @@ export const CustomersTable = (props) => {
                       }
                       if(headers.property === 'ApprovalStatus'){
 
-                        if(customer.VisitingStatus === 'Pending'){
+                        if(customer.VisitingStatus === 'Pending' && userDetails && (userDetails.RoleName ==='Admin' || userDetails.RoleName ==='Approver')){
                           return (<TableCell
                             key={index}>
                             <><CheckIcon style={{ cursor: 'pointer',color:'green' }} onClick={() => accepect(customer)} />  <CloseIcon style={{ cursor: 'pointer',color:'red' }} onClick={() => reject(customer)} /></> 
