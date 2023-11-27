@@ -4,6 +4,10 @@ const VisitingPassesService = {
 
 return requests.post(`/GetVisitingPasses`,{});
   },
+  getAllVisitingPassesByDate(data) {
+
+    return requests.post(`/GetVisitingPassesWithDates`,data);
+      },
   getVisitingPassesById(id) {
     return requests.get(`/VisitingPasses/${id}`);
   },

@@ -72,6 +72,16 @@ export const items = [
       //   </SvgIcon>
       // )
     },
+    {
+      title: 'Counter Pass',
+      path: '/counterpass',
+      role:['Admin'],
+    //  icon: (
+    //       <SvgIcon fontSize="small">
+    //         <ShoppingBagIcon />
+    //       </SvgIcon>
+    //     )
+    },
     ],
     icon: (
       <SvgIcon fontSize="small">
@@ -102,15 +112,16 @@ export const items = [
     )
   },
   {
-    title: 'Counter Pass',
-    path: '/counterpass',
+    title: 'Approval',
+    path: '/approval',
     role:['Admin', "user"],
-   icon: (
-        <SvgIcon fontSize="small">
-          <ShoppingBagIcon />
-        </SvgIcon>
-      )
+    icon: (
+      <SvgIcon fontSize="small">
+        <CogIcon />
+      </SvgIcon>
+    )
   },
+ 
   // {
   //   title: 'Login',
   //   path: '/auth/login',

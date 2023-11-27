@@ -275,7 +275,7 @@ const handleCloseQR = () => {
     return (
         <>
           
-        
+        {openQR ? 
         <Container maxWidth="sm">
          <Card variant='outlined' style={{width:500,height:300}}
          
@@ -373,7 +373,11 @@ const handleCloseQR = () => {
     </div>
     </Grid>
     </Grid>
-    </Container>
+    </Container>: <Container maxWidth="sm"> <Grid container spacing={2}>
+    <Grid xs={12} >
+        <h3 style={{color:'red'}}>No Qr code generated</h3>
+        </Grid></Grid></Container>
+    }
            
           
         </>

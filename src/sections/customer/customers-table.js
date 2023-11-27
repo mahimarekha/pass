@@ -17,6 +17,8 @@ import {
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import DownloadIcon from '@mui/icons-material/Download';
+import CheckIcon from '@mui/icons-material/Check';
+import CloseIcon from '@mui/icons-material/Close';
 import { Scrollbar } from 'src/components/scrollbar';
 import { getInitials } from 'src/utils/get-initials';
 
@@ -36,7 +38,9 @@ export const CustomersTable = (props) => {
     qrcode,
     page = 0,
     rowsPerPage = 0,
-    selected = []
+    selected = [],
+    accepect,
+    reject
   } = props;
 
   const selectedSome = (selected.length > 0) && (selected.length < items.length);
@@ -92,6 +96,24 @@ export const CustomersTable = (props) => {
 
                         </TableCell>);
                       }
+                      if(headers.property === 'ApprovalStatus'){
+
+                        if(customer.VisitingStatus === 'Pending'){
+                          return (<TableCell
+                            key={index}>
+                            <><CheckIcon style={{ cursor: 'pointer',color:'green' }} onClick={() => accepect(customer)} />  <CloseIcon style={{ cursor: 'pointer',color:'red' }} onClick={() => reject(customer)} /></> 
+  
+                          </TableCell>);
+                        }
+                        if(customer.VisitingStatus === 'Approved'){
+
+                        return (<TableCell
+                          key={index}>
+                           <DownloadIcon style={{ cursor: 'pointer' }} onClick={() => qrCode(customer)} />
+                        </TableCell>);
+                        }
+                      }
+                     
 
                   return  (<TableCell
                     key={index}>
