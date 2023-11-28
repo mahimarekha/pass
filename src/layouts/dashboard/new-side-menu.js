@@ -49,7 +49,7 @@ export const NewSideNavItem = (props) => {
     }
   }
 
-  if(!child ){
+  if(!child && loginRole){
     return (
         <>
      

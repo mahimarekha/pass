@@ -527,7 +527,7 @@ const Page = (props) => {
                             </Stack>
                             <div>
 
-                                <Button
+                                {/* <Button
                                     startIcon={(
                                         <SvgIcon fontSize="small">
                                             <PlusIcon />
@@ -537,7 +537,7 @@ const Page = (props) => {
                                 >
                                     Apply For New Pass
 
-                                </Button>
+                                </Button> */}
                                 <Dialog open={open} onClose={handleClose}>
                                     <DialogTitle>Request Pass</DialogTitle>
                                     <form onSubmit={formik.handleSubmit}  >

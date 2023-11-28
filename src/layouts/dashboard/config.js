@@ -104,7 +104,7 @@ export const items = [
   {
     title: 'Request Pass',
     path: '/visitingpasses',
-    role:['Admin', "user"],
+    role:['Admin', "SCs","Approver"],
     icon: (
       <SvgIcon fontSize="small">
         <CogIcon />
@@ -114,7 +114,7 @@ export const items = [
   {
     title: 'Approval',
     path: '/approval',
-    role:['Admin', "user"],
+    role:['Admin', "Approver"],
     icon: (
       <SvgIcon fontSize="small">
         <CogIcon />
