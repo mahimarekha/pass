@@ -26,7 +26,8 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
-
+import {userPermissions} from '../layouts/dashboard/config';
+import { useRouter } from 'next/router'
 
 
 // const now = new Date();
@@ -244,8 +245,11 @@ const Page = () => {
     // count: Yup.string(),
     Quota: Yup.string(true).required('Quota is required'),
   });
+  const router = useRouter();
   useEffect(() => {
-
+    if(!userPermissions(router.asPath)){
+      router.push('/unauthorized');
+    }
     getDepartmentList();
 
     return () => {

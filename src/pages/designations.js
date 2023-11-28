@@ -29,6 +29,8 @@ import DialogTitle from '@mui/material/DialogTitle';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
+import {userPermissions} from '../layouts/dashboard/config';
+import { useRouter } from 'next/router'
 import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
 const now = new Date();
 
@@ -241,7 +243,11 @@ const Page = () => {
         Description: Yup.string().required('description is required'),
         DesignationWisePlaces: Yup.string(),
     });
+    const router = useRouter();
     useEffect(() => {
+        if(!userPermissions(router.asPath)){
+            router.push('/unauthorized');
+          }
         getDesignationList();
         getVisitingPlacesList()
         return () => {

@@ -29,6 +29,8 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
+import { useRouter } from 'next/router'
+import {userPermissions} from '../layouts/dashboard/config';
 const now = new Date();
 
 const data = [
@@ -261,8 +263,11 @@ const Page = () => {
         DesignationId: Yup.string().required('Designation Id is required'),
         UserStatus: Yup.string(true).required('User Status is required'),
     });
-   
+    const router = useRouter();
     useEffect(() => {
+        if(!userPermissions(router.asPath)){
+            router.push('/unauthorized');
+          }
         getRoleList();
         getDepartmentList();
         getDesignationList();

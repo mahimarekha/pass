@@ -26,6 +26,8 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
+import {userPermissions} from '../layouts/dashboard/config';
+import { useRouter } from 'next/router'
 const now = new Date();
 
 const data = [
@@ -231,8 +233,12 @@ const Page = () => {
         PassName: Yup.string().required('Pass Name is required'),
         PassStatus: Yup.string(true).required('Pass Status is required'),
     });
+    const router = useRouter();
     useEffect(() => {
-
+        debugger
+        if(!userPermissions(router.asPath)){
+            router.push('/unauthorized');
+          }
         getPassList();
 
         return () => {

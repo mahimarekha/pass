@@ -32,12 +32,11 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-
-import { useRouter } from 'next/navigation';
-
+// import { useRouter } from 'next/navigation';
 import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
 import dayjs from 'dayjs';
-
+import {userPermissions} from '../layouts/dashboard/config';
+import { useRouter } from 'next/router'
 const now = new Date();
 const data = [
     {
@@ -296,7 +295,11 @@ const Page = (props) => {
         // Remarks: Yup.string().required('Remarks Status is required'),
 
     });
+    
     useEffect(() => {
+        if(!userPermissions(router.asPath)){
+            router.push('/unauthorized');
+          }
         getDepartmentList();
 
         getVisitingPassesList();

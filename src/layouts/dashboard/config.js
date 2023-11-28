@@ -104,7 +104,7 @@ export const items = [
   {
     title: 'Request Pass',
     path: '/visitingpasses',
-    role:['Admin', "SCs","Approver"],
+    role:['Admin',"Apply for Pass","Approver","Secretary","Counter pass"],
     icon: (
       <SvgIcon fontSize="small">
         <CogIcon />
@@ -114,7 +114,7 @@ export const items = [
   {
     title: 'Approval',
     path: '/approval',
-    role:['Admin', "Approver"],
+    role:['Admin',"Approver","Secretary","Counter pass"],
     icon: (
       <SvgIcon fontSize="small">
         <CogIcon />
@@ -150,3 +150,27 @@ export const items = [
   //   )
   // }
 ];
+export const USER_ROLE = {
+  ADMIN: 'Admin',
+  APPLYPASS: 'Apply for Pass',
+  APPROVER: 'Approver',
+  COUNTERPASS: 'Counter pass',
+  SECURITY:'Secretary'
+  // Add more details as needed
+};
+
+export const userPermissions = (router) => {
+  const userDetails = JSON.parse(window.sessionStorage.getItem('userDetails'));
+  const stringWithoutSlash = router.startsWith('/') ? router.substring(1) : router;
+  switch (userDetails.RoleName) {
+    case USER_ROLE.ADMIN:
+      return ['customers','role','visitingplaces','passes','designations','users','counterpass','visitingpasses','approval'].includes(stringWithoutSlash);
+    case USER_ROLE.APPLYPASS:
+      return ['visitingpasses'].includes(stringWithoutSlash);
+      case USER_ROLE.APPROVER:
+        return ['visitingpasses','approval'].includes(stringWithoutSlash)
+        case USER_ROLE.SECURITY:
+          return ['visitingpasses','approval'].includes(stringWithoutSlash)  
+  }
+};
+
