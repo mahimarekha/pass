@@ -91,15 +91,6 @@ export const items = [
     
   },
  
-  // {
-  //   title: 'Companies'
-  //   path: '/companies',
-  //   icon: (
-  //     <SvgIcon fontSize="small">
-  //       <ShoppingBagIcon />
-  //     </SvgIcon>
-  //   )
-  // },
 
   {
     title: 'Request Pass',
