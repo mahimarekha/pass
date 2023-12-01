@@ -164,5 +164,6 @@ CustomersTable.propTypes = {
   editDesignations:PropTypes.func,
   editUsers:PropTypes.func,
   editVisitingPasses:PropTypes.func,
+  editSession:PropTypes.func,
   getQrCodeList:PropTypes.func,
 };

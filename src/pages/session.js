@@ -21,7 +21,7 @@ import { CustomersTable } from 'src/sections/customer/customers-table';
 import UsersService from "../service/UsersService";
 import { CustomersSearch } from 'src/sections/customer/customers-search';
 import { applyPagination } from 'src/utils/apply-pagination';
-import VisitingPassesService from "../service/VisitingPassService";
+import SessionService from "../service/SessionService";
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import FormControl from '@mui/material/FormControl';
@@ -203,34 +203,15 @@ const Page = (props) => {
     const [openQR, setOpenQR] = React.useState(false);
     const [getQR, setQR] = React.useState('');
     const headersList = [
-        {
-            name: 'Department Name',
-            property: 'DepId'
-        },
-        {
-            name: 'Designation Id',
-            property: 'DesignationId'
-        },
-        {
-            name: 'FullName ',
-            property: 'FullName'
-        },
         
         {
-            name: 'From Date',
-            property: 'FromDate'
+            name: 'Session StartDate',
+            property: 'SessionStartDate'
         },
         {
-            name: 'Visiting PassesId',
-            property: 'VisitingPassesId'
+            name: 'Remarks',
+            property: 'Remarks'
         },
-       
-        {
-            name: 'Visiting Places Name ',
-            property: 'VisitingPlacesId'
-        },
-
-        
         {
             name: 'Edit',
             property: 'Edit'
@@ -248,14 +229,14 @@ const Page = (props) => {
     const [visitingPassesList, setVisitingPassesList] = useState([]);
     const [qrCodeList, setQrCodeList] = useState([]);
     const [status, setStatus] = useState([]);
-    const [visitingPlacesList, setVisitingPlacesList] = useState([]);
+    const [sessionList, setSessionList] = useState([]);
     const [session, setSession] = useState({
         SessionID: '',
         SessionStartDate:'',
         Remarks: '',
     });
-    const [validToDate, setValidToDate] = useState('');
     const [fromDate, setFromDate] = useState('');
+    const [validToDate, setValidToDate] = useState('');
     const [toDate, setToDate] = useState('');
     const router = useRouter();
     const currentDate = dayjs();
@@ -263,37 +244,16 @@ const Page = (props) => {
     const tomorrow = dayjs().add(3, 'day');
     const validationSchema = Yup.object().shape({
         //UserId: Yup.string().required('User Id is required'),
-        SessionStartDate: Yup.string().required('Session StartDate is required'),
+        SessionStartDate: Yup.string(),
         Remarks: Yup.string().required('Remarks is required'),
     });
     useEffect(() => {
-        getDepartmentList();
-
-        getVisitingPassesList();
-        getUsersList();
-        getVisitingPlacesList();
-        getDesignationList();
+        getSessionList();
         return () => {
-            setVisitingPassesList([]);
-            setUsersList([]);
-            setDepartmentList([]);
-            setVisitingPlacesList([]);
-            setDesignationList([]);
+            setSessionList([]);
         }
     }, []);
-    const getDesignationList = () => {
-        DesignationsService.getAllDesignations().then((res) => {
-            const result = res.map((response) => {
-                return {
-                    ...response,
-                    "status": response.DesignationStatus ? 'Active' : 'Inactive',
-                }
-            })
-            setDesignationList(result);
-        }).catch((err) => {
-            // setError(err.message);
-        });
-    }
+  
     const handleClickOpen = () => {
         setOpen(true);
         formReset();
@@ -320,115 +280,61 @@ const Page = (props) => {
         },
         []
     );
-    const editVisitingPasses = (visitingPasses) => {
-        setToDate(dayjs(visitingPasses.ToDate))
-        setFromDate(dayjs(visitingPasses.FromDate))
-
-        setVisitingPasses(visitingPasses);
+    const editSession = (session) => {
+        setFromDate(dayjs(session.SessionStartDate))
+        setSession(session);
         setOpen(true);
     }
-    // const deleteVisitingPasses = (visitingPassesdelete) => {
-    //     if (visitingPassesdelete) {
-    //         VisitingPassesService.deleteVisitingPasses(visitingPassesdelete).then((res) => {
-    //             getVisitingPassesList();
-    //         }).catch((err) => {
-    //         });
-    //     }
-    // };
-
-    const getUsersList = () => {
-        UsersService.getAllUsers().then((res) => {
-            setUsersList(res);
+    const getSessionList = () => {
+        SessionService.getAllSession().then((res) => {
+            setSessionList(res);
         }).catch((err) => {
             // setError(err.message);
         });
     }
-    const getDepartmentList = () => {
-        DepartmentService.getAllDepartment().then((res) => {
-            setDepartmentList(res);
-        }).catch((err) => {
-            // setError(err.message);
-        });
-    }
-    const getVisitingPlacesList = () => {
-        VisitingPlacesService.getAllVisitingPlaces().then((res) => {
-            setVisitingPlacesList(res);
-        }).catch((err) => {
-            // setError(err.message);
-        });
-    }
-    const getVisitingPassesList = () => {
-        VisitingPassesService.getAllVisitingPasses().then((res) => {
-            const result = res.map((response) => {
-                return {
-                    ...response,
-                    "status": response.VisitingPassesStatus ? 'Active' : 'Inactive',
-                }
-            })
-            setVisitingPassesList(result);
-        }).catch((err) => {
-            // setError(err.message);
-        });
-    }
-
-    // const getQrCodeList = (data) => {
-    //     if (data && data.QRCodeNumber) {
-    //         router.push('/qrcode/' + data.QRCodeNumber);
-    //     }
-    // }
     const formReset = () => {
-        setVisitingPasses({
-            DepId: userDetails ? userDetails.Depid : '',
-            VisitingPassesId: '',
-            VisitingPlacesId: '',
-            DesignationId: '',
-            FullName: '',
-            MobileNumber: '',
-            //  VisitorAddress: '',
-            // VisitorPhotoPath: '',
-            FromDate: "",
-            ToDate: '',
-            PurposeVisting: '',
-            // VisitingStatus: true,
-            // Remarks: '',
+        setSession({
+            SessionID: '',
+            SessionStartDate:'',
+            Remarks: '',
         })
     }
     const formik = useFormik({
-        initialValues: visitingPasses,
+        initialValues: session,
         enableReinitialize: true,
         validationSchema: validationSchema,
         onSubmit: (values, { resetForm }) => {
-            values.UserId = userDetails ? userDetails.UserId : '';
-            values.FromDate = fromDate;
-            values.ToDate = toDate;
-            values.VisitingStatus = status;
+            // values.UserId = userDetails ? userDetails.UserId : '';
+            values.SessionStartDate = fromDate;
+            // values.ToDate = toDate;
+            // values.VisitingStatus = status;
 
-            if (!fromDate || !toDate) {
-                alert("Please select start date and end date");
+            if (!fromDate) {
+                alert("Please select session start date ");
                 return;
             }
-            if (visitingPasses.VisitingPassesId) {
-                VisitingPassesService.upadeVisitingPasses(values).then((res) => {
+            if (session.SessionID) {
+                SessionService.upadeSession(values).then((res) => {
                     handleClose();
-                    getVisitingPassesList();
+                    getSessionList();
                     resetForm();
                     formReset();
-                    alert(" VisitingPasses Updated Successfully.");
+                    alert(" Session Updated Successfully.");
                 }).catch((err) => {
                 });
             }
             else {
-                delete values.VisitingPassesId;
-                VisitingPassesService.creteVisitingPasses(values).then((res) => {
+                delete values.SessionID;
+                SessionService.creteSession(values).then((res) => {
                     const data = res.length > 0 ? res[res.length - 1] : null
                     // if (data) {
                     //     getQrCodeList(data);
                     // }
-                    getVisitingPassesList();
+                    getSessionList();
                     resetForm();
                     formReset();
                     handleClose();
-                    alert(" VisitingPasses Added Successfully.");
+                    alert(" Session Added Successfully.");
                     // props.history.push('/app/vendor');
                 })
                     .catch((err) => {
@@ -436,7 +342,6 @@ const Page = (props) => {
                         alert(err)
                     })
             }
-
         },
     });
 
@@ -508,7 +413,7 @@ const Page = (props) => {
                                 <Dialog open={open} onClose={handleClose}>
                                     <DialogTitle>Add</DialogTitle>
                                     <form onSubmit={formik.handleSubmit}  >
-                                        <DialogContent style={{ width: 530 }}>
+                                        <DialogContent style={{ width: 400 }}>
                                             <DialogContentText>
 
                                             </DialogContentText>
@@ -518,7 +423,7 @@ const Page = (props) => {
                                                
                                                
 
-                                                <Grid xs={6} md={6}>
+                                                <Grid xs={12} md={12}>
                                                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                                                         <DatePicker InputProps={{ style: { width: 245 } }}
                                                             id="SessionStartDate"
@@ -537,14 +442,14 @@ const Page = (props) => {
                                                             InputLabelProps={{
                                                                 shrink: true,
                                                             }}
-                                                            value={SessionStartDate}
+                                                            value={fromDate}
                                                             error={formik.touched.SessionStartDate && Boolean(formik.errors.SessionStartDate)}
                                                             helperText={formik.touched.SessionStartDate && formik.errors.SessionStartDate} />
                                                     </LocalizationProvider>
                                                 </Grid>
                                                 
 
-                                                <Grid xs={6} md={6}>
+                                                <Grid xs={12} md={12}>
                                                     <TextField
                                                         InputProps={{ style: { width: 245 } }}
 
@@ -564,7 +469,7 @@ const Page = (props) => {
                                                 <Grid xs={12} md={12}>
 
                                                     <Button onClick={handleClose}>Cancel</Button>
-                                                    <Button type="submit">{session.SessionId ? 'Update' : 'Add'}</Button>
+                                                    <Button type="submit">{session.SessionID ? 'Update' : 'Add'}</Button>
 
                                                 </Grid>
 
@@ -605,9 +510,9 @@ const Page = (props) => {
                         {/* <CustomersSearch /> */}
                         <CustomersTable
                             headersList={headersList}
-                            count={visitingPassesList.length}
-                            items={visitingPassesList}
-                            editDetails={editVisitingPasses}
+                            count={sessionList.length}
+                            items={sessionList}
+                            editDetails={editSession}
                             // qrCode={getQrCodeList}
                             onDeselectAll={customersSelection.handleDeselectAll}
                             onDeselectOne={customersSelection.handleDeselectOne}

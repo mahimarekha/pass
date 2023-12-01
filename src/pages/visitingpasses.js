@@ -22,6 +22,7 @@ import UsersService from "../service/UsersService";
 import { CustomersSearch } from 'src/sections/customer/customers-search';
 import { applyPagination } from 'src/utils/apply-pagination';
 import VisitingPassesService from "../service/VisitingPassService";
+import SessionService from "../service/SessionService";
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import FormControl from '@mui/material/FormControl';
@@ -243,6 +244,7 @@ const Page = (props) => {
     const [usersList, setUsersList] = useState([]);
     var [departmentId, setDepartmentId] = useState("");
     const [departmentList, setDepartmentList] = useState([]);
+    const [sessionList, setSessionList] = useState([]);
     const [visitingPassesList, setVisitingPassesList] = useState([]);
     const [qrCodeList, setQrCodeList] = useState([]);
     const [status, setStatus] = useState([]);
@@ -259,6 +261,7 @@ const Page = (props) => {
         FromDate: '',
         ToDate: '',
         PurposeVisting: '',
+        SessionId:'',
         // VisitingStatus: true,
         // Remarks: '',
     });
@@ -274,19 +277,18 @@ const Page = (props) => {
         DepId: Yup.string().required('Department Id is required'),
         DesignationId: Yup.string().required('Designation Id is required'),
         VisitingPlacesId: Yup.string().required('VisitingPlacesId  is required'),
-
         FullName: Yup.string().required('Full Name is required'),
         MobileNumber: Yup.string().required()
             .matches(/^[0-9]+$/, "Must be only digits")
             .min(10, 'Must be exactly 10 digits')
             .max(10, 'Must be exactly 10 digits'),
-
         // VisitorPhotoPath: Yup.string().required('Visitor Photo Path is required'),
         FromDate: Yup.string(),
         ToDate: Yup.string(),
         PurposeVisting: Yup.string().required('Purpose Visting is required'),
         // VisitingStatus: Yup.string(true).required('Visiting Status is required'),
         // Remarks: Yup.string().required('Remarks Status is required'),
+        SessionId:Yup.string().required('Session name is required'),
 
     });
     
@@ -295,7 +297,7 @@ const Page = (props) => {
             router.push('/unauthorized');
           }
         getDepartmentList();
-
+        getSessionList();
         getVisitingPassesList();
         getUsersList();
         getVisitingPlacesList();
@@ -306,6 +308,7 @@ const Page = (props) => {
             setDepartmentList([]);
             setVisitingPlacesList([]);
             setDesignationList([]);
+            setSessionList([]);
         }
     }, []);
     const getDesignationList = () => {
@@ -317,6 +320,16 @@ const Page = (props) => {
                 }
             })
             setDesignationList(result);
+        }).catch((err) => {
+            // setError(err.message);
+        });
+    }
+    const getSessionList = () => {
+        SessionService.GetLatestSessionFrom().then((res) => {
+            if(res){
+                setSessionList([res]);
+            }
+            
         }).catch((err) => {
             // setError(err.message);
         });
@@ -418,6 +431,7 @@ const Page = (props) => {
             PurposeVisting: '',
             // VisitingStatus: true,
             // Remarks: '',
+            SessionId:'',
         })
     }
     const formik = useFormik({
@@ -429,7 +443,7 @@ const Page = (props) => {
             values.FromDate = fromDate;
             values.ToDate = toDate;
             values.VisitingStatus = status;
-
+       
             if (!fromDate || !toDate) {
                 alert("Please select start date and end date");
                 return;
@@ -751,6 +765,28 @@ const Page = (props) => {
                                                         error={formik.touched.PurposeVisting && Boolean(formik.errors.PurposeVisting)}
                                                         helperText={formik.touched.PurposeVisting && formik.errors.PurposeVisting}
                                                     />
+                                                </Grid>
+                                                <Grid xs={6} md={6}>
+                                                    <FormControl variant="standard" fullWidth>
+                                                        <InputLabel id="studentName">Session Name</InputLabel>
+                                                        <Select
+                                                            labelId="SessionId"
+                                                            id="SessionId"
+                                                            label="Session Name"
+                                                            name="SessionId"
+                                                            value={formik.values.SessionId}
+                                                            onChange={e => { formik.handleChange(e); }}
+                                                        
+                                                        >
+                                                            <MenuItem value="">
+                                                                <em>None</em>
+                                                            </MenuItem>
+                                                            {sessionList.map(({ index, SessionID, Sno }) => (
+                                                                <MenuItem key={index} value={Sno}>{SessionID}
+                                                                </MenuItem>
+                                                            ))}
+                                                        </Select>
+                                                    </FormControl>
                                                 </Grid>
                                                 {/* {!visitingPasses?.VisitingPassesId ? <>
                                                     <Grid xs={4} md={4}>

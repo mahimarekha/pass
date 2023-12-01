@@ -211,16 +211,16 @@ const Page = () => {
         property: 'EmailId'
     },
     {
-        name: 'Role Id',
-        property: 'RoleId'
+        name: 'Role',
+        property: 'RoleName'
     },
     {
-        name: 'Dep id',
-        property: 'Depid'
+        name: 'Dep',
+        property: 'DepartmentName'
     },
     {
-        name: 'Designation Id',
-        property: 'DesignationId'
+        name: 'Designation',
+        property: 'Designation'
     },
     {
         name: 'User Status',

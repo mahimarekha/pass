@@ -235,7 +235,7 @@ const Page = () => {
     });
     const router = useRouter();
     useEffect(() => {
-        debugger
+        
         if(!userPermissions(router.asPath)){
             router.push('/unauthorized');
           }

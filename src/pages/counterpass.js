@@ -35,7 +35,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 // import { useRouter } from 'next/navigation';
 import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
 import dayjs from 'dayjs';
-import {userPermissions} from '../layouts/dashboard/config';
+import { userPermissions } from '../layouts/dashboard/config';
 import { useRouter } from 'next/router'
 const now = new Date();
 const data = [
@@ -197,6 +197,7 @@ const useCustomerIds = (customers) => {
     );
 };
 const Page = (props) => {
+
     const [page, setPage] = useState(0);
     const [open, setOpen] = React.useState(false);
     const [openQR, setOpenQR] = React.useState(false);
@@ -295,11 +296,11 @@ const Page = (props) => {
         // Remarks: Yup.string().required('Remarks Status is required'),
 
     });
-    
+
     useEffect(() => {
-        if(!userPermissions(router.asPath)){
+        if (!userPermissions(router.asPath)) {
             router.push('/unauthorized');
-          }
+        }
         getDepartmentList();
 
         getVisitingPassesList();
@@ -436,10 +437,10 @@ const Page = (props) => {
             // values.ToDate = toDate;
             values.VisitingStatus = status;
 
-            // if (!fromDate || !toDate) {
-            //     alert("Please select start date and end date");
-            //     return;
-            // }
+            if (!fromDate ) {
+                alert("Please select  date ");
+                return;
+            }
             if (visitingPasses.VisitingPassesId) {
                 VisitingPassesService.upadeVisitingPasses(values).then((res) => {
                     handleClose();
@@ -547,74 +548,6 @@ const Page = (props) => {
                                             </DialogContentText>
 
                                             <Grid container spacing={2}>
-                                                {/* <Grid xs={6} md={6} >
-                                                    <FormControl variant="standard" fullWidth>
-                                                        <InputLabel id="studentName">User Id</InputLabel>
-                                                        <Select
-                                                        autoFocus
-                                                            labelId="UserId"
-                                                            id="UserId"
-                                                            label="User Name"
-                                                            name="UserId"
-                                                            value={formik.values.UserId}
-                                                            // value={roleId}
-                                                            onChange={e => { formik.handleChange(e); }}
-                                                        >
-                                                            <MenuItem value="">
-                                                                <em>None</em>
-                                                            </MenuItem>
-                                                            {usersList.map(({ index, UserId, FullName }) => (
-                                                                <MenuItem key={index} value={UserId}>{FullName}
-                                                                </MenuItem>
-                                                            ))}
-                                                        </Select>
-                                                    </FormControl>
-                                                </Grid> */}
-                                                {/* <Grid xs={6} md={6}>
-                                                    <FormControl variant="standard" fullWidth>
-                                                        <InputLabel id="studentName">Department Id</InputLabel>
-                                                        <Select
-                                                            labelId="Depid"
-                                                            id="Depid"
-                                                            label="Department Name"
-                                                            name="DepId"
-                                                            disabled={userDetails?.RoleName === 'Admin' ? false : true}
-                                                            value={formik.values.DepId}
-                                                            onChange={e => { formik.handleChange(e); }}
-                                                        // onChange={e => { setDepartmentId(e.target.value) }}
-                                                        >
-                                                            <MenuItem value="">
-                                                                <em>None</em>
-                                                            </MenuItem>
-                                                            {departmentList.map(({ index, Depid, DepartmentName }) => (
-                                                                <MenuItem key={index} value={Depid}>{DepartmentName}
-                                                                </MenuItem>
-                                                            ))}
-                                                        </Select>
-                                                    </FormControl>
-                                                </Grid> */}
-                                                {/* <Grid xs={6} md={6}>
-                                                    <FormControl variant="standard" fullWidth>
-                                                        <InputLabel id="studentName">Designation</InputLabel>
-                                                        <Select
-                                                            labelId="DesignationId"
-                                                            id="DesignationId"
-                                                            label="Designation Id"
-                                                            name="DesignationId"
-                                                            value={formik.values.DesignationId}
-                                                            onChange={e => { formik.handleChange(e); }}
-                                                        // onChange={e => { setDepartmentId(e.target.value) }}
-                                                        >
-                                                            <MenuItem value="">
-                                                                <em>None</em>
-                                                            </MenuItem>
-                                                            {designationsList.map(({ index, DesignationId, Designation }) => (
-                                                                <MenuItem key={index} value={DesignationId}>{Designation}
-                                                                </MenuItem>
-                                                            ))}
-                                                        </Select>
-                                                    </FormControl>
-                                                </Grid> */}
                                                 <Grid xs={6} md={6}>
                                                     <FormControl variant="standard" fullWidth>
                                                         <InputLabel id="studentName">VisitingPlaces Id</InputLabel>
@@ -637,7 +570,6 @@ const Page = (props) => {
                                                         </Select>
                                                     </FormControl>
                                                 </Grid>
-
                                                 <Grid xs={6} md={6}>
                                                     <TextField
                                                         InputProps={{ style: { width: 245 } }}
@@ -672,57 +604,32 @@ const Page = (props) => {
                                                         helperText={formik.touched.MobileNumber && formik.errors.MobileNumber}
                                                     />
                                                 </Grid>
-                                                {/* <Grid xs={6} md={6}>
-                                                <TextField
-                                                        InputProps={{ style: { width: 245 } }}
-                                                        
-                                                        margin="dense"
-                                                        id="VisitorPhotoPath"
-                                                        name="VisitorPhotoPath"
-                                                        label="VisitorPhotoPath"
-                                                        type="text"
-                                                        variant="standard"
-                                                        value={formik.values.VisitorPhotoPath}
-                                                        onChange={formik.handleChange}
-                                                        error={formik.touched.VisitorPhotoPath && Boolean(formik.errors.VisitorPhotoPath)}
-                                                        helperText={formik.touched.VisitorPhotoPath && formik.errors.VisitorPhotoPath}
-                                                    />
-                                                </Grid> */}
-
+                                                
                                                 <Grid xs={6} md={6}>
-                                                <LocalizationProvider dateAdapter={AdapterDayjs} >
-    <DatePicker defaultValue={dayjs(new Date())} />
-
-</LocalizationProvider>
-                                                </Grid>
-                                                {/* <Grid xs={6} md={6}>
-                                                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                                    <LocalizationProvider dateAdapter={AdapterDayjs} >
+                                                        {/* <DatePicker defaultValue={dayjs(new Date())} /> */}
                                                         <DatePicker InputProps={{ style: { width: 245 } }}
+                                                            id="FromDate"
+                                                            slotProps={{ textField: { size: "small", error: false } }}
+                                                            name="FromDate"
+                                                            label="Date"
                                                             disablePast
                                                             onChange={(value) => {
-                                                                formik.setFieldValue("date", value, true)
-                                                                setToDate(value.format('YYYY-MM-DD'));
+
+                                                                formik.setFieldValue("date", value, true);
+                                                                const dayDifference = value.diff(currentDate, 'day');
+                                                                setFromDate(value.format('YYYY-MM-DD'));
+                                                                setValidToDate(dayjs().add(dayDifference + 1, 'day'));
                                                             }}
-                                                            minDate={validToDate}
-                                                            id="ToDate"
-                                                            slotProps={{ textField: { size: "small", error: false } }}
-                                                            name="ToDate"
-                                                            label="ToDate"
-                                                            type="date"
                                                             sx={{ width: 250 }}
                                                             InputLabelProps={{
                                                                 shrink: true,
                                                             }}
-                                                            value={toDate}
-                                                            error={formik.touched.ToDate && Boolean(formik.errors.ToDate)}
-                                                            helperText={formik.touched.ToDate && formik.errors.ToDate}
-                                                        />
-
+                                                            value={fromDate}
+                                                            error={formik.touched.FromDate && Boolean(formik.errors.FromDate)}
+                                                            helperText={formik.touched.FromDate && formik.errors.FromDate} />
                                                     </LocalizationProvider>
-
-                                                   
-                                                </Grid> */}
-
+                                                </Grid>
                                                 <Grid xs={6} md={6}>
                                                     <TextField
                                                         InputProps={{ style: { width: 245 } }}
@@ -739,62 +646,6 @@ const Page = (props) => {
                                                         helperText={formik.touched.PurposeVisting && formik.errors.PurposeVisting}
                                                     />
                                                 </Grid>
-                                                {/* {!visitingPasses?.VisitingPassesId ? <>
-                                                    <Grid xs={4} md={4}>
-                                                        <Button variant={status == "Accepted" ? "contained" : "outlined"} type="submit" color='success' onClick={() => setStatus("Accepted")} >Accepted</Button>
-                                                    </Grid>
-                                                    <Grid xs={4} md={4}>
-                                                        <Button variant={status == "Rejected" ? "contained" : "outlined"} type="submit" color='error' onClick={() => setStatus("Rejected")}>Rejected</Button>
-                                                    </Grid>
-                                                </> : ''} */}
-
-                                                {/* <Grid xs={4} md={4}>
-                                                    <Button variant={status == "Cancel" ? "contained" : "outlined"} color='info' onClick={() => { setStatus("Cancel"); handleClose() }}
-                                                    >Cancel</Button>
-                                                </Grid> */}
-                                                {/* <Grid xs={6} md={6}>
-                                                    <FormControl variant="standard" fullWidth>
-                                                        <InputLabel id="demo-simple-select-standard-label">Status</InputLabel>
-                                                        <Select
-                                                            labelId="demo-simple-select-standard-label"
-                                                            id="demo-simple-select-standard"
-                                                            label="Visiting Status"
-                                                            name="VisitingStatus"
-                                                            value={formik.values.VisitingStatus}
-                                                            onChange={formik.handleChange}
-                                                            error={formik.touched.VisitingStatus && Boolean(formik.errors.VisitingStatus)}
-                                                            helperText={formik.touched.VisitingStatus && formik.errors.VisitingStatus}
-                                                        >
-                                                            <MenuItem value="">
-                                                                <em>None</em>
-                                                            </MenuItem>
-                                                            <MenuItem value="Approved">Approved</MenuItem>
-                                                            <MenuItem value="Rejected">Rejected</MenuItem>
-                                                            <MenuItem value="Pending">Pending</MenuItem>
-
-                                                        </Select>
-                                                    </FormControl>
-                                                </Grid> */}
-                                                {/* <Grid xs={6} md={6}>
-                                                    <TextField
-                                                        InputProps={{ style: { width: 500 } }}
-                                                        
-                                                        margin="dense"
-                                                        id="Remarks"
-                                                        name="Remarks"
-                                                        label="Remarks"
-                                                        type="text"
-                                                        variant="standard"
-                                                        value={formik.values.Remarks}
-                                                        onChange={formik.handleChange}
-                                                        error={formik.touched.Remarks && Boolean(formik.errors.Remarks)}
-                                                        helperText={formik.touched.Remarks && formik.errors.Remarks}
-                                                    />
-                                                </Grid> */}
-
-
-
-
                                                 <Grid xs={12} md={12}>
 
                                                     <Button onClick={handleClose}>Cancel</Button>

@@ -17,16 +17,14 @@ const instance = axios.create({
 instance.interceptors.request.use(function (config) {
   // Do something before request is sent
   let token;
+  let baseToke = btoa(`TSAC:SrshtaTech`);
   if ( localStorage.getItem("id_token")) {
     token =   localStorage.getItem("id_token");
   }
   return {
     ...config,
     headers: {
-        'Access-Control-Allow-Headers':'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token',
-        'Access-Control-Allow-Methods':'*',
-        'Access-Control-Allow-Origin':'*',
-      Authorization: token ? `Bearer ${token}` : null,
+      Authorization: baseToke ? `Basic ${baseToke}` : null,
     },
   };
 });

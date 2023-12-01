@@ -425,6 +425,12 @@ const Page = (props) => {
             getVisitingPassesList();
            
             alert(" VisitingPasses Updated Successfully.");
+
+            if(res && res.QRCodeNumber){
+                
+                    router.push('/qrcode/' + res.QRCodeNumber);
+                
+            }
         }).catch((err) => {
         });
     }

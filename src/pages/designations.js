@@ -440,7 +440,7 @@ const Page = () => {
                                 </Button>
                                 <Dialog open={open} onClose={handleClose}>
                                     <DialogTitle>Designation</DialogTitle>
-                                    <form onSubmit={formik.handleSubmit} >
+                                    <form onSubmit={formik.handleSubmit}>
                                         <DialogContent style={{ width: 308}}>
                                             <DialogContentText>
 

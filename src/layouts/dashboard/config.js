@@ -82,6 +82,12 @@ export const items = [
     //       </SvgIcon>
     //     )
     },
+    {
+      title: 'Session',
+      path: '/session',
+      role:['Admin'],
+   
+    },
     ],
     icon: (
       <SvgIcon fontSize="small">
@@ -146,7 +152,8 @@ export const USER_ROLE = {
   APPLYPASS: 'Apply for Pass',
   APPROVER: 'Approver',
   COUNTERPASS: 'Counter pass',
-  SECURITY:'Secretary'
+  SECURITY:'Secretary',
+  
   // Add more details as needed
 };
 
@@ -161,7 +168,10 @@ export const userPermissions = (router) => {
       case USER_ROLE.APPROVER:
         return ['visitingpasses','approval'].includes(stringWithoutSlash)
         case USER_ROLE.SECURITY:
+          return ['visitingpasses','approval'].includes(stringWithoutSlash) 
+           case USER_ROLE.SECRETARY:
           return ['visitingpasses','approval'].includes(stringWithoutSlash)  
+          
   }
 };
 
