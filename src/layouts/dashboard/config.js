@@ -72,16 +72,7 @@ export const items = [
       //   </SvgIcon>
       // )
     },
-    {
-      title: 'Counter Pass',
-      path: '/counterpass',
-      role:['Admin'],
-    //  icon: (
-    //       <SvgIcon fontSize="small">
-    //         <ShoppingBagIcon />
-    //       </SvgIcon>
-    //     )
-    },
+    
     {
       title: 'Session',
       path: '/session',
@@ -97,7 +88,16 @@ export const items = [
     
   },
  
-
+  {
+    title: 'Counter Pass',
+    path: '/counterpass',
+    role:['Admin','Counter pass'],
+   icon: (
+        <SvgIcon fontSize="small">
+          <ShoppingBagIcon />
+        </SvgIcon>
+      )
+  },
   {
     title: 'Request Pass',
     path: '/visitingpasses',

@@ -198,7 +198,7 @@ const Page = () => {
                   error={!!(formik.touched.loginId && formik.errors.loginId)}
                   fullWidth
                   helperText={formik.touched.loginId && formik.errors.loginId}
-                  label="Login Id"
+                  label="Mobile no. / Email id "
                   name="loginId"
                  // onBlur={checkLoginId}
                   

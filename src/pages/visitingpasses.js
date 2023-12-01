@@ -207,7 +207,7 @@ const Page = (props) => {
             property: 'DepId'
         },
         {
-            name: 'Designation Id',
+            name: 'Designation Name',
             property: 'DesignationId'
         },
         {
@@ -485,7 +485,7 @@ const Page = (props) => {
         <>
             <Head>
                 <title>
-                    Customers | Devias Kit
+                    Customers | Telangana Assembly
                 </title>
             </Head>
             <Box

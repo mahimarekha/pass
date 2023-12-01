@@ -100,7 +100,7 @@ const Page = () => {
     <>
       <Head>
         <title>
-          Login | Devias Kit
+          Login | Telangana Assembly
         </title>
       </Head>
       <Box

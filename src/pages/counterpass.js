@@ -405,11 +405,11 @@ const Page = (props) => {
         });
     }
 
-    // const getQrCodeList = (data) => {
-    //     if (data && data.QRCodeNumber) {
-    //         router.push('/qrcode/' + data.QRCodeNumber);
-    //     }
-    // }
+    const getQrCodeList = (data) => {
+        if (data && data.QRCodeNumber) {
+            router.push('/qrcode/' + data.QRCodeNumber);
+        }
+    }
     const formReset = () => {
         setVisitingPasses({
             // DepId: userDetails ? userDetails.Depid : '',
@@ -455,9 +455,9 @@ const Page = (props) => {
                 delete values.VisitingPassesId;
                 VisitingPassesService.creteVisitingPasses(values).then((res) => {
                     const data = res.length > 0 ? res[res.length - 1] : null
-                    // if (data) {
-                    //     getQrCodeList(data);
-                    // }
+                    if (data) {
+                        getQrCodeList(data);
+                    }
                     getVisitingPassesList();
                     resetForm();
                     formReset();
@@ -478,7 +478,7 @@ const Page = (props) => {
         <>
             <Head>
                 <title>
-                    Customers | Devias Kit
+                    Customers | Telangana Assembly
                 </title>
             </Head>
             <Box
@@ -693,7 +693,7 @@ const Page = (props) => {
                             count={visitingPassesList.length}
                             items={visitingPassesList}
                             editDetails={editVisitingPasses}
-                            // qrCode={getQrCodeList}
+                             qrCode={getQrCodeList}
                             onDeselectAll={customersSelection.handleDeselectAll}
                             onDeselectOne={customersSelection.handleDeselectOne}
                             onPageChange={handlePageChange}

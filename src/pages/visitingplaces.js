@@ -371,7 +371,7 @@ const Page = () => {
         <>
             <Head>
                 <title>
-                    Customers | Devias Kit
+                    Customers | Telangana Assembly
                 </title>
             </Head>
             <Box

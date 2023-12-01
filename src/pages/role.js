@@ -356,7 +356,7 @@ const Page = (context) => {
         <>
             <Head>
                 <title>
-                    Customers | Devias Kit
+                    Customers | Telangana Assembly
                 </title>
             </Head>
             <Box

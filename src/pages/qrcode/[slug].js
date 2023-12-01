@@ -15,6 +15,7 @@ import UsersService from "../../service/UsersService";
 import { CustomersSearch } from 'src/sections/customer/customers-search';
 import { applyPagination } from 'src/utils/apply-pagination';
 import VisitingPassesService from "../../service/VisitingPassService";
+import Dialog from '@mui/material/Dialog';
 
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -248,7 +249,24 @@ const handleCloseQR = () => {
         });
     }
    const printTicket =()=>{
-    window.print();
+    // const printContent = document.getElementById('divToPrint');
+
+    // if (printContent) {
+    //   const newWindow = window.open('', '_blank');
+    //  // newWindow.document.write('<html><head><title>Print</title></head><body>');
+    //   newWindow.document.write(printContent.innerHTML);
+    //   //newWindow.document.write('</body></html>');
+    //   newWindow.document.close();
+    //   newWindow.print();
+    // } else {
+    //   console.error('Div not found.');
+    // }
+    setOpen(true)
+    setTimeout(() => {
+        window.print(); 
+        setOpen(false)
+    }, 500);
+    
    }
     const getQrCodeList = () => {
         
@@ -276,7 +294,7 @@ const handleCloseQR = () => {
         <>
           
         {openQR ? 
-        <Container maxWidth="sm">
+        <Container maxWidth="sm" id="divToPrint" >
          <Card variant='outlined' style={{width:500,height:300}}
          
          sx={{
@@ -378,7 +396,98 @@ const handleCloseQR = () => {
         <h3 style={{color:'red'}}>No Qr code generated</h3>
         </Grid></Grid></Container>
     }
+         <Dialog open={open} >
+         <Container maxWidth="sm" id="divToPrint" >
+         <Card variant='outlined' style={{width:500,height:300}}
+         
+         sx={{
+            boxShadow: 3,
            
+            bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#101010' : '#fff'),
+            color: (theme) =>
+              theme.palette.mode === 'dark' ? 'grey.300' : 'grey.800',
+        
+           
+         
+            fontSize: '0.875rem',
+            fontWeight: '700',
+          }}>
+       <CardHeader
+        sx={{
+            
+           
+            bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#101010' : 'gray'),
+           
+    
+            
+          }}
+        action={
+          <p style={{color:"black"}}>ENTRTY PASS</p>
+        }
+        title="TELANGANA ASSEMBLY"
+       titleTypographyProps={{color:"black",fontSize:'20px'}}
+      />
+      <CardContent style={{backgroundColor: "gainsboro"}}>
+      
+        
+      
+        <Grid container spacing={2}>
+                <Grid xs={8} md={8} container spacing={1} >
+                <Grid xs={12} md={12}>
+                    <label style={{fontWeight:"bold"}}>
+                     Full Name
+                    </label>
+                  
+                        <div style={{fontWeight:"500", fontSize:"17px", textTransform:"uppercase"}}>
+                            {getQR?.FullName}
+                             </div>
+                       
+                   
+                </Grid>
+                
+                <Grid xs={6} md={6}>
+                    <label style={{fontWeight:"bold"}}>
+                      From Date
+                    </label>
+                    <div style={{fontWeight:"500", fontSize:"17px", textTransform:"uppercase"}}>
+                        
+                    {getQR?.FromDate} 
+                        </div>
+                   
+                </Grid>
+                <Grid xs={6} md={6}>
+                    <label style={{fontWeight:"bold"}}>
+                      To Date
+                    </label>
+                    <div style={{fontWeight:"500", fontSize:"17px", textTransform:"uppercase"}}>
+
+                    {getQR?.ToDate} 
+                        </div>
+                </Grid>
+                <Grid xs={6} md={6}>
+                    <label style={{fontWeight:"bold"}}>
+                      Purpose Of Visiting
+                    </label>
+                    <div style={{fontWeight:"500", fontSize:"15px"}}>
+
+                    {getQR?.PurposeVisting} 
+                        </div>
+                </Grid>
+                </Grid>
+                <Grid xs={4} md={4}>
+                <Typography sx={{ mb: 1.5 }} color="text.secondary">
+        <img src={getQR?.qrcode} alt='qrcode' style={{ width:'100%',border:'1px solid #2f3746'}}/>
+        </Typography>
+                </Grid>
+            </Grid>
+      </CardContent>
+      <CardActions>
+     
+      </CardActions>
+    </Card>
+   
+    </Container>
+                                </Dialog>   
           
         </>
     );
