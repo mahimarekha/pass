@@ -423,10 +423,9 @@ const Page = (props) => {
         VisitingPassesService.upadeVisitingPasses(values).then((res) => {
            // handleClose();
             getVisitingPassesList();
-           
             alert(" VisitingPasses Updated Successfully.");
 
-            if(res && res.QRCodeNumber){
+            if(res && res.QRCodeNumber && status=="Approved"){
                 
                     router.push('/qrcode/' + res.QRCodeNumber);
                 

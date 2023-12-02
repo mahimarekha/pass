@@ -29,6 +29,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import SessionService from "../service/SessionService";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
@@ -253,6 +254,7 @@ const Page = (props) => {
     const [visitingPassesList, setVisitingPassesList] = useState([]);
     const [qrCodeList, setQrCodeList] = useState([]);
     const [status, setStatus] = useState([]);
+    const [sessionList, setSessionList] = useState([]);
     const [visitingPlacesList, setVisitingPlacesList] = useState([]);
     const [visitingPasses, setVisitingPasses] = useState({
         //UserId: '',
@@ -268,6 +270,7 @@ const Page = (props) => {
         PurposeVisting: '',
         // VisitingStatus: true,
         // Remarks: '',
+        SessionId:'',
     });
     const [validToDate, setValidToDate] = useState('');
     const [fromDate, setFromDate] = useState('');
@@ -294,7 +297,7 @@ const Page = (props) => {
         PurposeVisting: Yup.string().required('Purpose Visting is required'),
         // VisitingStatus: Yup.string(true).required('Visiting Status is required'),
         // Remarks: Yup.string().required('Remarks Status is required'),
-
+        SessionId:Yup.string().required('Session name is required'),
     });
 
     useEffect(() => {
@@ -302,7 +305,7 @@ const Page = (props) => {
             router.push('/unauthorized');
         }
         getDepartmentList();
-
+        getSessionList();
         getVisitingPassesList();
         getUsersList();
         getVisitingPlacesList();
@@ -313,8 +316,19 @@ const Page = (props) => {
             setDepartmentList([]);
             setVisitingPlacesList([]);
             setDesignationList([]);
+            setSessionList([]);
         }
     }, []);
+    const getSessionList = () => {
+        SessionService.GetLatestSessionFrom().then((res) => {
+            if(res){
+                setSessionList([res]);
+            }
+            
+        }).catch((err) => {
+            // setError(err.message);
+        });
+    }
     const getDesignationList = () => {
         DesignationsService.getAllDesignations().then((res) => {
             const result = res.map((response) => {
@@ -425,6 +439,7 @@ const Page = (props) => {
             PurposeVisting: '',
             // VisitingStatus: true,
             // Remarks: '',
+            SessionId:'',
         })
     }
     const formik = useFormik({
@@ -645,6 +660,28 @@ const Page = (props) => {
                                                         error={formik.touched.PurposeVisting && Boolean(formik.errors.PurposeVisting)}
                                                         helperText={formik.touched.PurposeVisting && formik.errors.PurposeVisting}
                                                     />
+                                                </Grid>
+                                                <Grid xs={6} md={6}>
+                                                    <FormControl variant="standard" fullWidth>
+                                                        <InputLabel id="studentName">Session Name</InputLabel>
+                                                        <Select
+                                                            labelId="SessionId"
+                                                            id="SessionId"
+                                                            label="Session Name"
+                                                            name="SessionId"
+                                                            value={formik.values.SessionId}
+                                                            onChange={e => { formik.handleChange(e); }}
+                                                        
+                                                        >
+                                                            <MenuItem value="">
+                                                                <em>None</em>
+                                                            </MenuItem>
+                                                            {sessionList.map(({ index, SessionID, Sno }) => (
+                                                                <MenuItem key={index} value={Sno}>{SessionID}
+                                                                </MenuItem>
+                                                            ))}
+                                                        </Select>
+                                                    </FormControl>
                                                 </Grid>
                                                 <Grid xs={12} md={12}>
 
