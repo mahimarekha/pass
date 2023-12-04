@@ -204,7 +204,7 @@ const Page = (props) => {
     const [openQR, setOpenQR] = React.useState(false);
     const [getQR, setQR] = React.useState('');
     const headersList = [{
-        name: 'Visiting PassesId',
+        name: 'Visiting Pass Name',
         property: 'VisitingPassesId'
     },
 
@@ -277,14 +277,12 @@ const Page = (props) => {
     const [toDate, setToDate] = useState('');
     const router = useRouter();
     const currentDate = dayjs();
-
     const tomorrow = dayjs().add(3, 'day');
     const validationSchema = Yup.object().shape({
         //UserId: Yup.string().required('User Id is required'),
         // DepId: Yup.string().required('Department Id is required'),
         // DesignationId: Yup.string().required('Designation Id is required'),
         VisitingPlacesId: Yup.string().required('VisitingPlacesId  is required'),
-
         FullName: Yup.string().required('Full Name is required'),
         MobileNumber: Yup.string().required()
             .matches(/^[0-9]+$/, "Must be only digits")
@@ -451,7 +449,7 @@ const Page = (props) => {
             values.FromDate = fromDate;
             // values.ToDate = toDate;
             values.VisitingStatus = status;
-
+            values.CreatedBy  = userDetails ? userDetails.UserId : '';
             if (!fromDate ) {
                 alert("Please select  date ");
                 return;
@@ -684,26 +682,18 @@ const Page = (props) => {
                                                     </FormControl>
                                                 </Grid>
                                                 <Grid xs={12} md={12}>
-
                                                     <Button onClick={handleClose}>Cancel</Button>
                                                     <Button type="submit">{visitingPasses.VisitingPassesId ? 'Update' : 'Add'}</Button>
-
                                                 </Grid>
-
                                             </Grid>
-
-
                                         </DialogContent>
                                     </form>
                                 </Dialog>
-
                                 <Dialog open={openQR} onClose={handleCloseQR}>
                                     <DialogTitle>Scan QR code</DialogTitle>
                                     <DialogContent >
                                         <DialogContentText>
-
                                         </DialogContentText>
-
                                         <Grid container spacing={2}>
                                             <img src={getQR} alt='qrcode' />
 

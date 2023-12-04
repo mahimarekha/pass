@@ -330,13 +330,24 @@ const handleCloseQR = () => {
       
         <Grid container spacing={2}>
                 <Grid xs={8} md={8} container spacing={1} >
-                <Grid xs={12} md={12}>
+                <Grid xs={6} md={6}>
                     <label style={{fontWeight:"bold"}}>
                      Full Name
                     </label>
                   
                         <div style={{fontWeight:"500", fontSize:"17px", textTransform:"uppercase"}}>
                             {getQR?.FullName}
+                             </div>
+                       
+                   
+                </Grid>
+                <Grid xs={6} md={6}>
+                    <label style={{fontWeight:"bold"}}>
+                    Department Name
+                    </label>
+                  
+                        <div style={{fontWeight:"500", fontSize:"17px", textTransform:"uppercase"}}>
+                            {getQR?.DepartmentName}
                              </div>
                        
                    
@@ -361,6 +372,15 @@ const handleCloseQR = () => {
                     {getQR?.ToDate} 
                         </div>
                 </Grid>
+                 <Grid xs={6} md={6}>
+                    <label style={{fontWeight:"bold"}}>
+                    Visiting Place
+                    </label>
+                    <div style={{fontWeight:"500", fontSize:"15px"}}>
+
+                    {getQR?.VisitingPlace} 
+                        </div>
+                </Grid>
                 <Grid xs={6} md={6}>
                     <label style={{fontWeight:"bold"}}>
                       Purpose Of Visiting
@@ -370,6 +390,8 @@ const handleCloseQR = () => {
                     {getQR?.PurposeVisting} 
                         </div>
                 </Grid>
+
+               
                 </Grid>
                 <Grid xs={4} md={4}>
                 <Typography sx={{ mb: 1.5 }} color="text.secondary">
@@ -433,13 +455,24 @@ const handleCloseQR = () => {
       
         <Grid container spacing={2}>
                 <Grid xs={8} md={8} container spacing={1} >
-                <Grid xs={12} md={12}>
+                <Grid xs={6} md={6}>
                     <label style={{fontWeight:"bold"}}>
                      Full Name
                     </label>
                   
                         <div style={{fontWeight:"500", fontSize:"17px", textTransform:"uppercase"}}>
                             {getQR?.FullName}
+                             </div>
+                       
+                   
+                </Grid>
+                <Grid xs={6} md={6}>
+                    <label style={{fontWeight:"bold"}}>
+                    Department Name
+                    </label>
+                  
+                        <div style={{fontWeight:"500", fontSize:"17px", textTransform:"uppercase"}}>
+                            {getQR?.DepartmentName}
                              </div>
                        
                    
@@ -462,6 +495,15 @@ const handleCloseQR = () => {
                     <div style={{fontWeight:"500", fontSize:"17px", textTransform:"uppercase"}}>
 
                     {getQR?.ToDate} 
+                        </div>
+                </Grid>
+                 <Grid xs={6} md={6}>
+                    <label style={{fontWeight:"bold"}}>
+                    Visiting Place
+                    </label>
+                    <div style={{fontWeight:"500", fontSize:"15px"}}>
+
+                    {getQR?.VisitingPlace} 
                         </div>
                 </Grid>
                 <Grid xs={6} md={6}>

@@ -388,6 +388,7 @@ const Page = (props) => {
     }
 
     const getQrCodeList = (data) => {
+        
         if (data && data.QRCodeNumber) {
             router.push('/qrcode/' + data.QRCodeNumber);
         }
@@ -424,11 +425,8 @@ const Page = (props) => {
            // handleClose();
             getVisitingPassesList();
             alert(" VisitingPasses Updated Successfully.");
-
             if(res && res.QRCodeNumber && status=="Approved"){
-                
                     router.push('/qrcode/' + res.QRCodeNumber);
-                
             }
         }).catch((err) => {
         });

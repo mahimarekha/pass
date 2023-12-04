@@ -17,6 +17,10 @@ return requests.post(`/GetVisitingPasses`,{});
   creteVisitingPasses(body){
     return requests.post('/PostVisitingPasses',body); 
   },
+  cretePostVisitingPasses(body){
+    return requests.post('/PostVisitingPassesList',body); 
+  },
+  
 //   deleteDesignations(body){
 //     return requests.delete(`/RemoveDesignations/${body._id}`); 
 //   },

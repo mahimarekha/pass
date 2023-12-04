@@ -204,7 +204,7 @@ const Page = (props) => {
     const headersList = [
         {
             name: 'Department Name',
-            property: 'DepId'
+            property: 'DepartmentName'
         },
         {
             name: 'Designation Name',
@@ -220,13 +220,13 @@ const Page = (props) => {
             property: 'FromDate'
         },
         {
-            name: 'Visiting PassesId',
-            property: 'VisitingPassesId'
+            name: 'From Date',
+            property: 'ToDate'
         },
        
         {
             name: 'Visiting Places Name ',
-            property: 'VisitingPlacesId'
+            property: 'VisitingPlace'
         },
 
         
@@ -234,6 +234,29 @@ const Page = (props) => {
             name: 'Edit',
             property: 'Edit'
         },
+
+    ];
+    const dataAddheadersList = [
+      
+        {
+            name: 'Designation Name',
+            property: 'DesignationId'
+        },
+        {
+            name: 'FullName ',
+            property: 'FullName'
+        },
+        
+        {
+            name: 'From Date',
+            property: 'FromDate'
+        },
+        {
+            name: 'To Date',
+            property: 'ToDate'
+        },
+
+       
 
     ];
     const userDetails = JSON.parse(window.sessionStorage.getItem('userDetails'));
@@ -248,6 +271,7 @@ const Page = (props) => {
     const [visitingPassesList, setVisitingPassesList] = useState([]);
     const [qrCodeList, setQrCodeList] = useState([]);
     const [status, setStatus] = useState([]);
+    const [multipleRequest, setMultipleRequest] = useState([]);
     const [visitingPlacesList, setVisitingPlacesList] = useState([]);
     const [visitingPasses, setVisitingPasses] = useState({
         //UserId: '',
@@ -288,7 +312,7 @@ const Page = (props) => {
         PurposeVisting: Yup.string().required('Purpose Visting is required'),
         // VisitingStatus: Yup.string(true).required('Visiting Status is required'),
         // Remarks: Yup.string().required('Remarks Status is required'),
-        SessionId:Yup.string().required('Session name is required'),
+        SessionId:Yup.string(),
 
     });
     
@@ -434,6 +458,7 @@ const Page = (props) => {
             SessionId:'',
         })
     }
+   
     const formik = useFormik({
         initialValues: visitingPasses,
         enableReinitialize: true,
@@ -443,6 +468,7 @@ const Page = (props) => {
             values.FromDate = fromDate;
             values.ToDate = toDate;
             values.VisitingStatus = status;
+            values.CreatedBy =  userDetails ? userDetails.UserId : '';
        
             if (!fromDate || !toDate) {
                 alert("Please select start date and end date");
@@ -459,28 +485,42 @@ const Page = (props) => {
                 });
             }
             else {
+                
                 delete values.VisitingPassesId;
-                VisitingPassesService.creteVisitingPasses(values).then((res) => {
-                    const data = res.length > 0 ? res[res.length - 1] : null
-                    // if (data) {
-                    //     getQrCodeList(data);
-                    // }
-                    getVisitingPassesList();
-                    resetForm();
-                    formReset();
-                    handleClose();
-                    alert(" VisitingPasses Added Successfully.");
-                    // props.history.push('/app/vendor');
-                })
-                    .catch((err) => {
-
-                        alert(err)
-                    })
+               
+               
+                setMultipleRequest(prvArray=>[...prvArray, values]);
+               
+               
             }
+           
+           
 
         },
     });
+    const multiple = () => {
 
+
+         if(!multipleRequest.length){
+            alert("Please Enter Required Details");
+            return;
+         }
+        VisitingPassesService.cretePostVisitingPasses(multipleRequest).then((res) => {
+            const data = res.length > 0 ? res[res.length - 1] : null
+            setMultipleRequest([]);
+            getVisitingPassesList();
+            formik.resetForm()
+            formReset();
+             handleClose();
+           
+            alert(" VisitingPasses Added Successfully.");
+            
+        })
+            .catch((err) => {
+
+                alert(err)
+            })
+    };
     return (
         <>
             <Head>
@@ -546,10 +586,10 @@ const Page = (props) => {
                                     Apply For New Pass
 
                                 </Button>
-                                <Dialog open={open} onClose={handleClose}>
+                                <Dialog open={open} onClose={handleClose} maxWidth="800" >
                                     <DialogTitle>Request Pass</DialogTitle>
                                     <form onSubmit={formik.handleSubmit}  >
-                                        <DialogContent style={{ width: 530 }}>
+                                        <DialogContent style={{ width: 900 }}>
                                             <DialogContentText>
 
                                             </DialogContentText>
@@ -578,7 +618,7 @@ const Page = (props) => {
                                                         </Select>
                                                     </FormControl>
                                                 </Grid> */}
-                                                <Grid xs={6} md={6}>
+                                                <Grid xs={6} md={4}>
                                                     <FormControl variant="standard" fullWidth>
                                                         <InputLabel id="studentName">Department Name</InputLabel>
                                                         <Select
@@ -602,7 +642,7 @@ const Page = (props) => {
                                                     </FormControl>
                                                 </Grid>
 
-                                                <Grid xs={6} md={6}>
+                                                <Grid xs={6} md={4}>
                                                     <FormControl variant="standard" fullWidth>
                                                         <InputLabel id="studentName">VisitingPlaces Name</InputLabel>
                                                         <Select
@@ -625,7 +665,7 @@ const Page = (props) => {
                                                     </FormControl>
                                                 </Grid>
 
-                                                <Grid xs={6} md={6}>
+                                                <Grid xs={6} md={4}>
                                                     <TextField
                                                         InputProps={{ style: { width: 245 } }}
 
@@ -641,7 +681,7 @@ const Page = (props) => {
                                                         helperText={formik.touched.FullName && formik.errors.FullName}
                                                     />
                                                 </Grid>
-                                                <Grid xs={6} md={6}>
+                                                <Grid xs={6} md={4}>
                                                     <FormControl variant="standard" fullWidth>
                                                         <InputLabel id="studentName">Designation Name</InputLabel>
                                                         <Select
@@ -663,7 +703,7 @@ const Page = (props) => {
                                                         </Select>
                                                     </FormControl>
                                                 </Grid>
-                                                <Grid xs={6} md={6}>
+                                                <Grid xs={6} md={4}>
                                                     <TextField
                                                         InputProps={{ style: { width: 245 } }}
 
@@ -698,7 +738,7 @@ const Page = (props) => {
                                                     />
                                                 </Grid> */}
 
-                                                <Grid xs={6} md={6}>
+                                                <Grid xs={6} md={4}>
                                                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                                                         <DatePicker InputProps={{ style: { width: 245 } }}
                                                             id="FromDate"
@@ -722,7 +762,7 @@ const Page = (props) => {
                                                             helperText={formik.touched.FromDate && formik.errors.FromDate} />
                                                     </LocalizationProvider>
                                                 </Grid>
-                                                <Grid xs={6} md={6}>
+                                                <Grid xs={6} md={4}>
                                                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                                                         <DatePicker InputProps={{ style: { width: 245 } }}
                                                             disablePast
@@ -750,7 +790,7 @@ const Page = (props) => {
 
                                                 </Grid>
 
-                                                <Grid xs={6} md={6}>
+                                                <Grid xs={6} md={4}>
                                                     <TextField
                                                         InputProps={{ style: { width: 245 } }}
 
@@ -766,7 +806,7 @@ const Page = (props) => {
                                                         helperText={formik.touched.PurposeVisting && formik.errors.PurposeVisting}
                                                     />
                                                 </Grid>
-                                                <Grid xs={6} md={6}>
+                                                <Grid xs={6} md={4}>
                                                     <FormControl variant="standard" fullWidth>
                                                         <InputLabel id="studentName">Session Name</InputLabel>
                                                         <Select
@@ -841,21 +881,44 @@ const Page = (props) => {
                                                     />
                                                 </Grid> */}
 
+                                                <Grid xs={12} md={12} style={{textAlign:'end'}}>
+                                                {visitingPasses.VisitingPassesId ? <Button onClick={handleClose} style={{marginRight:'10px'}} variant="contained" color="error">Cancel</Button> :''}
 
-
-
-                                                <Grid xs={12} md={12}>
-
-                                                    <Button onClick={handleClose}>Cancel</Button>
-                                                    <Button type="submit">{visitingPasses.VisitingPassesId ? 'Update' : 'Add'}</Button>
+                                                    
+                                                    <Button  variant="contained"  type="submit">{visitingPasses.VisitingPassesId ? 'Update' : 'Add More'}</Button>
 
                                                 </Grid>
 
                                             </Grid>
-
-
+                                            {visitingPasses.VisitingPassesId ? '':      <div>
+                               <CustomersTable
+                            headersList={dataAddheadersList}
+                            count={multipleRequest.length}
+                            items={multipleRequest}
+                            editDetails={editVisitingPasses}
+                            // qrCode={getQrCodeList}
+                            onDeselectAll={customersSelection.handleDeselectAll}
+                            onDeselectOne={customersSelection.handleDeselectOne}
+                            onPageChange={handlePageChange}
+                            onRowsPerPageChange={handleRowsPerPageChange}
+                            onSelectAll={customersSelection.handleSelectAll}
+                            onSelectOne={customersSelection.handleSelectOne}
+                            page={page}
+                            maxheight={180}
+                            rowsPerPage={rowsPerPage}
+                            selected={customersSelection.selected}
+                        />  <DialogActions >
+                                   
+                        <Button onClick={handleClose} variant="contained" color="error">Cancel</Button>
+<Button  onClick={multiple} variant="contained" color="success">Save</Button>
+</DialogActions>
+                                    </div>}
+                                  
                                         </DialogContent>
+
                                     </form>
+                                
+                                    
                                 </Dialog>
 
                                 <Dialog open={openQR} onClose={handleCloseQR}>

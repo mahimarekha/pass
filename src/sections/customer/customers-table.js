@@ -12,7 +12,8 @@ import {
   TableHead,
   TablePagination,
   TableRow,
-  Typography
+  Typography,
+  TableContainer
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
@@ -42,7 +43,8 @@ export const CustomersTable = (props) => {
     rowsPerPage = 0,
     selected = [],
     accepect,
-    reject
+    reject,
+    maxheight = 400
   } = props;
 
   const selectedSome = (selected.length > 0) && (selected.length < items.length);
@@ -50,8 +52,9 @@ export const CustomersTable = (props) => {
   return (
     <Card>
       <Scrollbar>
+        <TableContainer style={{maxHeight:maxheight}}>
         <Box sx={{ minWidth: 800 }}>
-          <Table>
+          <Table stickyHeader>
             <TableHead>
               <TableRow>
                 {headersList.map((headers, index) => {
@@ -129,7 +132,9 @@ export const CustomersTable = (props) => {
               })}
             </TableBody>
           </Table>
+
         </Box>
+        </TableContainer>
       </Scrollbar>
       <TablePagination
         component="div"
