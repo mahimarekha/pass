@@ -468,6 +468,17 @@ const handleCloseQR = () => {
                 </Grid>
                 <Grid xs={6} md={6}>
                     <label style={{fontWeight:"bold"}}>
+                    Designation 
+                    </label>
+                  
+                        <div style={{fontWeight:"500", fontSize:"17px", textTransform:"uppercase"}}>
+                            {getQR?.DesignationName}
+                             </div>
+                       
+                   
+                </Grid>
+                <Grid xs={6} md={6}>
+                    <label style={{fontWeight:"bold"}}>
                     Department Name
                     </label>
                   
@@ -477,7 +488,6 @@ const handleCloseQR = () => {
                        
                    
                 </Grid>
-                
                 <Grid xs={6} md={6}>
                     <label style={{fontWeight:"bold"}}>
                       From Date

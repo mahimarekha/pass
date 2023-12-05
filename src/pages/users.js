@@ -195,6 +195,7 @@ const useCustomerIds = (customers) => {
 };
 
 const Page = () => {
+    const userDetails = JSON.parse(window.sessionStorage.getItem('userDetails'));
     const [page, setPage] = useState(0);
     const [open, setOpen] = React.useState(false);
     const headersList = [{
@@ -388,7 +389,7 @@ const Page = () => {
         enableReinitialize: true,
         validationSchema: validationSchema,
         onSubmit: (values, { resetForm }) => {
-           
+            values.CreatedBy =  userDetails ? userDetails.UserId : '';
             if (users.UserId) {
                 UsersService.upadeUsers(values).then((res) => {
                     handleClose();

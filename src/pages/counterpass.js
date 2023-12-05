@@ -295,7 +295,7 @@ const Page = (props) => {
         PurposeVisting: Yup.string().required('Purpose Visting is required'),
         // VisitingStatus: Yup.string(true).required('Visiting Status is required'),
         // Remarks: Yup.string().required('Remarks Status is required'),
-        SessionId:Yup.string().required('Session name is required'),
+        SessionId:Yup.string(),
     });
 
     useEffect(() => {
