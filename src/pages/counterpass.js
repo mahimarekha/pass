@@ -38,6 +38,8 @@ import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
 import dayjs from 'dayjs';
 import { userPermissions } from '../layouts/dashboard/config';
 import { useRouter } from 'next/router'
+import Webcam from "react-webcam";
+import { useRef } from "react";
 const now = new Date();
 const data = [
     {
@@ -200,6 +202,7 @@ const useCustomerIds = (customers) => {
 const Page = (props) => {
 
     const [page, setPage] = useState(0);
+    const [open1, setOpen1] = React.useState(false);
     const [open, setOpen] = React.useState(false);
     const [openQR, setOpenQR] = React.useState(false);
     const [getQR, setQR] = React.useState('');
@@ -245,13 +248,13 @@ const Page = (props) => {
 
     ];
     const dataAddheadersList = [
-      
-       
+
+
         {
             name: 'FullName ',
             property: 'FullName'
         },
-        
+
         {
             name: 'From Date',
             property: 'FromDate'
@@ -261,7 +264,7 @@ const Page = (props) => {
             property: 'ToDate'
         },
 
-       
+
 
     ];
     const userDetails = JSON.parse(window.sessionStorage.getItem('userDetails'));
@@ -277,6 +280,9 @@ const Page = (props) => {
     const [status, setStatus] = useState([]);
     const [sessionList, setSessionList] = useState([]);
     const [visitingPlacesList, setVisitingPlacesList] = useState([]);
+    const webcamRef = useRef(null);
+    const [imgSrc, setImgSrc] = useState(null);
+    const [mirrored, setMirrored] = useState(false);
     const [visitingPasses, setVisitingPasses] = useState({
         //UserId: '',
         // DepId: '',
@@ -291,7 +297,7 @@ const Page = (props) => {
         PurposeVisting: '',
         // VisitingStatus: true,
         // Remarks: '',
-        SessionId:'',
+        SessionId: '',
     });
     const [validToDate, setValidToDate] = useState('');
     const [fromDate, setFromDate] = useState('');
@@ -316,7 +322,7 @@ const Page = (props) => {
         PurposeVisting: Yup.string().required('Purpose Visting is required'),
         // VisitingStatus: Yup.string(true).required('Visiting Status is required'),
         // Remarks: Yup.string().required('Remarks Status is required'),
-        SessionId:Yup.string(),
+        SessionId: Yup.string(),
     });
 
     useEffect(() => {
@@ -338,12 +344,40 @@ const Page = (props) => {
             setSessionList([]);
         }
     }, []);
+    const capture = useCallback(() => {
+        retake();
+        //setImgSrc(null);
+        const imageSrc = webcamRef.current.getScreenshot();
+        console.log(imageSrc);
+        setOpen1(false);
+        setImgSrc(imageSrc);
+    }, [webcamRef]);
+
+    const handleImageUpload = (e) => {
+        const file = e.target.files[0];
+    
+        if (file) {
+          const reader = new FileReader();
+    
+          reader.onloadend = () => {
+            // Set the base64 image in the state
+            setImgSrc(reader.result);
+          };
+    
+          // Read the file as a data URL
+          reader.readAsDataURL(file);
+        }
+      };
+
+    const retake = () => {
+        setImgSrc(null);
+    };
     const getSessionList = () => {
         SessionService.GetLatestSessionFrom().then((res) => {
-            if(res){
+            if (res) {
                 setSessionList([res]);
             }
-            
+
         }).catch((err) => {
             // setError(err.message);
         });
@@ -367,6 +401,12 @@ const Page = (props) => {
         setStatus("");
         setFromDate('');
         setToDate('');
+    };
+    const handleClickOpen1 = () => {
+        setOpen1(true);
+    };
+    const handleClickclose1 = () => {
+        setOpen1(false);
     };
     const handleClose = () => {
         setOpen(false);
@@ -458,20 +498,25 @@ const Page = (props) => {
             PurposeVisting: '',
             // VisitingStatus: true,
             // Remarks: '',
-            SessionId:'',
+            SessionId: '',
         })
     }
     const formik = useFormik({
         initialValues: visitingPasses,
         enableReinitialize: true,
         validationSchema: validationSchema,
+
         onSubmit: (values, { resetForm }) => {
+            const result = departmentList.find(({ DepartmentName }) => DepartmentName === "Counter Pass");
+
             values.UserId = userDetails ? userDetails.UserId : '';
             values.FromDate = fromDate;
             values.ToDate = toDate;
             values.VisitingStatus = status;
-            values.CreatedBy  = userDetails ? userDetails.UserId : '';
-            if (!fromDate ) {
+            values.CreatedBy = userDetails ? userDetails.UserId : '';
+            values.DepId = result.Depid;
+
+            if (!fromDate) {
                 alert("Please select  date ");
                 return;
             }
@@ -487,10 +532,10 @@ const Page = (props) => {
             }
             else {
                 delete values.VisitingPassesId;
-               
-               
-                setMultipleRequest(prvArray=>[...prvArray, values]);
-               
+
+
+                setMultipleRequest(prvArray => [...prvArray, values]);
+
             }
 
         },
@@ -498,26 +543,26 @@ const Page = (props) => {
     const multiple = () => {
 
 
-        if(!multipleRequest.length){
-           alert("Please Enter Required Details");
-           return;
+        if (!multipleRequest.length) {
+            alert("Please Enter Required Details");
+            return;
         }
-       VisitingPassesService.cretePostVisitingPasses(multipleRequest).then((res) => {
-           const data = res.length > 0 ? res[res.length - 1] : null
-           setMultipleRequest([]);
-           getVisitingPassesList();
-           formik.resetForm()
-           formReset();
+        VisitingPassesService.cretePostVisitingPasses(multipleRequest).then((res) => {
+            const data = res.length > 0 ? res[res.length - 1] : null
+            setMultipleRequest([]);
+            getVisitingPassesList();
+            formik.resetForm()
+            formReset();
             handleClose();
-          
-           alert(" Counter Pass Added Successfully.");
-           
-       })
-           .catch((err) => {
 
-               alert(err)
-           })
-   };
+            alert(" Counter Pass Added Successfully.");
+
+        })
+            .catch((err) => {
+
+                alert(err)
+            })
+    };
     return (
         <>
             <Head>
@@ -648,7 +693,7 @@ const Page = (props) => {
                                                         helperText={formik.touched.MobileNumber && formik.errors.MobileNumber}
                                                     />
                                                 </Grid>
-                                                
+
                                                 <Grid xs={6} md={4}>
                                                     <LocalizationProvider dateAdapter={AdapterDayjs} >
                                                         {/* <DatePicker defaultValue={dayjs(new Date())} /> */}
@@ -663,7 +708,7 @@ const Page = (props) => {
                                                                 formik.setFieldValue("date", value, true);
                                                                 const dayDifference = value.diff(currentDate, 'day');
                                                                 setFromDate(value.format('YYYY-MM-DD'));
-                                                                setValidToDate(dayjs().add(dayDifference , 'day'));
+                                                                setValidToDate(dayjs().add(dayDifference, 'day'));
                                                             }}
                                                             sx={{ width: 250 }}
                                                             InputLabelProps={{
@@ -726,7 +771,6 @@ const Page = (props) => {
                                                             name="SessionId"
                                                             value={formik.values.SessionId}
                                                             onChange={e => { formik.handleChange(e); }}
-                                                        
                                                         >
                                                             <MenuItem value="">
                                                                 <em>None</em>
@@ -738,15 +782,56 @@ const Page = (props) => {
                                                         </Select>
                                                     </FormControl>
                                                 </Grid>
-                                                {/* <Grid xs={6} md={6}>
-                                                <Button variant="contained" color="primary" component="span">
-        Upload
-      </Button>
-      </Grid> */}
+                                                <Grid xs={12} md={12}>
+                                                    <div>
+                                                        {imgSrc ? (
+                                                    <img src={imgSrc} alt="webcam" height={100} width={100} />
+ ):''
+} 
+                                                    </div>
+                                                <Button variant="contained" onClick={handleClickOpen1}>Capture From WebCam</Button>  OR       <input type="file" style={{"display":"inline-block","padding":"10px 20px","backgroundColor":"#6366F1","color":"#fff","border":"none","borderRadius":"12px","cursor":"pointer"}} onChange={handleImageUpload} />
+                                                    
+                                                </Grid>
+                                                <Dialog open={open1} onClose={handleClose}  PaperProps={{
+    sx: {
+     height:'400'
+    }
+  }}  maxWidth="500">
+                                                <div className="container">
+                                                        {imgSrc ? (
+                                                            <img src={imgSrc} height={400} width={500}  alt="webcam" />
+                                                        ) : (
+                                                            <Webcam height={400} width={500} ref={webcamRef} mirrored={mirrored} screenshotFormat="image/jpeg"
+                                                            screenshotQuality={0.8} />
+                                                        )}
+                                                        {/* <div className="controls">
+                                                            <div>
+                                                                <input
+                                                                    type="checkbox"
+                                                                    checked={mirrored}
+                                                                    onChange={(e) => setMirrored(e.target.checked)}
+                                                                />
+                                                                <label>Mirror</label>
+                                                            </div>
+                                                        </div> */}
+                                                        <div className="btn-container" style={{marginTop:'10px',textAlign: 'center','marginBottom': '10px'}}>
+                                                        <Button variant="contained" color='error' onClick={handleClickclose1} style={{marginRight:'5px'}}>Cancel</Button>
+
+                                                            {imgSrc ? (
+                                                                <Button variant="contained" onClick={retake}>Retake photo</Button>
+                                                            ) : (
+                                                                <Button variant="contained" onClick={capture}>Capture photo</Button>
+                                                            )}
+
+                                                        </div>
+                                                    </div>
+                                   
+                                </Dialog>
+                                                
                                                 <Grid item xs={12} style={{ marginTop: '30px' }}>
-                  <span style={{ fontSize: '17px', color: 'rgb(16 182 128)' }} >Referenced By :</span>
-                </Grid>
-                <Grid xs={6} md={4}>
+                                                    <span style={{ fontSize: '17px', color: 'rgb(16 182 128)' }} >Referenced By :</span>
+                                                </Grid>
+                                                <Grid xs={6} md={4}>
                                                     <TextField
                                                         InputProps={{ style: { width: 245 } }}
 
@@ -798,37 +883,39 @@ const Page = (props) => {
                                                     <Button onClick={handleClose}>Cancel</Button>
                                                     <Button type="submit">{visitingPasses.VisitingPassesId ? 'Update' : 'Add'}</Button>
                                                 </Grid> */}
-                                                 <Grid xs={12} md={12} style={{textAlign:'end'}}>
-                                                {visitingPasses.VisitingPassesId ? <Button onClick={handleClose} style={{marginRight:'10px'}} variant="contained" color="error">Cancel</Button> :''}
+                                                <Grid xs={12} md={12} style={{ textAlign: 'end' }}>
+                                                    {visitingPasses.VisitingPassesId ? <Button onClick={handleClose} style={{ marginRight: '10px' }} variant="contained" color="error">Cancel</Button> : ''}
 
-                                                    
-                                                    <Button  variant="contained"  type="submit">{visitingPasses.VisitingPassesId ? 'Update' : 'Add More'}</Button>
+
+                                                    <Button variant="contained" type="submit">{visitingPasses.VisitingPassesId ? 'Update' : 'Add More'}</Button>
 
                                                 </Grid>
                                             </Grid>
-                                            {visitingPasses.VisitingPassesId ? '':      <div>
-                               <CustomersTable
-                            headersList={dataAddheadersList}
-                            count={multipleRequest.length}
-                            items={multipleRequest}
-                            editDetails={editVisitingPasses}
-                            // qrCode={getQrCodeList}
-                            onDeselectAll={customersSelection.handleDeselectAll}
-                            onDeselectOne={customersSelection.handleDeselectOne}
-                            onPageChange={handlePageChange}
-                            onRowsPerPageChange={handleRowsPerPageChange}
-                            onSelectAll={customersSelection.handleSelectAll}
-                            onSelectOne={customersSelection.handleSelectOne}
-                            page={page}
-                            maxheight={180}
-                            rowsPerPage={rowsPerPage}
-                            selected={customersSelection.selected}
-                        />  <DialogActions >
-                                   
-                        <Button onClick={handleClose} variant="contained" color="error">Cancel</Button>
-<Button  onClick={multiple} variant="contained" color="success">Save</Button>
-</DialogActions>
-                                    </div>}
+                                            {visitingPasses.VisitingPassesId ? '' : <div>
+                                                <CustomersTable
+                                                    headersList={dataAddheadersList}
+                                                    count={multipleRequest.length}
+                                                    items={multipleRequest}
+                                                    editDetails={editVisitingPasses}
+                                                    // qrCode={getQrCodeList}
+                                                    onDeselectAll={customersSelection.handleDeselectAll}
+                                                    onDeselectOne={customersSelection.handleDeselectOne}
+                                                    onPageChange={handlePageChange}
+                                                    onRowsPerPageChange={handleRowsPerPageChange}
+                                                    onSelectAll={customersSelection.handleSelectAll}
+                                                    onSelectOne={customersSelection.handleSelectOne}
+                                                    page={page}
+                                                    maxheight={180}
+                                                    rowsPerPage={rowsPerPage}
+                                                    selected={customersSelection.selected}
+                                                />  <DialogActions >
+
+                                                    <Button onClick={handleClose} variant="contained" color="error">Cancel</Button>
+                                                    <Button onClick={multiple} variant="contained" color="success">Save</Button>
+                                                    console.log(result);
+
+                                                </DialogActions>
+                                            </div>}
                                         </DialogContent>
                                     </form>
                                 </Dialog>
@@ -863,7 +950,7 @@ const Page = (props) => {
                             count={visitingPassesList.length}
                             items={visitingPassesList}
                             editDetails={editVisitingPasses}
-                             qrCode={getQrCodeList}
+                            qrCode={getQrCodeList}
                             onDeselectAll={customersSelection.handleDeselectAll}
                             onDeselectOne={customersSelection.handleDeselectOne}
                             onPageChange={handlePageChange}

@@ -297,8 +297,8 @@ const Page = (props) => {
         if(!userPermissions(router.asPath)){
             router.push('/unauthorized');
           }
-       // getDepartmentList();
-
+       
+       getDepartmentList();
         getVisitingPassesList();
         // getUsersList();
         // getVisitingPlacesList();
@@ -306,7 +306,7 @@ const Page = (props) => {
         return () => {
             setVisitingPassesList([]);
             // setUsersList([]);
-            // setDepartmentList([]);
+            setDepartmentList([]);
             // setVisitingPlacesList([]);
             // setDesignationList([]);
         }
@@ -367,7 +367,13 @@ const Page = (props) => {
     // };
 
    
-  
+    const getDepartmentList = () => {
+        DepartmentService.getAllDepartment().then((res) => {
+            setDepartmentList(res);
+        }).catch((err) => {
+            // setError(err.message);
+        });
+    }
     const getVisitingPassesList = () => {
         const filter= {
          "Types":"Dates",
@@ -496,42 +502,117 @@ const Page = (props) => {
             >
                 <Container maxWidth="xl">
                     <Stack spacing={3}>
-                        <Stack
-                            direction="row"
-                            justifyContent="space-between"
-                            spacing={4}
-                        >
-                            <Stack spacing={1}>
+                      
+                           
                                 <Typography variant="h4">
                                  Approval
                                 </Typography>
-                                <Stack
-                                    alignItems="center"
-                                    direction="row"
-                                    spacing={1}
-                                >
-                                    <Button
-                                        color="inherit"
-                                        startIcon={(
-                                            <SvgIcon fontSize="small">
-                                                <ArrowUpOnSquareIcon />
-                                            </SvgIcon>
-                                        )}
+                               
+                                    <Grid container spacing={2} columns={12} style={{ margin: 10 }}  >
+                                    <Grid item xs={12} sm={6} md={2}>
+                                                    <LocalizationProvider dateAdapter={AdapterDayjs} >
+                                                        {/* <DatePicker defaultValue={dayjs(new Date())} /> */}
+                                                        <DatePicker 
+                                                            id="FromDate"
+                                                            slotProps={{ textField: { size: "small", error: false } }}
+                                                            name="FromDate"
+                                                            label="From Date"
+                                                            
+                                                            onChange={(value) => {
+
+                                                                formik.setFieldValue("date", value, true);
+                                                                const dayDifference = value.diff(currentDate, 'day');
+                                                                setFromDate(value.format('YYYY-MM-DD'));
+                                                                setValidToDate(dayjs().add(dayDifference , 'day'));
+                                                            }}
+                                                            sx={{ width: 200 }}
+                                                            InputLabelProps={{
+                                                                shrink: true,
+                                                            }}
+                                                            value={fromDate}
+                                                            // error={formik.touched.FromDate && Boolean(formik.errors.FromDate)}
+                                                            // helperText={formik.touched.FromDate && formik.errors.FromDate} 
+                                                            />
+                                                    </LocalizationProvider>
+                                                </Grid>
+                                                <Grid item xs={12} sm={6} md={3}>
+                                                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                                        <DatePicker 
+                                                            
+                                                            onChange={(value) => {
+                                                                formik.setFieldValue("date", value, true)
+                                                                setToDate(value.format('YYYY-MM-DD'));
+                                                            }}
+                                                            minDate={validToDate}
+                                                            id="ToDate"
+                                                            slotProps={{ textField: { size: "small", error: false } }}
+                                                            name="ToDate"
+                                                            label="ToDate"
+                                                            type="date"
+                                                            sx={{ width: 200 }}
+                                                            InputLabelProps={{
+                                                                shrink: true,
+                                                            }}
+                                                            value={toDate}
+                                                            // error={formik.touched.ToDate && Boolean(formik.errors.ToDate)}
+                                                            // helperText={formik.touched.ToDate && formik.errors.ToDate}
+                                                        />
+
+                                                    </LocalizationProvider>
+
+
+                                                </Grid>
+                                                <Grid item xs={12} sm={6} md={3}>
+                                                <FormControl variant="standard" style={{width:"200px"}}>
+                                                        <InputLabel id="studentName">Department Name</InputLabel>
+                                                        <Select
+                                                            labelId="Depid"
+                                                            id="Depid"
+                                                            label="Department Name"
+                                                            name="DepId"
+                                                            disabled={userDetails?.RoleName === 'Admin' ? false : true}
+                                                            value={formik.values.DepId}
+                                                            onChange={e => { formik.handleChange(e); }}
+                                                        // onChange={e => { setDepartmentId(e.target.value) }}
+                                                        >
+                                                            <MenuItem value="">
+                                                                <em>None</em>
+                                                            </MenuItem>
+                                                            {departmentList.map(({ index, Depid, DepartmentName }) => (
+                                                                <MenuItem key={index} value={Depid}>{DepartmentName}
+                                                                </MenuItem>
+                                                            ))}
+                                                        </Select>
+                                                    </FormControl>
+                                                </Grid>
+                                                <Grid item xs={12} sm={6} md={3}>
+                                                <FormControl variant="standard" style={{width:"200px"}}>
+                                                        <InputLabel id="demo-simple-select-standard-label"> Status</InputLabel>
+                                                        <Select
+                                                            labelId="demo-simple-select-standard-label"
+                                                            id="demo-simple-select-standard"
+                                                            label=" Status"
+                                                            name="VisitingPassesStatus"
+                                                        >
+                                                            <MenuItem value="">
+                                                                <em>None</em>
+                                                            </MenuItem>
+                                                            <MenuItem value="Approved">Approved</MenuItem>
+                                                            <MenuItem value="Rejected">Rejected</MenuItem>
+                                                            <MenuItem value="Pending">Pending</MenuItem>
+                                                        </Select>
+                                                    </FormControl>
+                                                </Grid>
+                                                <Grid item xs={12}  sm={6} md={1}>
+                                    <Button style={{ backgroundColor: 'rgb(48 135 91)', color: 'white' }}
+                                        type="button"
+                                        onClick={() => onSubmit()} variant="contained"
                                     >
-                                        Import
-                                    </Button>
-                                    <Button
-                                        color="inherit"
-                                        startIcon={(
-                                            <SvgIcon fontSize="small">
-                                                <ArrowDownOnSquareIcon />
-                                            </SvgIcon>
-                                        )}
-                                    >
-                                        Export
-                                    </Button>
-                                </Stack>
-                            </Stack>
+                                        Search</Button>
+                                </Grid>
+                                                </Grid>
+                                
+                           
                             <div>
 
                                 {/* <Button
@@ -861,7 +942,7 @@ const Page = (props) => {
 
                                 </Dialog>
                             </div>
-                        </Stack>
+                       
                         {/* <CustomersSearch /> */}
                         <CustomersTable
                             headersList={headersList}
