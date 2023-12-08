@@ -663,7 +663,7 @@ const Page = (props) => {
                                                                 formik.setFieldValue("date", value, true);
                                                                 const dayDifference = value.diff(currentDate, 'day');
                                                                 setFromDate(value.format('YYYY-MM-DD'));
-                                                                setValidToDate(dayjs().add(dayDifference + 1, 'day'));
+                                                                setValidToDate(dayjs().add(dayDifference , 'day'));
                                                             }}
                                                             sx={{ width: 250 }}
                                                             InputLabelProps={{
@@ -738,11 +738,11 @@ const Page = (props) => {
                                                         </Select>
                                                     </FormControl>
                                                 </Grid>
-                                                <Grid xs={6} md={6}>
+                                                {/* <Grid xs={6} md={6}>
                                                 <Button variant="contained" color="primary" component="span">
         Upload
       </Button>
-      </Grid>
+      </Grid> */}
                                                 <Grid item xs={12} style={{ marginTop: '30px' }}>
                   <span style={{ fontSize: '17px', color: 'rgb(16 182 128)' }} >Reacteferenced By :</span>
                 </Grid>

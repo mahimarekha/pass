@@ -753,7 +753,7 @@ const Page = (props) => {
                                                                 formik.setFieldValue("date", value, true);
                                                                 const dayDifference = value.diff(currentDate, 'day');
                                                                 setFromDate(value.format('YYYY-MM-DD'));
-                                                                setValidToDate(dayjs().add(dayDifference + 1, 'day'));
+                                                                setValidToDate(dayjs().add(dayDifference , 'day'));
                                                             }}
                                                             sx={{ width: 250 }}
                                                             InputLabelProps={{
