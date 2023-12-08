@@ -583,16 +583,16 @@ const Page = (props) => {
                                     Add
 
                                 </Button>
-                                <Dialog open={open} onClose={handleClose}>
+                                <Dialog open={open} onClose={handleClose} maxWidth="800">
                                     <DialogTitle>Counter Pass</DialogTitle>
                                     <form onSubmit={formik.handleSubmit}  >
-                                        <DialogContent style={{ width: 530 }}>
+                                        <DialogContent style={{ width: 900 }}>
                                             <DialogContentText>
 
                                             </DialogContentText>
 
                                             <Grid container spacing={2}>
-                                                <Grid xs={6} md={6}>
+                                                <Grid xs={6} md={4}>
                                                     <FormControl variant="standard" fullWidth>
                                                         <InputLabel id="studentName">VisitingPlaces Id</InputLabel>
                                                         <Select
@@ -614,7 +614,7 @@ const Page = (props) => {
                                                         </Select>
                                                     </FormControl>
                                                 </Grid>
-                                                <Grid xs={6} md={6}>
+                                                <Grid xs={6} md={4}>
                                                     <TextField
                                                         InputProps={{ style: { width: 245 } }}
 
@@ -630,7 +630,7 @@ const Page = (props) => {
                                                         helperText={formik.touched.FullName && formik.errors.FullName}
                                                     />
                                                 </Grid>
-                                                <Grid xs={6} md={6}>
+                                                <Grid xs={6} md={4}>
                                                     <TextField
                                                         InputProps={{ style: { width: 245 } }}
 
@@ -649,7 +649,7 @@ const Page = (props) => {
                                                     />
                                                 </Grid>
                                                 
-                                                <Grid xs={6} md={6}>
+                                                <Grid xs={6} md={4}>
                                                     <LocalizationProvider dateAdapter={AdapterDayjs} >
                                                         {/* <DatePicker defaultValue={dayjs(new Date())} /> */}
                                                         <DatePicker InputProps={{ style: { width: 245 } }}
@@ -674,7 +674,7 @@ const Page = (props) => {
                                                             helperText={formik.touched.FromDate && formik.errors.FromDate} />
                                                     </LocalizationProvider>
                                                 </Grid>
-                                                <Grid xs={6} md={6}>
+                                                <Grid xs={6} md={4}>
                                                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                                                         <DatePicker InputProps={{ style: { width: 245 } }}
                                                             disablePast
@@ -701,7 +701,7 @@ const Page = (props) => {
 
 
                                                 </Grid>
-                                                <Grid xs={6} md={6}>
+                                                <Grid xs={6} md={4}>
                                                     <TextField
                                                         InputProps={{ style: { width: 245 } }}
                                                         margin="dense"
@@ -716,7 +716,7 @@ const Page = (props) => {
                                                         helperText={formik.touched.PurposeVisting && formik.errors.PurposeVisting}
                                                     />
                                                 </Grid>
-                                                <Grid xs={6} md={6}>
+                                                <Grid xs={6} md={4}>
                                                     <FormControl variant="standard" fullWidth>
                                                         <InputLabel id="studentName">Session Name</InputLabel>
                                                         <Select
@@ -744,9 +744,9 @@ const Page = (props) => {
       </Button>
       </Grid> */}
                                                 <Grid item xs={12} style={{ marginTop: '30px' }}>
-                  <span style={{ fontSize: '17px', color: 'rgb(16 182 128)' }} >Reacteferenced By :</span>
+                  <span style={{ fontSize: '17px', color: 'rgb(16 182 128)' }} >Referenced By :</span>
                 </Grid>
-                <Grid xs={6} md={6}>
+                <Grid xs={6} md={4}>
                                                     <TextField
                                                         InputProps={{ style: { width: 245 } }}
 
@@ -762,7 +762,7 @@ const Page = (props) => {
                                                         helperText={formik.touched.FirstName && formik.errors.FirstName}
                                                     />
                                                 </Grid>
-                                                <Grid xs={6} md={6}>
+                                                <Grid xs={6} md={4}>
                                                     <TextField
                                                         InputProps={{ style: { width: 245 } }}
 
@@ -778,7 +778,7 @@ const Page = (props) => {
                                                         helperText={formik.touched.MiddleName && formik.errors.MiddleName}
                                                     />
                                                 </Grid>
-                                                <Grid xs={6} md={6}>
+                                                <Grid xs={6} md={4}>
                                                     <TextField
                                                         InputProps={{ style: { width: 245 } }}
 

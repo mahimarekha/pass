@@ -203,7 +203,10 @@ const Page = (props) => {
     const [openQR, setOpenQR] = React.useState(false);
     const [getQR, setQR] = React.useState('');
     const headersList = [
-        
+        {
+            name: 'Session Id',
+            property: 'SessionID'
+        },
         {
             name: 'Session StartDate',
             property: 'SessionStartDate'
