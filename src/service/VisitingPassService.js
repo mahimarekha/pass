@@ -1,8 +1,8 @@
 import requests from './httpService';
 const VisitingPassesService = {
-  getAllVisitingPasses() {
+  getAllVisitingPasses(body) {
 
-return requests.post(`/GetVisitingPasses`,{});
+return requests.post(`/GetVisitingPasses`,body);
   },
   getAllVisitingPassesByDate(data) {
 

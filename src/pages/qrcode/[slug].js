@@ -295,7 +295,7 @@ const handleCloseQR = () => {
           
         {openQR ? 
         <Container maxWidth="sm" id="divToPrint" >
-         <Card variant='outlined' style={{width:500,height:300}}
+         <Card variant='outlined' style={{width:600,height:380}}
          
          sx={{
             boxShadow: 3,
@@ -326,9 +326,17 @@ const handleCloseQR = () => {
       />
       <CardContent style={{backgroundColor: "gainsboro"}}>
       
-        
+          {/* <Grid xs={6} md={6}> */}
+                    {/* <label style={{fontWeight:"bold"}}>
+                    Visiting Place
+                    </label> */}
+                    <div style={{fontWeight:"bold", fontSize:"20px", textAlign:'center'}}>
+
+                    {getQR?.VisitingPlace} 
+                        </div>
+                {/* </Grid> */}
       
-        <Grid container spacing={2}>
+        <Grid style={{paddingTop:"15px"}} container spacing={2} >
                 <Grid xs={8} md={8} container spacing={1} >
                 <Grid xs={6} md={6}>
                     <label style={{fontWeight:"bold"}}>
@@ -337,6 +345,17 @@ const handleCloseQR = () => {
                   
                         <div style={{fontWeight:"500", fontSize:"17px", textTransform:"uppercase"}}>
                             {getQR?.FullName}
+                             </div>
+                       
+                   
+                </Grid>
+                <Grid xs={6} md={6}>
+                    <label style={{fontWeight:"bold"}}>
+                    Designation
+                    </label>
+                  
+                        <div style={{fontWeight:"500", fontSize:"17px", textTransform:"uppercase"}}>
+                            {getQR?.Designation}
                              </div>
                        
                    
@@ -372,7 +391,7 @@ const handleCloseQR = () => {
                     {getQR?.ToDate} 
                         </div>
                 </Grid>
-                 <Grid xs={6} md={6}>
+                 {/* <Grid xs={6} md={6}>
                     <label style={{fontWeight:"bold"}}>
                     Visiting Place
                     </label>
@@ -380,7 +399,7 @@ const handleCloseQR = () => {
 
                     {getQR?.VisitingPlace} 
                         </div>
-                </Grid>
+                </Grid> */}
                 <Grid xs={6} md={6}>
                     <label style={{fontWeight:"bold"}}>
                       Purpose Of Visiting
@@ -420,7 +439,7 @@ const handleCloseQR = () => {
     }
          <Dialog open={open} >
          <Container maxWidth="sm" id="divToPrint" >
-         <Card variant='outlined' style={{width:500,height:300}}
+         <Card variant='outlined' style={{width:600,height:380}}
          
          sx={{
             boxShadow: 3,
@@ -428,20 +447,12 @@ const handleCloseQR = () => {
             bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#101010' : '#fff'),
             color: (theme) =>
               theme.palette.mode === 'dark' ? 'grey.300' : 'grey.800',
-        
-           
-         
             fontSize: '0.875rem',
             fontWeight: '700',
           }}>
        <CardHeader
         sx={{
-            
-           
             bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#101010' : 'gray'),
-           
-    
-            
           }}
         action={
           <p style={{color:"black"}}>ENTRTY PASS</p>
@@ -450,9 +461,6 @@ const handleCloseQR = () => {
        titleTypographyProps={{color:"black",fontSize:'20px'}}
       />
       <CardContent style={{backgroundColor: "gainsboro"}}>
-      
-        
-      
         <Grid container spacing={2}>
                 <Grid xs={8} md={8} container spacing={1} >
                 <Grid xs={6} md={6}>
@@ -472,7 +480,7 @@ const handleCloseQR = () => {
                     </label>
                   
                         <div style={{fontWeight:"500", fontSize:"17px", textTransform:"uppercase"}}>
-                            {getQR?.DesignationName}
+                            {getQR?.Designation}
                              </div>
                        
                    

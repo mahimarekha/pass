@@ -203,11 +203,11 @@ const Page = (props) => {
     const headersList = [
         {
             name: 'Department Name',
-            property: 'DepId'
+            property: 'DepartmentName'
         },
         {
             name: 'Designation Name',
-            property: 'DesignationId'
+            property: 'Designation'
         },
         {
             name: 'FullName ',
@@ -225,7 +225,7 @@ const Page = (props) => {
        
         {
             name: 'Visiting Places Name ',
-            property: 'VisitingPlacesId'
+            property: 'VisitingPlace'
         },
         {
         name:'Status',
@@ -373,6 +373,8 @@ const Page = (props) => {
          "Types":"Dates",
           "FromDate":dayjs().format("YYYY-MM-DD"),
           "ToDate": dayjs().add(3, 'day').format("YYYY-MM-DD"),
+           DeptId: userDetails ? userDetails.Depid : '',
+          
           }
         VisitingPassesService.getAllVisitingPassesByDate(filter).then((res) => {
             const result = res.map((response) => {

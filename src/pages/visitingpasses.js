@@ -208,7 +208,7 @@ const Page = (props) => {
         },
         {
             name: 'Designation Name',
-            property: 'DesignationId'
+            property: 'Designation'
         },
         {
             name: 'FullName ',
@@ -422,7 +422,9 @@ const Page = (props) => {
         });
     }
     const getVisitingPassesList = () => {
-        VisitingPassesService.getAllVisitingPasses().then((res) => {
+
+        
+        VisitingPassesService.getAllVisitingPasses({DatesWithStatusDepId: userDetails ? userDetails.Depid : ''}).then((res) => {
             const result = res.map((response) => {
                 return {
                     ...response,

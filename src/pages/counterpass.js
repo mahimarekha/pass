@@ -203,6 +203,7 @@ const Page = (props) => {
     const [open, setOpen] = React.useState(false);
     const [openQR, setOpenQR] = React.useState(false);
     const [getQR, setQR] = React.useState('');
+    const [multipleRequest, setMultipleRequest] = useState([]);
     const headersList = [{
         name: 'Visiting Pass Name',
         property: 'VisitingPassesId'
@@ -243,6 +244,26 @@ const Page = (props) => {
     },
 
     ];
+    const dataAddheadersList = [
+      
+       
+        {
+            name: 'FullName ',
+            property: 'FullName'
+        },
+        
+        {
+            name: 'From Date',
+            property: 'FromDate'
+        },
+        {
+            name: 'To Date',
+            property: 'ToDate'
+        },
+
+       
+
+    ];
     const userDetails = JSON.parse(window.sessionStorage.getItem('userDetails'));
     const [designationsList, setDesignationList] = useState([]);
     const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -266,7 +287,7 @@ const Page = (props) => {
         MobileNumber: '',
         // VisitorPhotoPath: '',
         FromDate: '',
-        // ToDate: '',
+        ToDate: '',
         PurposeVisting: '',
         // VisitingStatus: true,
         // Remarks: '',
@@ -291,7 +312,7 @@ const Page = (props) => {
 
         // VisitorPhotoPath: Yup.string().required('Visitor Photo Path is required'),
         FromDate: Yup.string(),
-        // ToDate: Yup.string(),
+        ToDate: Yup.string(),
         PurposeVisting: Yup.string().required('Purpose Visting is required'),
         // VisitingStatus: Yup.string(true).required('Visiting Status is required'),
         // Remarks: Yup.string().required('Remarks Status is required'),
@@ -344,8 +365,8 @@ const Page = (props) => {
         setOpen(true);
         formReset();
         setStatus("");
-        setFromDate(dayjs());
-        // setToDate(dayjs());
+        setFromDate('');
+        setToDate('');
     };
     const handleClose = () => {
         setOpen(false);
@@ -367,7 +388,7 @@ const Page = (props) => {
         []
     );
     const editVisitingPasses = (visitingPasses) => {
-        // setToDate(dayjs(visitingPasses.ToDate))
+        setToDate(dayjs(visitingPasses.ToDate))
         setFromDate(dayjs(visitingPasses.FromDate))
 
         setVisitingPasses(visitingPasses);
@@ -433,7 +454,7 @@ const Page = (props) => {
             //  VisitorAddress: '',
             // VisitorPhotoPath: '',
             FromDate: "",
-            // ToDate: '',
+            ToDate: '',
             PurposeVisting: '',
             // VisitingStatus: true,
             // Remarks: '',
@@ -447,7 +468,7 @@ const Page = (props) => {
         onSubmit: (values, { resetForm }) => {
             values.UserId = userDetails ? userDetails.UserId : '';
             values.FromDate = fromDate;
-            // values.ToDate = toDate;
+            values.ToDate = toDate;
             values.VisitingStatus = status;
             values.CreatedBy  = userDetails ? userDetails.UserId : '';
             if (!fromDate ) {
@@ -460,33 +481,43 @@ const Page = (props) => {
                     getVisitingPassesList();
                     resetForm();
                     formReset();
-                    alert(" VisitingPasses Updated Successfully.");
+                    alert(" Counter Pass Updated Successfully.");
                 }).catch((err) => {
                 });
             }
             else {
                 delete values.VisitingPassesId;
-                VisitingPassesService.creteVisitingPasses(values).then((res) => {
-                    const data = res.length > 0 ? res[res.length - 1] : null
-                    if (data) {
-                        getQrCodeList(data);
-                    }
-                    getVisitingPassesList();
-                    resetForm();
-                    formReset();
-                    handleClose();
-                    alert(" VisitingPasses Added Successfully.");
-                    // props.history.push('/app/vendor');
-                })
-                    .catch((err) => {
-
-                        alert(err)
-                    })
+               
+               
+                setMultipleRequest(prvArray=>[...prvArray, values]);
+               
             }
 
         },
     });
+    const multiple = () => {
 
+
+        if(!multipleRequest.length){
+           alert("Please Enter Required Details");
+           return;
+        }
+       VisitingPassesService.cretePostVisitingPasses(multipleRequest).then((res) => {
+           const data = res.length > 0 ? res[res.length - 1] : null
+           setMultipleRequest([]);
+           getVisitingPassesList();
+           formik.resetForm()
+           formReset();
+            handleClose();
+          
+           alert(" Counter Pass Added Successfully.");
+           
+       })
+           .catch((err) => {
+
+               alert(err)
+           })
+   };
     return (
         <>
             <Head>
@@ -625,7 +656,7 @@ const Page = (props) => {
                                                             id="FromDate"
                                                             slotProps={{ textField: { size: "small", error: false } }}
                                                             name="FromDate"
-                                                            label="Date"
+                                                            label="From Date"
                                                             disablePast
                                                             onChange={(value) => {
 
@@ -644,9 +675,35 @@ const Page = (props) => {
                                                     </LocalizationProvider>
                                                 </Grid>
                                                 <Grid xs={6} md={6}>
+                                                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                                        <DatePicker InputProps={{ style: { width: 245 } }}
+                                                            disablePast
+                                                            onChange={(value) => {
+                                                                formik.setFieldValue("date", value, true)
+                                                                setToDate(value.format('YYYY-MM-DD'));
+                                                            }}
+                                                            minDate={validToDate}
+                                                            id="ToDate"
+                                                            slotProps={{ textField: { size: "small", error: false } }}
+                                                            name="ToDate"
+                                                            label="ToDate"
+                                                            type="date"
+                                                            sx={{ width: 250 }}
+                                                            InputLabelProps={{
+                                                                shrink: true,
+                                                            }}
+                                                            value={toDate}
+                                                            error={formik.touched.ToDate && Boolean(formik.errors.ToDate)}
+                                                            helperText={formik.touched.ToDate && formik.errors.ToDate}
+                                                        />
+
+                                                    </LocalizationProvider>
+
+
+                                                </Grid>
+                                                <Grid xs={6} md={6}>
                                                     <TextField
                                                         InputProps={{ style: { width: 245 } }}
-
                                                         margin="dense"
                                                         id="PurposeVisting"
                                                         name="PurposeVisting"
@@ -681,11 +738,97 @@ const Page = (props) => {
                                                         </Select>
                                                     </FormControl>
                                                 </Grid>
-                                                <Grid xs={12} md={12}>
+                                                <Grid xs={6} md={6}>
+                                                <Button variant="contained" color="primary" component="span">
+        Upload
+      </Button>
+      </Grid>
+                                                <Grid item xs={12} style={{ marginTop: '30px' }}>
+                  <span style={{ fontSize: '17px', color: 'rgb(16 182 128)' }} >Reacteferenced By :</span>
+                </Grid>
+                <Grid xs={6} md={6}>
+                                                    <TextField
+                                                        InputProps={{ style: { width: 245 } }}
+
+                                                        margin="dense"
+                                                        id="FirstName"
+                                                        name="FirstName"
+                                                        label="Name"
+                                                        type="text"
+                                                        variant="standard"
+                                                        value={formik.values.FirstName}
+                                                        onChange={formik.handleChange}
+                                                        error={formik.touched.FirstName && Boolean(formik.errors.FirstName)}
+                                                        helperText={formik.touched.FirstName && formik.errors.FirstName}
+                                                    />
+                                                </Grid>
+                                                <Grid xs={6} md={6}>
+                                                    <TextField
+                                                        InputProps={{ style: { width: 245 } }}
+
+                                                        margin="dense"
+                                                        id="MiddleName"
+                                                        name="MiddleName"
+                                                        label="Designation"
+                                                        type="text"
+                                                        variant="standard"
+                                                        value={formik.values.MiddleName}
+                                                        onChange={formik.handleChange}
+                                                        error={formik.touched.MiddleName && Boolean(formik.errors.MiddleName)}
+                                                        helperText={formik.touched.MiddleName && formik.errors.MiddleName}
+                                                    />
+                                                </Grid>
+                                                <Grid xs={6} md={6}>
+                                                    <TextField
+                                                        InputProps={{ style: { width: 245 } }}
+
+                                                        margin="dense"
+                                                        id="LastName"
+                                                        name="LastName"
+                                                        label="Department"
+                                                        type="text"
+                                                        variant="standard"
+                                                        value={formik.values.LastName}
+                                                        onChange={formik.handleChange}
+                                                        error={formik.touched.LastName && Boolean(formik.errors.LastName)}
+                                                        helperText={formik.touched.LastName && formik.errors.LastName}
+                                                    />
+                                                </Grid>
+                                                {/* <Grid xs={12} md={12}>
                                                     <Button onClick={handleClose}>Cancel</Button>
                                                     <Button type="submit">{visitingPasses.VisitingPassesId ? 'Update' : 'Add'}</Button>
+                                                </Grid> */}
+                                                 <Grid xs={12} md={12} style={{textAlign:'end'}}>
+                                                {visitingPasses.VisitingPassesId ? <Button onClick={handleClose} style={{marginRight:'10px'}} variant="contained" color="error">Cancel</Button> :''}
+
+                                                    
+                                                    <Button  variant="contained"  type="submit">{visitingPasses.VisitingPassesId ? 'Update' : 'Add More'}</Button>
+
                                                 </Grid>
                                             </Grid>
+                                            {visitingPasses.VisitingPassesId ? '':      <div>
+                               <CustomersTable
+                            headersList={dataAddheadersList}
+                            count={multipleRequest.length}
+                            items={multipleRequest}
+                            editDetails={editVisitingPasses}
+                            // qrCode={getQrCodeList}
+                            onDeselectAll={customersSelection.handleDeselectAll}
+                            onDeselectOne={customersSelection.handleDeselectOne}
+                            onPageChange={handlePageChange}
+                            onRowsPerPageChange={handleRowsPerPageChange}
+                            onSelectAll={customersSelection.handleSelectAll}
+                            onSelectOne={customersSelection.handleSelectOne}
+                            page={page}
+                            maxheight={180}
+                            rowsPerPage={rowsPerPage}
+                            selected={customersSelection.selected}
+                        />  <DialogActions >
+                                   
+                        <Button onClick={handleClose} variant="contained" color="error">Cancel</Button>
+<Button  onClick={multiple} variant="contained" color="success">Save</Button>
+</DialogActions>
+                                    </div>}
                                         </DialogContent>
                                     </form>
                                 </Dialog>
