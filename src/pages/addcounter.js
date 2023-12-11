@@ -35,11 +35,13 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 // import { useRouter } from 'next/navigation';
 import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
-import dayjs from 'dayjs';
+
 import { userPermissions } from '../layouts/dashboard/config';
 import { useRouter } from 'next/router'
 import Webcam from "react-webcam";
 import { useRef } from "react";
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+ import dayjs, { Dayjs } from 'dayjs';
 const now = new Date();
 const data = [
     {
@@ -263,8 +265,11 @@ const Page = (props) => {
         SessionId: '',
     });
     const [validToDate, setValidToDate] = useState('');
-    const [fromDate, setFromDate] = useState('');
-    const [toDate, setToDate] = useState('');
+    // const [fromDate, setFromDate] = useState('');
+    const current = dayjs().format('YYYY-MM-DDTHH:mm:ss');
+
+    const [fromDate, setFromDate]= useState(dayjs(current));
+    const [toDate, setToDate] = useState(dayjs(current));
     const router = useRouter();
     const currentDate = dayjs();
     const tomorrow = dayjs().add(3, 'day');
@@ -670,8 +675,31 @@ const Page = (props) => {
                                                 </Grid>
                                                 <Grid xs={6} md={3}>
                                                     <LocalizationProvider dateAdapter={AdapterDayjs} >
+                                                    <DateTimePicker
+        
+          id="FromDate"
+          slotProps={{ textField: { size: "small", error: false } }}
+          name="FromDate"
+          label="From Date"
+          disablePast
+          onChange={(value) => {
+
+              formik.setFieldValue("date", value, true);
+              const dayDifference = value.diff(currentDate, 'day');
+              setFromDate(value.format('YYYY-MM-DDTHH:mm:ss'));
+              setValidToDate(dayjs().add(dayDifference, 'day'));
+          }}
+          sx={{ width: 250 }}
+          InputLabelProps={{
+              shrink: true,
+          }}
+          value={fromDate}
+        //   value={value}
+        //   onChange={handleChange}
+          renderInput={(params) => <TextField {...params} />}
+        />
                                                         {/* <DatePicker defaultValue={dayjs(new Date())} /> */}
-                                                        <DatePicker InputProps={{ style: { width: 245 } }}
+                                                        {/* <DatePicker InputProps={{ style: { width: 245 } }}
                                                             id="FromDate"
                                                             slotProps={{ textField: { size: "small", error: false } }}
                                                             name="FromDate"
@@ -690,16 +718,16 @@ const Page = (props) => {
                                                             }}
                                                             value={fromDate}
                                                             error={formik.touched.FromDate && Boolean(formik.errors.FromDate)}
-                                                            helperText={formik.touched.FromDate && formik.errors.FromDate} />
+                                                            helperText={formik.touched.FromDate && formik.errors.FromDate} /> */}
                                                     </LocalizationProvider>
                                                 </Grid>
                                                 <Grid xs={6} md={3}>
                                                     <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                                        <DatePicker InputProps={{ style: { width: 245 } }}
+                                                        <DateTimePicker InputProps={{ style: { width: 245 } }}
                                                             disablePast
                                                             onChange={(value) => {
                                                                 formik.setFieldValue("date", value, true)
-                                                                setToDate(value.format('YYYY-MM-DD'));
+                                                                setToDate(value.format('YYYY-MM-DDTHH:mm:ss'));
                                                             }}
                                                             minDate={validToDate}
                                                             id="ToDate"

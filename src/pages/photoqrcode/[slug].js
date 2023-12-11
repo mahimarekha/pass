@@ -382,7 +382,7 @@ const handleCloseQR = () => {
                          </label>
                          <div style={{fontWeight:"500", fontSize:"17px", textTransform:"uppercase"}}>
                              
-                         {getQRDetails?.FromDate} 
+                         {dayjs(getQRDetails?.FromDate).format('YYYY-MM-DD HH:mm')} 
                              </div>
                         
                      </Grid>
@@ -391,8 +391,8 @@ const handleCloseQR = () => {
                            To Date
                          </label>
                          <div style={{fontWeight:"500", fontSize:"17px", textTransform:"uppercase"}}>
-     
-                         {getQRDetails?.ToDate} 
+                         {dayjs(getQRDetails?.ToDate).format('YYYY-MM-DD HH:mm')} 
+                         {/* {getQRDetails?.ToDate}  */}
                              </div>
                      </Grid>
                       {/* <Grid xs={6} md={6}>
@@ -529,8 +529,8 @@ const handleCloseQR = () => {
                            From Date
                          </label>
                          <div style={{fontWeight:"500", fontSize:"17px", textTransform:"uppercase"}}>
-                             
-                         {getQRDetails?.FromDate} 
+                         {dayjs(getQRDetails?.FromDate).format('YYYY-MM-DD HH:mm')} 
+                         {/* {getQRDetails?.FromDate}  */}
                              </div>
                         
                      </Grid>
@@ -539,8 +539,8 @@ const handleCloseQR = () => {
                            To Date
                          </label>
                          <div style={{fontWeight:"500", fontSize:"17px", textTransform:"uppercase"}}>
-     
-                         {getQRDetails?.ToDate} 
+                         {dayjs(getQRDetails?.ToDate).format('YYYY-MM-DD HH:mm')} 
+                         {/* {getQRDetails?.ToDate}  */}
                              </div>
                      </Grid>
                       
