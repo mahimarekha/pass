@@ -99,6 +99,16 @@ export const items = [
       )
   },
   {
+    title: 'Add Counter Pass',
+    path: '/addcounter',
+    role:['Admin','Counter pass'],
+   icon: (
+        <SvgIcon fontSize="small">
+          <ShoppingBagIcon />
+        </SvgIcon>
+      )
+  },
+  {
     title: 'Request Pass',
     path: '/visitingpasses',
     role:['Admin',"Apply for Pass","Approver","Secretary","Counter pass"],
@@ -111,7 +121,7 @@ export const items = [
   {
     title: 'Approval',
     path: '/approval',
-    role:['Admin',"Approver","Secretary","Counter pass"],
+    role:['Admin',"Approver"],
     icon: (
       <SvgIcon fontSize="small">
         <CogIcon />
@@ -162,7 +172,7 @@ export const userPermissions = (router) => {
   const stringWithoutSlash = router.startsWith('/') ? router.substring(1) : router;
   switch (userDetails.RoleName) {
     case USER_ROLE.ADMIN:
-      return ['customers','role','visitingplaces','passes','designations','users','counterpass','visitingpasses','approval'].includes(stringWithoutSlash);
+      return ['customers','role','visitingplaces','passes','designations','users','counterpass','visitingpasses','approval','addcounter'].includes(stringWithoutSlash);
     case USER_ROLE.APPLYPASS:
       return ['visitingpasses'].includes(stringWithoutSlash);
       case USER_ROLE.APPROVER:
@@ -170,7 +180,9 @@ export const userPermissions = (router) => {
         case USER_ROLE.SECURITY:
           return ['visitingpasses','approval'].includes(stringWithoutSlash) 
            case USER_ROLE.SECRETARY:
-          return ['visitingpasses','approval'].includes(stringWithoutSlash)  
+          return ['visitingpasses','approval'].includes(stringWithoutSlash) 
+          case USER_ROLE.COUNTERPASS:
+            return ['visitingpasses','counterpass', 'addcounter'].includes(stringWithoutSlash)  
           
   }
 };

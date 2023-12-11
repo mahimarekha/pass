@@ -14,6 +14,9 @@ return requests.post(`/GetVisitingPasses`,body);
   getQrCode(id) {
     return requests.get(`/GetQrCode/${id}`);
   },
+  getCounterQrCode(id) {
+    return requests.get(`/GetBatchId/${id}`);
+  },
   creteVisitingPasses(body){
     return requests.post('/PostVisitingPasses',body); 
   },

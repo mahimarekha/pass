@@ -219,8 +219,8 @@ const Page = (props) => {
             property: 'FromDate'
         },
         {
-            name: 'Visiting Passes Name',
-            property: 'VisitingPassesId'
+            name: 'To Date',
+            property: 'ToDate'
         },
        
         {
@@ -375,11 +375,14 @@ const Page = (props) => {
         });
     }
     const getVisitingPassesList = () => {
+        
         const filter= {
-         "Types":"Dates",
-          "FromDate":dayjs().format("YYYY-MM-DD"),
-          "ToDate": dayjs().add(3, 'day').format("YYYY-MM-DD"),
-           DeptId: userDetails ? userDetails.Depid : '',
+         "Types":"SelectList",
+         "VisitingStatus":"ALL",
+        //   "FromDate":dayjs().format("YYYY-MM-DD"),
+        //   "ToDate": dayjs().add(3, 'day').format("YYYY-MM-DD"),
+           DeptId: (userDetails && userDetails.RoleName !== 'Admin') ? userDetails.Depid : 0,
+          
           
           }
         VisitingPassesService.getAllVisitingPassesByDate(filter).then((res) => {
@@ -508,10 +511,9 @@ const Page = (props) => {
                                  Approval
                                 </Typography>
                                
-                                    <Grid container spacing={2} columns={12} style={{ margin: 10 }}  >
+                                    {/* <Grid container spacing={2} columns={12} style={{ margin: 10 }}  >
                                     <Grid item xs={12} sm={6} md={2}>
                                                     <LocalizationProvider dateAdapter={AdapterDayjs} >
-                                                        {/* <DatePicker defaultValue={dayjs(new Date())} /> */}
                                                         <DatePicker 
                                                             id="FromDate"
                                                             slotProps={{ textField: { size: "small", error: false } }}
@@ -530,8 +532,6 @@ const Page = (props) => {
                                                                 shrink: true,
                                                             }}
                                                             value={fromDate}
-                                                            // error={formik.touched.FromDate && Boolean(formik.errors.FromDate)}
-                                                            // helperText={formik.touched.FromDate && formik.errors.FromDate} 
                                                             />
                                                     </LocalizationProvider>
                                                 </Grid>
@@ -554,8 +554,6 @@ const Page = (props) => {
                                                                 shrink: true,
                                                             }}
                                                             value={toDate}
-                                                            // error={formik.touched.ToDate && Boolean(formik.errors.ToDate)}
-                                                            // helperText={formik.touched.ToDate && formik.errors.ToDate}
                                                         />
 
                                                     </LocalizationProvider>
@@ -573,7 +571,6 @@ const Page = (props) => {
                                                             disabled={userDetails?.RoleName === 'Admin' ? false : true}
                                                             value={formik.values.DepId}
                                                             onChange={e => { formik.handleChange(e); }}
-                                                        // onChange={e => { setDepartmentId(e.target.value) }}
                                                         >
                                                             <MenuItem value="">
                                                                 <em>None</em>
@@ -610,22 +607,12 @@ const Page = (props) => {
                                     >
                                         Search</Button>
                                 </Grid>
-                                                </Grid>
+                                                </Grid> */}
                                 
                            
                             <div>
 
-                                {/* <Button
-                                    startIcon={(
-                                        <SvgIcon fontSize="small">
-                                            <PlusIcon />
-                                        </SvgIcon>
-                                    )}
-                                    variant="contained" onClick={handleClickOpen}
-                                >
-                                    Apply For New Pass
-
-                                </Button> */}
+                              
                                 <Dialog open={open} onClose={handleClose}>
                                     <DialogTitle>Request Pass</DialogTitle>
                                     <form onSubmit={formik.handleSubmit}  >

@@ -22,7 +22,6 @@ import UsersService from "../service/UsersService";
 import { CustomersSearch } from 'src/sections/customer/customers-search';
 import { applyPagination } from 'src/utils/apply-pagination';
 import VisitingPassesService from "../service/VisitingPassService";
-import SessionService from "../service/SessionService";
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import FormControl from '@mui/material/FormControl';
@@ -30,13 +29,17 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import SessionService from "../service/SessionService";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+// import { useRouter } from 'next/navigation';
 import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
 import dayjs from 'dayjs';
+import { userPermissions } from '../layouts/dashboard/config';
 import { useRouter } from 'next/router'
-import {userPermissions} from '../layouts/dashboard/config';
+import Webcam from "react-webcam";
+import { useRef } from "react";
 const now = new Date();
 const data = [
     {
@@ -197,56 +200,22 @@ const useCustomerIds = (customers) => {
     );
 };
 const Page = (props) => {
+
     const [page, setPage] = useState(0);
+    const [open1, setOpen1] = React.useState(false);
     const [open, setOpen] = React.useState(false);
     const [openQR, setOpenQR] = React.useState(false);
     const [getQR, setQR] = React.useState('');
-    const headersList = [
-        {
-            name: 'Department Name',
-            property: 'DepartmentName'
-        },
-        {
-            name: 'Designation Name',
-            property: 'Designation'
-        },
-        {
-            name: 'FullName ',
-            property: 'FullName'
-        },
-        
-        {
-            name: 'From Date',
-            property: 'FromDate'
-        },
-        {
-            name: 'From Date',
-            property: 'ToDate'
-        },
-       
-        {
-            name: 'Visiting Places Name ',
-            property: 'VisitingPlace'
-        },
+    const [multipleRequest, setMultipleRequest] = useState([]);
 
-        
-        {
-            name: 'Edit',
-            property: 'Edit'
-        },
-
-    ];
     const dataAddheadersList = [
-      
-        {
-            name: 'Designation Name',
-            property: 'DesignationId'
-        },
+
+
         {
             name: 'FullName ',
             property: 'FullName'
         },
-        
+
         {
             name: 'From Date',
             property: 'FromDate'
@@ -256,7 +225,7 @@ const Page = (props) => {
             property: 'ToDate'
         },
 
-       
+
 
     ];
     const userDetails = JSON.parse(window.sessionStorage.getItem('userDetails'));
@@ -267,59 +236,62 @@ const Page = (props) => {
     const [usersList, setUsersList] = useState([]);
     var [departmentId, setDepartmentId] = useState("");
     const [departmentList, setDepartmentList] = useState([]);
-    const [sessionList, setSessionList] = useState([]);
     const [visitingPassesList, setVisitingPassesList] = useState([]);
     const [qrCodeList, setQrCodeList] = useState([]);
     const [status, setStatus] = useState([]);
-    const [multipleRequest, setMultipleRequest] = useState([]);
+    const [sessionList, setSessionList] = useState([]);
     const [visitingPlacesList, setVisitingPlacesList] = useState([]);
+    const webcamRef = useRef(null);
+    const [imgSrc, setImgSrc] = useState(null);
+
+    const [docSrc, setDocSrc] = useState(null);
+    const [mirrored, setMirrored] = useState(false);
     const [visitingPasses, setVisitingPasses] = useState({
         //UserId: '',
-        DepId: '',
+        // DepId: '',
         VisitingPassesId: '',
         VisitingPlacesId: '',
-        DesignationId: '',
+        // DesignationId: '',
         FullName: '',
         MobileNumber: '',
         // VisitorPhotoPath: '',
         FromDate: '',
         ToDate: '',
         PurposeVisting: '',
-        SessionId:'',
         // VisitingStatus: true,
         // Remarks: '',
+        SessionId: '',
     });
     const [validToDate, setValidToDate] = useState('');
     const [fromDate, setFromDate] = useState('');
     const [toDate, setToDate] = useState('');
     const router = useRouter();
     const currentDate = dayjs();
-    var [designationId, setDesignationId] = useState("");
     const tomorrow = dayjs().add(3, 'day');
     const validationSchema = Yup.object().shape({
         //UserId: Yup.string().required('User Id is required'),
-        DepId: Yup.string().required('Department Id is required'),
-        DesignationId: Yup.string().required('Designation Id is required'),
+        // DepId: Yup.string().required('Department Id is required'),
+        // DesignationId: Yup.string().required('Designation Id is required'),
         VisitingPlacesId: Yup.string().required('VisitingPlacesId  is required'),
         FullName: Yup.string().required('Full Name is required'),
         MobileNumber: Yup.string().required()
             .matches(/^[0-9]+$/, "Must be only digits")
             .min(10, 'Must be exactly 10 digits')
             .max(10, 'Must be exactly 10 digits'),
+
         // VisitorPhotoPath: Yup.string().required('Visitor Photo Path is required'),
         FromDate: Yup.string(),
         ToDate: Yup.string(),
         PurposeVisting: Yup.string().required('Purpose Visting is required'),
         // VisitingStatus: Yup.string(true).required('Visiting Status is required'),
         // Remarks: Yup.string().required('Remarks Status is required'),
-        SessionId:Yup.string(),
-
+        SessionId: Yup.string(),
     });
-    
+
     useEffect(() => {
-        if(!userPermissions(router.asPath)){
-            router.push('/unauthorized');
-          }
+        // if (!userPermissions(router.asPath)) {
+        //     router.push('/unauthorized');
+        // }
         getDepartmentList();
         getSessionList();
         getVisitingPassesList();
@@ -335,6 +307,67 @@ const Page = (props) => {
             setSessionList([]);
         }
     }, []);
+    const handleRedirect = () => {
+
+        props.history.push("/addcounter")
+    };
+    const capture = useCallback(() => {
+        retake();
+        //setImgSrc(null);
+        const imageSrc = webcamRef.current.getScreenshot();
+        console.log(imageSrc);
+        setOpen1(false);
+        setImgSrc(imageSrc);
+    }, [webcamRef]);
+
+    const handleImageUpload = (e) => {
+        const file = e.target.files[0];
+
+        if (file) {
+            const reader = new FileReader();
+
+            reader.onloadend = () => {
+                // Set the base64 image in the state
+                setImgSrc(reader.result);
+            };
+
+            // Read the file as a data URL
+            reader.readAsDataURL(file);
+        }
+    };
+
+    const handleDocumentUpload = (e) => {
+        const file = e.target.files[0];
+
+        if (file) {
+            const reader = new FileReader();
+
+            reader.onloadend = () => {
+                // Set the base64 image in the state
+                setDocSrc(reader.result);
+            };
+
+            // Read the file as a data URL
+            reader.readAsDataURL(file);
+        }
+    };
+    const retake = () => {
+        setImgSrc(null);
+    };
+    const getSessionList = () => {
+        SessionService.GetLatestSessionFrom().then((res) => {
+            if (res) {
+                setSessionList([res]);
+                visitingPasses.SessionId = res.Sno;
+                 setVisitingPasses(visitingPasses);
+                // setMultipleRequest(prvvisitingPasses => [...prvArray, values]);
+
+            }
+
+        }).catch((err) => {
+            // setError(err.message);
+        });
+    }
     const getDesignationList = () => {
         DesignationsService.getAllDesignations().then((res) => {
             const result = res.map((response) => {
@@ -348,22 +381,18 @@ const Page = (props) => {
             // setError(err.message);
         });
     }
-    const getSessionList = () => {
-        SessionService.GetLatestSessionFrom().then((res) => {
-            if(res){
-                setSessionList([res]);
-            }
-            
-        }).catch((err) => {
-            // setError(err.message);
-        });
-    }
     const handleClickOpen = () => {
         setOpen(true);
         formReset();
         setStatus("");
-        setFromDate("");
-        setToDate("");
+        setFromDate('');
+        setToDate('');
+    };
+    const handleClickOpen1 = () => {
+        setOpen1(true);
+    };
+    const handleClickclose1 = () => {
+        setOpen1(false);
     };
     const handleClose = () => {
         setOpen(false);
@@ -422,13 +451,7 @@ const Page = (props) => {
         });
     }
     const getVisitingPassesList = () => {
-        const filter= {
-            "Types":"SelectList",
-            "VisitingStatus":"ALL",
-              DeptId: (userDetails && userDetails.RoleName !== 'Admin') ? userDetails.Depid : 0,
-             }
-        
-        VisitingPassesService.getAllVisitingPassesByDate(filter).then((res) => {
+        VisitingPassesService.getAllVisitingPasses().then((res) => {
             const result = res.map((response) => {
                 return {
                     ...response,
@@ -441,17 +464,17 @@ const Page = (props) => {
         });
     }
 
-    // const getQrCodeList = (data) => {
-    //     if (data && data.QRCodeNumber) {
-    //         router.push('/qrcode/' + data.QRCodeNumber);
-    //     }
-    // }
+    const getQrCodeList = (id) => {
+        if (id) {
+            router.push('/photoqrcode/' + id);
+        }
+    }
     const formReset = () => {
         setVisitingPasses({
-            DepId: userDetails ? userDetails.Depid : '',
+            // DepId: userDetails ? userDetails.Depid : '',
             VisitingPassesId: '',
             VisitingPlacesId: '',
-            DesignationId: '',
+            // DesignationId: '',
             FullName: '',
             MobileNumber: '',
             //  VisitorAddress: '',
@@ -461,23 +484,26 @@ const Page = (props) => {
             PurposeVisting: '',
             // VisitingStatus: true,
             // Remarks: '',
-            SessionId:'',
+            SessionId: '',
         })
     }
-   
     const formik = useFormik({
         initialValues: visitingPasses,
         enableReinitialize: true,
         validationSchema: validationSchema,
+
         onSubmit: (values, { resetForm }) => {
+            const result = departmentList.find(({ DepartmentName }) => DepartmentName === "Counter Pass");
             values.UserId = userDetails ? userDetails.UserId : '';
             values.FromDate = fromDate;
             values.ToDate = toDate;
-            values.VisitingStatus = status;
-            values.CreatedBy =  userDetails ? userDetails.UserId : '';
-       
-            if (!fromDate || !toDate) {
-                alert("Please select start date and end date");
+           // values.VisitingStatus = status;
+            values.CreatedBy = userDetails ? userDetails.UserId : '';
+            values.DepId = result.Depid;
+            values.VisitorPhotoPath = imgSrc ? imgSrc : '';
+            values.UploadPath  = docSrc ? docSrc : '';
+            if (!fromDate) {
+                alert("Please select  date ");
                 return;
             }
             if (visitingPasses.VisitingPassesId) {
@@ -486,41 +512,44 @@ const Page = (props) => {
                     getVisitingPassesList();
                     resetForm();
                     formReset();
-                    alert(" VisitingPasses Updated Successfully.");
+                    alert(" Counter Pass Updated Successfully.");
                 }).catch((err) => {
                 });
             }
             else {
-                
                 delete values.VisitingPassesId;
-               
-               
-                setMultipleRequest(prvArray=>[...prvArray, values]);
-               
-               
+                setMultipleRequest(prvArray => [...prvArray, values]);
             }
-           
-           
 
         },
     });
     const multiple = () => {
 
 
-         if(!multipleRequest.length){
+        if (!multipleRequest.length) {
             alert("Please Enter Required Details");
             return;
-         }
-        VisitingPassesService.cretePostVisitingPasses(multipleRequest).then((res) => {
+        }
+        const currentTimeInMilliseconds = new Date().getTime();
+
+        
+        const updatedRequests = multipleRequest.map(result => ({
+            ...result,
+            BatchId: currentTimeInMilliseconds.toString()
+          }));
+
+        VisitingPassesService.cretePostVisitingPasses(updatedRequests).then((res) => {
             const data = res.length > 0 ? res[res.length - 1] : null
             setMultipleRequest([]);
             getVisitingPassesList();
             formik.resetForm()
             formReset();
-             handleClose();
-           
-            alert(" VisitingPasses Added Successfully.");
-            
+            handleClose();
+            setImgSrc('');
+            getQrCodeList(currentTimeInMilliseconds);
+            // getQrCodeList(res.QRCodeNumber);
+            alert("Counter Pass Added Successfully.");
+
         })
             .catch((err) => {
 
@@ -538,7 +567,7 @@ const Page = (props) => {
                 component="main"
                 sx={{
                     flexGrow: 1,
-                    py: 8
+                    py: 1
                 }}
             >
                 <Container maxWidth="xl">
@@ -546,115 +575,29 @@ const Page = (props) => {
                         <Stack
                             direction="row"
                             justifyContent="space-between"
-                            spacing={4}
+                            spacing={2}
                         >
                             <Stack spacing={1}>
-                                <Typography variant="h4">
-                                    Request Pass
+                                <Typography variant="h5">
+                                    Add Counter Pass
                                 </Typography>
                                 <Stack
                                     alignItems="center"
                                     direction="row"
                                     spacing={1}
                                 >
-                                    <Button
-                                        color="inherit"
-                                        startIcon={(
-                                            <SvgIcon fontSize="small">
-                                                <ArrowUpOnSquareIcon />
-                                            </SvgIcon>
-                                        )}
-                                    >
-                                        Import
-                                    </Button>
-                                    <Button
-                                        color="inherit"
-                                        startIcon={(
-                                            <SvgIcon fontSize="small">
-                                                <ArrowDownOnSquareIcon />
-                                            </SvgIcon>
-                                        )}
-                                    >
-                                        Export
-                                    </Button>
-                                </Stack>
-                            </Stack>
-                            <div>
-
-                                <Button
-                                    startIcon={(
-                                        <SvgIcon fontSize="small">
-                                            <PlusIcon />
-                                        </SvgIcon>
-                                    )}
-                                    variant="contained" onClick={handleClickOpen}
-                                >
-                                    Apply For New Pass
-
-                                </Button>
-                                <Dialog open={open} onClose={handleClose} maxWidth="800" >
-                                    <DialogTitle>Request Pass</DialogTitle>
                                     <form onSubmit={formik.handleSubmit}  >
-                                        <DialogContent style={{ width: 900 }}>
-                                            <DialogContentText>
+                                        <DialogContent >
 
-                                            </DialogContentText>
 
                                             <Grid container spacing={2}>
-                                                {/* <Grid xs={6} md={6} >
+                                                <Grid xs={6} md={3}>
                                                     <FormControl variant="standard" fullWidth>
-                                                        <InputLabel id="studentName">User Id</InputLabel>
-                                                        <Select
-                                                        autoFocus
-                                                            labelId="UserId"
-                                                            id="UserId"
-                                                            label="User Name"
-                                                            name="UserId"
-                                                            value={formik.values.UserId}
-                                                            // value={roleId}
-                                                            onChange={e => { formik.handleChange(e); }}
-                                                        >
-                                                            <MenuItem value="">
-                                                                <em>None</em>
-                                                            </MenuItem>
-                                                            {usersList.map(({ index, UserId, FullName }) => (
-                                                                <MenuItem key={index} value={UserId}>{FullName}
-                                                                </MenuItem>
-                                                            ))}
-                                                        </Select>
-                                                    </FormControl>
-                                                </Grid> */}
-                                                <Grid xs={6} md={4}>
-                                                    <FormControl variant="standard" fullWidth>
-                                                        <InputLabel id="studentName">Department Name</InputLabel>
-                                                        <Select
-                                                            labelId="Depid"
-                                                            id="Depid"
-                                                            label="Department Name"
-                                                            name="DepId"
-                                                            disabled={userDetails?.RoleName === 'Admin' ? false : true}
-                                                            value={formik.values.DepId}
-                                                            onChange={e => { formik.handleChange(e); }}
-                                                        // onChange={e => { setDepartmentId(e.target.value) }}
-                                                        >
-                                                            <MenuItem value="">
-                                                                <em>None</em>
-                                                            </MenuItem>
-                                                            {departmentList.map(({ index, Depid, DepartmentName }) => (
-                                                                <MenuItem key={index} value={Depid}>{DepartmentName}
-                                                                </MenuItem>
-                                                            ))}
-                                                        </Select>
-                                                    </FormControl>
-                                                </Grid>
-
-                                                <Grid xs={6} md={4}>
-                                                    <FormControl variant="standard" fullWidth>
-                                                        <InputLabel id="studentName">VisitingPlaces Name</InputLabel>
+                                                        <InputLabel id="studentName">VisitingPlaces Id</InputLabel>
                                                         <Select
                                                             labelId="VisitingPlacesId"
                                                             id="VisitingPlacesId"
-                                                            label="VisitingPlaces Name"
+                                                            label="VisitingPlaces Id"
                                                             name="VisitingPlacesId"
                                                             value={formik.values.VisitingPlacesId}
                                                             onChange={e => { formik.handleChange(e); }}
@@ -670,8 +613,7 @@ const Page = (props) => {
                                                         </Select>
                                                     </FormControl>
                                                 </Grid>
-
-                                                <Grid xs={6} md={4}>
+                                                <Grid xs={6} md={3}>
                                                     <TextField
                                                         InputProps={{ style: { width: 245 } }}
 
@@ -687,29 +629,7 @@ const Page = (props) => {
                                                         helperText={formik.touched.FullName && formik.errors.FullName}
                                                     />
                                                 </Grid>
-                                                <Grid xs={6} md={4}>
-                                                    <FormControl variant="standard" fullWidth>
-                                                        <InputLabel id="studentName">Designation Name</InputLabel>
-                                                        <Select
-                                                            labelId="DesignationId"
-                                                            id="DesignationId"
-                                                            label="Designation Name"
-                                                            name="DesignationId"
-                                                            value={formik.values.DesignationId}
-                                                            onChange={e => { formik.handleChange(e); }}
-                                                        // onChange={e => { setDepartmentId(e.target.value) }}
-                                                        >
-                                                            <MenuItem value="">
-                                                                <em>None</em>
-                                                            </MenuItem>
-                                                            {designationsList.map(({ index, DesignationId, Designation }) => (
-                                                                <MenuItem key={index} value={DesignationId}>{Designation}
-                                                                </MenuItem>
-                                                            ))}
-                                                        </Select>
-                                                    </FormControl>
-                                                </Grid>
-                                                <Grid xs={6} md={4}>
+                                                <Grid xs={6} md={3}>
                                                     <TextField
                                                         InputProps={{ style: { width: 245 } }}
 
@@ -727,25 +647,30 @@ const Page = (props) => {
                                                         helperText={formik.touched.MobileNumber && formik.errors.MobileNumber}
                                                     />
                                                 </Grid>
-                                                {/* <Grid xs={6} md={6}>
-                                                <TextField
-                                                        InputProps={{ style: { width: 245 } }}
-                                                        
-                                                        margin="dense"
-                                                        id="VisitorPhotoPath"
-                                                        name="VisitorPhotoPath"
-                                                        label="VisitorPhotoPath"
-                                                        type="text"
-                                                        variant="standard"
-                                                        value={formik.values.VisitorPhotoPath}
-                                                        onChange={formik.handleChange}
-                                                        error={formik.touched.VisitorPhotoPath && Boolean(formik.errors.VisitorPhotoPath)}
-                                                        helperText={formik.touched.VisitorPhotoPath && formik.errors.VisitorPhotoPath}
-                                                    />
-                                                </Grid> */}
-
-                                                <Grid xs={6} md={4}>
-                                                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                                <Grid xs={6} md={3}>
+                                                    <FormControl variant="standard" fullWidth>
+                                                        <InputLabel id="studentName">Session Name</InputLabel>
+                                                        <Select
+                                                            labelId="SessionId"
+                                                            id="SessionId"
+                                                            label="Session Name"
+                                                            name="SessionId"
+                                                            value={formik.values.SessionId}
+                                                            onChange={e => { formik.handleChange(e); }}
+                                                        >
+                                                            <MenuItem value="">
+                                                                <em>None</em>
+                                                            </MenuItem>
+                                                            {sessionList.map(({ index, SessionID, Sno }) => (
+                                                                <MenuItem key={index} value={Sno}>{SessionID}
+                                                                </MenuItem>
+                                                            ))}
+                                                        </Select>
+                                                    </FormControl>
+                                                </Grid>
+                                                <Grid xs={6} md={3}>
+                                                    <LocalizationProvider dateAdapter={AdapterDayjs} >
+                                                        {/* <DatePicker defaultValue={dayjs(new Date())} /> */}
                                                         <DatePicker InputProps={{ style: { width: 245 } }}
                                                             id="FromDate"
                                                             slotProps={{ textField: { size: "small", error: false } }}
@@ -757,7 +682,7 @@ const Page = (props) => {
                                                                 formik.setFieldValue("date", value, true);
                                                                 const dayDifference = value.diff(currentDate, 'day');
                                                                 setFromDate(value.format('YYYY-MM-DD'));
-                                                                setValidToDate(dayjs().add(dayDifference , 'day'));
+                                                                setValidToDate(dayjs().add(dayDifference, 'day'));
                                                             }}
                                                             sx={{ width: 250 }}
                                                             InputLabelProps={{
@@ -768,7 +693,7 @@ const Page = (props) => {
                                                             helperText={formik.touched.FromDate && formik.errors.FromDate} />
                                                     </LocalizationProvider>
                                                 </Grid>
-                                                <Grid xs={6} md={4}>
+                                                <Grid xs={6} md={3}>
                                                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                                                         <DatePicker InputProps={{ style: { width: 245 } }}
                                                             disablePast
@@ -795,11 +720,9 @@ const Page = (props) => {
 
 
                                                 </Grid>
-
-                                                <Grid xs={6} md={4}>
+                                                <Grid xs={6} md={3}>
                                                     <TextField
                                                         InputProps={{ style: { width: 245 } }}
-
                                                         margin="dense"
                                                         id="PurposeVisting"
                                                         name="PurposeVisting"
@@ -812,128 +735,166 @@ const Page = (props) => {
                                                         helperText={formik.touched.PurposeVisting && formik.errors.PurposeVisting}
                                                     />
                                                 </Grid>
-                                                <Grid xs={6} md={4}>
-                                                    <FormControl variant="standard" fullWidth>
-                                                        <InputLabel id="studentName">Session Name</InputLabel>
-                                                        <Select
-                                                            labelId="SessionId"
-                                                            id="SessionId"
-                                                            label="Session Name"
-                                                            name="SessionId"
-                                                            value={formik.values.SessionId}
-                                                            onChange={e => { formik.handleChange(e); }}
-                                                        
-                                                        >
-                                                            <MenuItem value="">
-                                                                <em>None</em>
-                                                            </MenuItem>
-                                                            {sessionList.map(({ index, SessionID, Sno }) => (
-                                                                <MenuItem key={index} value={Sno}>{SessionID}
-                                                                </MenuItem>
-                                                            ))}
-                                                        </Select>
-                                                    </FormControl>
+                                                <Grid item xs={12} style={{ marginTop: '10px' }}>
+                                                    <span style={{ fontSize: '17px', color: 'rgb(16 182 128)' }} >Doc Upload :</span>
                                                 </Grid>
-                                                {/* {!visitingPasses?.VisitingPassesId ? <>
-                                                    <Grid xs={4} md={4}>
-                                                        <Button variant={status == "Accepted" ? "contained" : "outlined"} type="submit" color='success' onClick={() => setStatus("Accepted")} >Accepted</Button>
-                                                    </Grid>
-                                                    <Grid xs={4} md={4}>
-                                                        <Button variant={status == "Rejected" ? "contained" : "outlined"} type="submit" color='error' onClick={() => setStatus("Rejected")}>Rejected</Button>
-                                                    </Grid>
-                                                </> : ''} */}
+                                                <Grid xs={6} md={6}>
+                                                    <label style={{ fontSize: '15px', color: 'black' }} >Upload Photo</label>
+                                                    <div>
+                                                        {imgSrc ? (
+                                                            <img src={imgSrc} alt="webcam" height={100} width={100} />
+                                                        ) : ''
+                                                        }
+                                                    </div>
+                                                    <Button variant="contained" onClick={handleClickOpen1}>Capture From WebCam</Button>  OR
+                                                    <input type="file" style={{ "display": "inline-block", "padding": "10px 20px", "backgroundColor": "#6366F1", "color": "#fff", "border": "none", "borderRadius": "12px", "cursor": "pointer" }} onChange={handleImageUpload} />
 
-                                                {/* <Grid xs={4} md={4}>
-                                                    <Button variant={status == "Cancel" ? "contained" : "outlined"} color='info' onClick={() => { setStatus("Cancel"); handleClose() }}
-                                                    >Cancel</Button>
-                                                </Grid> */}
-                                                {/* <Grid xs={6} md={6}>
-                                                    <FormControl variant="standard" fullWidth>
-                                                        <InputLabel id="demo-simple-select-standard-label">Status</InputLabel>
-                                                        <Select
-                                                            labelId="demo-simple-select-standard-label"
-                                                            id="demo-simple-select-standard"
-                                                            label="Visiting Status"
-                                                            name="VisitingStatus"
-                                                            value={formik.values.VisitingStatus}
-                                                            onChange={formik.handleChange}
-                                                            error={formik.touched.VisitingStatus && Boolean(formik.errors.VisitingStatus)}
-                                                            helperText={formik.touched.VisitingStatus && formik.errors.VisitingStatus}
-                                                        >
-                                                            <MenuItem value="">
-                                                                <em>None</em>
-                                                            </MenuItem>
-                                                            <MenuItem value="Approved">Approved</MenuItem>
-                                                            <MenuItem value="Rejected">Rejected</MenuItem>
-                                                            <MenuItem value="Pending">Pending</MenuItem>
+                                                </Grid>
+                                                <Grid xs={6} md={6}>
+                                                <label style={{ fontSize: '15px', color: 'black' }} >Upload Document</label>
+                                                    <div>
+                                                        <input type="file" name="name" style={{ "display": "inline-block", "width": "245px", "padding": "10px 20px", "backgroundColor": "#6366F1", "color": "#fff", "border": "none", "borderRadius": "12px", "cursor": "pointer" }} onChange={handleDocumentUpload} />
 
-                                                        </Select>
-                                                    </FormControl>
-                                                </Grid> */}
-                                                {/* <Grid xs={6} md={6}>
+                                                    </div>
+                                                </Grid>
+
+                                                <Dialog open={open1} onClose={handleClose} PaperProps={{
+                                                    sx: {
+                                                        height: '400'
+                                                    }
+                                                }} maxWidth="500">
+                                                    <div className="container">
+                                                        {imgSrc ? (
+                                                            <img src={imgSrc} height={400} width={500} alt="webcam" />
+                                                        ) : (
+                                                            <Webcam height={400} width={500} ref={webcamRef} mirrored={mirrored} screenshotFormat="image/jpeg"
+                                                                screenshotQuality={0.8} />
+                                                        )}
+                                                        {/* <div className="controls">
+                                                            <div>
+                                                                <input
+                                                                    type="checkbox"
+                                                                    checked={mirrored}
+                                                                    onChange={(e) => setMirrored(e.target.checked)}
+                                                                />
+                                                                <label>Mirror</label>
+                                                            </div>
+                                                        </div> */}
+                                                        <div className="btn-container" style={{ marginTop: '10px', textAlign: 'center', 'marginBottom': '10px' }}>
+                                                            <Button variant="contained" color='error' onClick={handleClickclose1} style={{ marginRight: '5px' }}>Cancel</Button>
+
+                                                            {imgSrc ? (
+                                                                <Button variant="contained" onClick={retake}>Retake photo</Button>
+                                                            ) : (
+                                                                <Button variant="contained" onClick={capture}>Capture photo</Button>
+                                                            )}
+
+                                                        </div>
+                                                    </div>
+
+                                                </Dialog>
+
+                                                <Grid item xs={12} style={{ marginTop: '10px' }}>
+                                                    <span style={{ fontSize: '17px', color: 'rgb(16 182 128)' }} >Referenced By :</span>
+                                                </Grid>
+                                                <Grid xs={6} md={4}>
                                                     <TextField
-                                                        InputProps={{ style: { width: 500 } }}
-                                                        
+                                                        InputProps={{ style: { width: 245 } }}
+
                                                         margin="dense"
-                                                        id="Remarks"
-                                                        name="Remarks"
-                                                        label="Remarks"
+                                                        id="FirstName"
+                                                        name="FirstName"
+                                                        label="Name"
                                                         type="text"
                                                         variant="standard"
-                                                        value={formik.values.Remarks}
+                                                        value={formik.values.FirstName}
                                                         onChange={formik.handleChange}
-                                                        error={formik.touched.Remarks && Boolean(formik.errors.Remarks)}
-                                                        helperText={formik.touched.Remarks && formik.errors.Remarks}
+                                                        error={formik.touched.FirstName && Boolean(formik.errors.FirstName)}
+                                                        helperText={formik.touched.FirstName && formik.errors.FirstName}
                                                     />
+                                                </Grid>
+                                                <Grid xs={6} md={4}>
+                                                    <TextField
+                                                        InputProps={{ style: { width: 245 } }}
+
+                                                        margin="dense"
+                                                        id="MiddleName"
+                                                        name="MiddleName"
+                                                        label="Designation"
+                                                        type="text"
+                                                        variant="standard"
+                                                        value={formik.values.MiddleName}
+                                                        onChange={formik.handleChange}
+                                                        error={formik.touched.MiddleName && Boolean(formik.errors.MiddleName)}
+                                                        helperText={formik.touched.MiddleName && formik.errors.MiddleName}
+                                                    />
+                                                </Grid>
+                                                <Grid xs={6} md={4}>
+                                                    <TextField
+                                                        InputProps={{ style: { width: 245 } }}
+
+                                                        margin="dense"
+                                                        id="LastName"
+                                                        name="LastName"
+                                                        label="Department"
+                                                        type="text"
+                                                        variant="standard"
+                                                        value={formik.values.LastName}
+                                                        onChange={formik.handleChange}
+                                                        error={formik.touched.LastName && Boolean(formik.errors.LastName)}
+                                                        helperText={formik.touched.LastName && formik.errors.LastName}
+                                                    />
+                                                </Grid>
+                                                {/* <Grid xs={12} md={12}>
+                                                    <Button onClick={handleClose}>Cancel</Button>
+                                                    <Button type="submit">{visitingPasses.VisitingPassesId ? 'Update' : 'Add'}</Button>
                                                 </Grid> */}
+                                                <Grid xs={12} md={12} style={{ textAlign: 'end' }}>
+                                                    {visitingPasses.VisitingPassesId ? <Button onClick={handleClose} style={{ marginRight: '10px' }} variant="contained" color="error">Cancel</Button> : ''}
 
-                                                <Grid xs={12} md={12} style={{textAlign:'end'}}>
-                                                {visitingPasses.VisitingPassesId ? <Button onClick={handleClose} style={{marginRight:'10px'}} variant="contained" color="error">Cancel</Button> :''}
 
-                                                    
-                                                    <Button  variant="contained"  type="submit">{visitingPasses.VisitingPassesId ? 'Update' : 'Add More'}</Button>
+                                                    <Button variant="contained" type="submit">{visitingPasses.VisitingPassesId ? 'Update' : 'Add More'}</Button>
 
                                                 </Grid>
-
                                             </Grid>
-                                            {visitingPasses.VisitingPassesId ? '':      <div>
-                               <CustomersTable
-                            headersList={dataAddheadersList}
-                            count={multipleRequest.length}
-                            items={multipleRequest}
-                            editDetails={editVisitingPasses}
-                            // qrCode={getQrCodeList}
-                            onDeselectAll={customersSelection.handleDeselectAll}
-                            onDeselectOne={customersSelection.handleDeselectOne}
-                            onPageChange={handlePageChange}
-                            onRowsPerPageChange={handleRowsPerPageChange}
-                            onSelectAll={customersSelection.handleSelectAll}
-                            onSelectOne={customersSelection.handleSelectOne}
-                            page={page}
-                            maxheight={180}
-                            rowsPerPage={rowsPerPage}
-                            selected={customersSelection.selected}
-                        />  <DialogActions >
-                                   
-                        <Button onClick={handleClose} variant="contained" color="error">Cancel</Button>
-<Button  onClick={multiple} variant="contained" color="success">Save</Button>
-</DialogActions>
-                                    </div>}
-                                  
+                                            {visitingPasses.VisitingPassesId ? '' : <div>
+                                                <CustomersTable
+                                                    headersList={dataAddheadersList}
+                                                    count={multipleRequest.length}
+                                                    items={multipleRequest}
+                                                    editDetails={editVisitingPasses}
+                                                    // qrCode={getQrCodeList}
+                                                    onDeselectAll={customersSelection.handleDeselectAll}
+                                                    onDeselectOne={customersSelection.handleDeselectOne}
+                                                    onPageChange={handlePageChange}
+                                                    onRowsPerPageChange={handleRowsPerPageChange}
+                                                    onSelectAll={customersSelection.handleSelectAll}
+                                                    onSelectOne={customersSelection.handleSelectOne}
+                                                    page={page}
+                                                    maxheight={150}
+                                                    rowsPerPage={rowsPerPage}
+                                                    selected={customersSelection.selected}
+                                                />  <DialogActions >
+
+                                                    <Button onClick={handleClose} variant="contained" color="error">Cancel</Button>
+                                                    <Button onClick={multiple} variant="contained" color="success">Save</Button>
+
+
+                                                </DialogActions>
+                                            </div>}
                                         </DialogContent>
-
                                     </form>
-                                
-                                    
-                                </Dialog>
+                                </Stack>
+                            </Stack>
+                            <div>
 
+
+                               
                                 <Dialog open={openQR} onClose={handleCloseQR}>
                                     <DialogTitle>Scan QR code</DialogTitle>
                                     <DialogContent >
                                         <DialogContentText>
-
                                         </DialogContentText>
-
                                         <Grid container spacing={2}>
                                             <img src={getQR} alt='qrcode' />
 
@@ -954,23 +915,8 @@ const Page = (props) => {
                                 </Dialog>
                             </div>
                         </Stack>
-                        {/* <CustomersSearch /> */}
-                        <CustomersTable
-                            headersList={headersList}
-                            count={visitingPassesList.length}
-                            items={visitingPassesList}
-                            editDetails={editVisitingPasses}
-                            // qrCode={getQrCodeList}
-                            onDeselectAll={customersSelection.handleDeselectAll}
-                            onDeselectOne={customersSelection.handleDeselectOne}
-                            onPageChange={handlePageChange}
-                            onRowsPerPageChange={handleRowsPerPageChange}
-                            onSelectAll={customersSelection.handleSelectAll}
-                            onSelectOne={customersSelection.handleSelectOne}
-                            page={page}
-                            rowsPerPage={rowsPerPage}
-                            selected={customersSelection.selected}
-                        />
+
+
                     </Stack>
                 </Container>
             </Box>

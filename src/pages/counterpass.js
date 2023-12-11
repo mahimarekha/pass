@@ -199,6 +199,10 @@ const useCustomerIds = (customers) => {
         [customers]
     );
 };
+const handleRedirect = () => {
+        
+    props.history.push("/addcounter/")
+};
 const Page = (props) => {
 
     const [page, setPage] = useState(0);
@@ -208,8 +212,8 @@ const Page = (props) => {
     const [getQR, setQR] = React.useState('');
     const [multipleRequest, setMultipleRequest] = useState([]);
     const headersList = [{
-        name: 'Visiting Pass Name',
-        property: 'VisitingPassesId'
+        name: 'Visiting Place',
+        property: 'VisitingPlace'
     },
 
     {
@@ -331,7 +335,7 @@ const Page = (props) => {
         }
         getDepartmentList();
         getSessionList();
-        getVisitingPassesList();
+       
         getUsersList();
         getVisitingPlacesList();
         getDesignationList();
@@ -355,19 +359,19 @@ const Page = (props) => {
 
     const handleImageUpload = (e) => {
         const file = e.target.files[0];
-    
+
         if (file) {
-          const reader = new FileReader();
-    
-          reader.onloadend = () => {
-            // Set the base64 image in the state
-            setImgSrc(reader.result);
-          };
-    
-          // Read the file as a data URL
-          reader.readAsDataURL(file);
+            const reader = new FileReader();
+
+            reader.onloadend = () => {
+                // Set the base64 image in the state
+                setImgSrc(reader.result);
+            };
+
+            // Read the file as a data URL
+            reader.readAsDataURL(file);
         }
-      };
+    };
 
     const retake = () => {
         setImgSrc(null);
@@ -453,6 +457,8 @@ const Page = (props) => {
     const getDepartmentList = () => {
         DepartmentService.getAllDepartment().then((res) => {
             setDepartmentList(res);
+            
+            getVisitingPassesList(res);
         }).catch((err) => {
             // setError(err.message);
         });
@@ -464,8 +470,20 @@ const Page = (props) => {
             // setError(err.message);
         });
     }
-    const getVisitingPassesList = () => {
-        VisitingPassesService.getAllVisitingPasses().then((res) => {
+    const getVisitingPassesList = (dep) => {
+
+        const result = (dep || departmentList).find(({ DepartmentName }) => DepartmentName === "Counter Pass");
+
+        const filter= {
+            "Types":"SelectList",
+            "VisitingStatus":"ALL",
+           //   "FromDate":dayjs().format("YYYY-MM-DD"),
+           //   "ToDate": dayjs().add(3, 'day').format("YYYY-MM-DD"),
+              DeptId: result && result.Depid,
+             
+             
+             }
+        VisitingPassesService.getAllVisitingPassesByDate(filter).then((res) => {
             const result = res.map((response) => {
                 return {
                     ...response,
@@ -508,14 +526,13 @@ const Page = (props) => {
 
         onSubmit: (values, { resetForm }) => {
             const result = departmentList.find(({ DepartmentName }) => DepartmentName === "Counter Pass");
-
             values.UserId = userDetails ? userDetails.UserId : '';
             values.FromDate = fromDate;
             values.ToDate = toDate;
             values.VisitingStatus = status;
             values.CreatedBy = userDetails ? userDetails.UserId : '';
             values.DepId = result.Depid;
-
+            values.VisitorPhotoPath = imgSrc ? imgSrc : '';
             if (!fromDate) {
                 alert("Please select  date ");
                 return;
@@ -532,10 +549,7 @@ const Page = (props) => {
             }
             else {
                 delete values.VisitingPassesId;
-
-
                 setMultipleRequest(prvArray => [...prvArray, values]);
-
             }
 
         },
@@ -554,7 +568,7 @@ const Page = (props) => {
             formik.resetForm()
             formReset();
             handleClose();
-
+            setImgSrc('');
             alert(" Counter Pass Added Successfully.");
 
         })
@@ -617,17 +631,7 @@ const Page = (props) => {
                             </Stack>
                             <div>
 
-                                <Button
-                                    startIcon={(
-                                        <SvgIcon fontSize="small">
-                                            <PlusIcon />
-                                        </SvgIcon>
-                                    )}
-                                    variant="contained" onClick={handleClickOpen}
-                                >
-                                    Add
-
-                                </Button>
+                                
                                 <Dialog open={open} onClose={handleClose} maxWidth="800">
                                     <DialogTitle>Counter Pass</DialogTitle>
                                     <form onSubmit={formik.handleSubmit}  >
@@ -785,24 +789,24 @@ const Page = (props) => {
                                                 <Grid xs={12} md={12}>
                                                     <div>
                                                         {imgSrc ? (
-                                                    <img src={imgSrc} alt="webcam" height={100} width={100} />
- ):''
-} 
+                                                            <img src={imgSrc} alt="webcam" height={100} width={100} />
+                                                        ) : ''
+                                                        }
                                                     </div>
-                                                <Button variant="contained" onClick={handleClickOpen1}>Capture From WebCam</Button>  OR       <input type="file" style={{"display":"inline-block","padding":"10px 20px","backgroundColor":"#6366F1","color":"#fff","border":"none","borderRadius":"12px","cursor":"pointer"}} onChange={handleImageUpload} />
-                                                    
+                                                    <Button variant="contained" onClick={handleClickOpen1}>Capture From WebCam</Button>  OR       <input type="file" style={{ "display": "inline-block", "padding": "10px 20px", "backgroundColor": "#6366F1", "color": "#fff", "border": "none", "borderRadius": "12px", "cursor": "pointer" }} onChange={handleImageUpload} />
+
                                                 </Grid>
-                                                <Dialog open={open1} onClose={handleClose}  PaperProps={{
-    sx: {
-     height:'400'
-    }
-  }}  maxWidth="500">
-                                                <div className="container">
+                                                <Dialog open={open1} onClose={handleClose} PaperProps={{
+                                                    sx: {
+                                                        height: '400'
+                                                    }
+                                                }} maxWidth="500">
+                                                    <div className="container">
                                                         {imgSrc ? (
-                                                            <img src={imgSrc} height={400} width={500}  alt="webcam" />
+                                                            <img src={imgSrc} height={400} width={500} alt="webcam" />
                                                         ) : (
                                                             <Webcam height={400} width={500} ref={webcamRef} mirrored={mirrored} screenshotFormat="image/jpeg"
-                                                            screenshotQuality={0.8} />
+                                                                screenshotQuality={0.8} />
                                                         )}
                                                         {/* <div className="controls">
                                                             <div>
@@ -814,8 +818,8 @@ const Page = (props) => {
                                                                 <label>Mirror</label>
                                                             </div>
                                                         </div> */}
-                                                        <div className="btn-container" style={{marginTop:'10px',textAlign: 'center','marginBottom': '10px'}}>
-                                                        <Button variant="contained" color='error' onClick={handleClickclose1} style={{marginRight:'5px'}}>Cancel</Button>
+                                                        <div className="btn-container" style={{ marginTop: '10px', textAlign: 'center', 'marginBottom': '10px' }}>
+                                                            <Button variant="contained" color='error' onClick={handleClickclose1} style={{ marginRight: '5px' }}>Cancel</Button>
 
                                                             {imgSrc ? (
                                                                 <Button variant="contained" onClick={retake}>Retake photo</Button>
@@ -825,9 +829,9 @@ const Page = (props) => {
 
                                                         </div>
                                                     </div>
-                                   
-                                </Dialog>
-                                                
+
+                                                </Dialog>
+
                                                 <Grid item xs={12} style={{ marginTop: '30px' }}>
                                                     <span style={{ fontSize: '17px', color: 'rgb(16 182 128)' }} >Referenced By :</span>
                                                 </Grid>
@@ -912,7 +916,7 @@ const Page = (props) => {
 
                                                     <Button onClick={handleClose} variant="contained" color="error">Cancel</Button>
                                                     <Button onClick={multiple} variant="contained" color="success">Save</Button>
-                                                    console.log(result);
+
 
                                                 </DialogActions>
                                             </div>}

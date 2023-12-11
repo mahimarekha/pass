@@ -319,7 +319,7 @@ const handleCloseQR = () => {
             
           }}
         action={
-          <p style={{color:"white"}}>ENTRTY PASS</p>
+          <p style={{color:"white" ,textTransform:'uppercase'}}> {getQR?.VisitingPlace} </p>
         }
         title="TELANGANA ASSEMBLY"
        titleTypographyProps={{color:"white",fontSize:'20px'}}
@@ -330,10 +330,10 @@ const handleCloseQR = () => {
                     {/* <label style={{fontWeight:"bold"}}>
                     Visiting Place
                     </label> */}
-                    <div style={{fontWeight:"bold", fontSize:"20px", textAlign:'center'}}>
+                    {/* <div style={{fontWeight:"bold", fontSize:"20px", textAlign:'center'}}>
 
                     {getQR?.VisitingPlace} 
-                        </div>
+                        </div> */}
                 {/* </Grid> */}
       
         <Grid style={{paddingTop:"15px"}} container spacing={2} >
@@ -455,7 +455,7 @@ const handleCloseQR = () => {
             bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#101010' : 'gray'),
           }}
         action={
-          <p style={{color:"black"}}>ENTRTY PASS</p>
+          <p style={{color:"black",textTransform:'uppercase'}}> {getQR?.VisitingPlace} </p>
         }
         title="TELANGANA ASSEMBLY"
        titleTypographyProps={{color:"black",fontSize:'20px'}}
