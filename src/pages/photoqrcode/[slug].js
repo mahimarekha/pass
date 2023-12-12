@@ -315,19 +315,20 @@ const handleCloseQR = () => {
                }}>
             <CardHeader
              sx={{
-                 
-                
                  bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#101010' : '#6366f1'),
-                
-         
-                 
                }}
-               action={
-                <p style={{color:"white" ,textTransform:'uppercase'}}> {getQRDetails?.SessionID} </p>
-              }
+              
+              
              title="TELANGANA LEGISLATIVE ASSEMBLY"
-            titleTypographyProps={{color:"white",fontSize:'20px'}}
+            titleTypographyProps={{color:"white",fontSize:'20px',textAlign:"center"}}
+           
            />
+          
+               
+               <div style={{color:"white" ,textTransform:'uppercase',  backgroundColor:"#6366f1", textAlign:"center"}}
+                > {getQRDetails?.SessionID} </div>
+               
+           
   {/* <Grid xs={6} md={6} >
                          <label style={{fontWeight:"bold"}}>
                          Session Name
@@ -492,12 +493,14 @@ const handleCloseQR = () => {
                  bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#101010' : '#6366f1'),
             
                }}
-               action={
-                <p style={{color:"white" ,textTransform:'uppercase'}}> {getQRDetails?.SessionID} </p>
-              }
+            //    action={
+            //     <p style={{color:"white" ,textTransform:'uppercase'}}> {getQRDetails?.SessionID} </p>
+            //   }
              title="TELANGANA LEGISLATIVE ASSEMBLY"
-            titleTypographyProps={{color:"white",fontSize:'20px'}}
+            titleTypographyProps={{color:"white",fontSize:'20px', textAlign:"center"}}
            />
+             <div style={{color:"white" ,textTransform:'uppercase',  backgroundColor:"#6366f1", textAlign:"center"}}
+                > {getQRDetails?.SessionID} </div>
            <CardContent style={{backgroundColor: "gainsboro"}}>
            <div style={{fontWeight:"bold", textAlign:"center", fontSize:"23px", textTransform:"uppercase"}}>
                                  {getQRDetails?.VisitingPlace}

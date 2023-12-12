@@ -806,6 +806,57 @@ const Page = (props) => {
                                                     />
                                                 </Grid>
                                                 <Grid item xs={12} style={{ marginTop: '10px' }}>
+                                                    <span style={{ fontSize: '17px', color: 'rgb(16 182 128)' }} >Referenced By :</span>
+                                                </Grid>
+                                                <Grid xs={6} md={4}>
+                                                    <TextField
+                                                        InputProps={{ style: { width: 245 } }}
+
+                                                        margin="dense"
+                                                        id="FirstName"
+                                                        name="FirstName"
+                                                        label="Name"
+                                                        type="text"
+                                                        variant="standard"
+                                                        value={formik.values.FirstName}
+                                                        onChange={formik.handleChange}
+                                                        error={formik.touched.FirstName && Boolean(formik.errors.FirstName)}
+                                                        helperText={formik.touched.FirstName && formik.errors.FirstName}
+                                                    />
+                                                </Grid>
+                                                <Grid xs={6} md={4}>
+                                                    <TextField
+                                                        InputProps={{ style: { width: 245 } }}
+
+                                                        margin="dense"
+                                                        id="MiddleName"
+                                                        name="MiddleName"
+                                                        label="Designation"
+                                                        type="text"
+                                                        variant="standard"
+                                                        value={formik.values.MiddleName}
+                                                        onChange={formik.handleChange}
+                                                        error={formik.touched.MiddleName && Boolean(formik.errors.MiddleName)}
+                                                        helperText={formik.touched.MiddleName && formik.errors.MiddleName}
+                                                    />
+                                                </Grid>
+                                                <Grid xs={6} md={4}>
+                                                    <TextField
+                                                        InputProps={{ style: { width: 245 } }}
+
+                                                        margin="dense"
+                                                        id="LastName"
+                                                        name="LastName"
+                                                        label="Department"
+                                                        type="text"
+                                                        variant="standard"
+                                                        value={formik.values.LastName}
+                                                        onChange={formik.handleChange}
+                                                        error={formik.touched.LastName && Boolean(formik.errors.LastName)}
+                                                        helperText={formik.touched.LastName && formik.errors.LastName}
+                                                    />
+                                                </Grid>
+                                                <Grid item xs={12} style={{ marginTop: '10px' }}>
                                                     <span style={{ fontSize: '17px', color: 'rgb(16 182 128)' }} >Doc Upload :</span>
                                                 </Grid>
                                                 <Grid xs={6} md={6}>
@@ -864,57 +915,7 @@ const Page = (props) => {
 
                                                 </Dialog>
 
-                                                <Grid item xs={12} style={{ marginTop: '10px' }}>
-                                                    <span style={{ fontSize: '17px', color: 'rgb(16 182 128)' }} >Referenced By :</span>
-                                                </Grid>
-                                                <Grid xs={6} md={4}>
-                                                    <TextField
-                                                        InputProps={{ style: { width: 245 } }}
-
-                                                        margin="dense"
-                                                        id="FirstName"
-                                                        name="FirstName"
-                                                        label="Name"
-                                                        type="text"
-                                                        variant="standard"
-                                                        value={formik.values.FirstName}
-                                                        onChange={formik.handleChange}
-                                                        error={formik.touched.FirstName && Boolean(formik.errors.FirstName)}
-                                                        helperText={formik.touched.FirstName && formik.errors.FirstName}
-                                                    />
-                                                </Grid>
-                                                <Grid xs={6} md={4}>
-                                                    <TextField
-                                                        InputProps={{ style: { width: 245 } }}
-
-                                                        margin="dense"
-                                                        id="MiddleName"
-                                                        name="MiddleName"
-                                                        label="Designation"
-                                                        type="text"
-                                                        variant="standard"
-                                                        value={formik.values.MiddleName}
-                                                        onChange={formik.handleChange}
-                                                        error={formik.touched.MiddleName && Boolean(formik.errors.MiddleName)}
-                                                        helperText={formik.touched.MiddleName && formik.errors.MiddleName}
-                                                    />
-                                                </Grid>
-                                                <Grid xs={6} md={4}>
-                                                    <TextField
-                                                        InputProps={{ style: { width: 245 } }}
-
-                                                        margin="dense"
-                                                        id="LastName"
-                                                        name="LastName"
-                                                        label="Department"
-                                                        type="text"
-                                                        variant="standard"
-                                                        value={formik.values.LastName}
-                                                        onChange={formik.handleChange}
-                                                        error={formik.touched.LastName && Boolean(formik.errors.LastName)}
-                                                        helperText={formik.touched.LastName && formik.errors.LastName}
-                                                    />
-                                                </Grid>
+                                               
                                                 {/* <Grid xs={12} md={12}>
                                                     <Button onClick={handleClose}>Cancel</Button>
                                                     <Button type="submit">{visitingPasses.VisitingPassesId ? 'Update' : 'Add'}</Button>
