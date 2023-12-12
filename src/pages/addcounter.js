@@ -30,6 +30,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import SessionService from "../service/SessionService";
+import MinisterService from "../service/ministerService";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
@@ -41,7 +42,7 @@ import { useRouter } from 'next/router'
 import Webcam from "react-webcam";
 import { useRef } from "react";
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
- import dayjs, { Dayjs } from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
 const now = new Date();
 const data = [
     {
@@ -243,6 +244,7 @@ const Page = (props) => {
     const [status, setStatus] = useState([]);
     const [sessionList, setSessionList] = useState([]);
     const [visitingPlacesList, setVisitingPlacesList] = useState([]);
+    const [ministerList, setMinisterList] = useState([]);
     const webcamRef = useRef(null);
     const [imgSrc, setImgSrc] = useState(null);
 
@@ -268,8 +270,9 @@ const Page = (props) => {
     // const [fromDate, setFromDate] = useState('');
     const current = dayjs().format('YYYY-MM-DDTHH:mm:ss');
 
-    const [fromDate, setFromDate]= useState(dayjs(current));
+    const [fromDate, setFromDate] = useState(dayjs(current));
     const [toDate, setToDate] = useState(dayjs(current));
+    const [isShowMinister, setIsShowMinister] = useState(false);
     const router = useRouter();
     const currentDate = dayjs();
     const tomorrow = dayjs().add(3, 'day');
@@ -283,7 +286,6 @@ const Page = (props) => {
             .matches(/^[0-9]+$/, "Must be only digits")
             .min(10, 'Must be exactly 10 digits')
             .max(10, 'Must be exactly 10 digits'),
-
         // VisitorPhotoPath: Yup.string().required('Visitor Photo Path is required'),
         FromDate: Yup.string(),
         ToDate: Yup.string(),
@@ -303,10 +305,12 @@ const Page = (props) => {
         getUsersList();
         getVisitingPlacesList();
         getDesignationList();
+        getMinisterList();
         return () => {
             setVisitingPassesList([]);
             setUsersList([]);
             setDepartmentList([]);
+            setMinisterList([]);
             setVisitingPlacesList([]);
             setDesignationList([]);
             setSessionList([]);
@@ -364,7 +368,7 @@ const Page = (props) => {
             if (res) {
                 setSessionList([res]);
                 visitingPasses.SessionId = res.Sno;
-                 setVisitingPasses(visitingPasses);
+                setVisitingPasses(visitingPasses);
                 // setMultipleRequest(prvvisitingPasses => [...prvArray, values]);
 
             }
@@ -455,6 +459,13 @@ const Page = (props) => {
             // setError(err.message);
         });
     }
+    const getMinisterList = () => {
+        MinisterService.getAllMinister().then((res) => {
+            setMinisterList(res);
+        }).catch((err) => {
+            // setError(err.message);
+        });
+    }
     const getVisitingPassesList = () => {
         VisitingPassesService.getAllVisitingPasses().then((res) => {
             const result = res.map((response) => {
@@ -500,13 +511,15 @@ const Page = (props) => {
         onSubmit: (values, { resetForm }) => {
             const result = departmentList.find(({ DepartmentName }) => DepartmentName === "Counter Pass");
             values.UserId = userDetails ? userDetails.UserId : '';
-            values.FromDate = fromDate;
-            values.ToDate = toDate;
-           // values.VisitingStatus = status;
+            
+
+            values.FromDate = typeof fromDate === 'string' ? fromDate:dayjs(fromDate).format('YYYY-MM-DDTHH:mm:ss');
+            values.ToDate = typeof toDate === 'string' ? toDate:dayjs(toDate).format('YYYY-MM-DDTHH:mm:ss'); ;
+            // values.VisitingStatus = status;
             values.CreatedBy = userDetails ? userDetails.UserId : '';
             values.DepId = result.Depid;
             values.VisitorPhotoPath = imgSrc ? imgSrc : '';
-            values.UploadPath  = docSrc ? docSrc : '';
+            values.UploadPath = docSrc ? docSrc : '';
             if (!fromDate) {
                 alert("Please select  date ");
                 return;
@@ -525,23 +538,18 @@ const Page = (props) => {
                 delete values.VisitingPassesId;
                 setMultipleRequest(prvArray => [...prvArray, values]);
             }
-
         },
     });
     const multiple = () => {
-
-
         if (!multipleRequest.length) {
             alert("Please Enter Required Details");
             return;
         }
         const currentTimeInMilliseconds = new Date().getTime();
-
-        
         const updatedRequests = multipleRequest.map(result => ({
             ...result,
             BatchId: currentTimeInMilliseconds.toString()
-          }));
+        }));
 
         VisitingPassesService.cretePostVisitingPasses(updatedRequests).then((res) => {
             const data = res.length > 0 ? res[res.length - 1] : null
@@ -604,8 +612,14 @@ const Page = (props) => {
                                                             id="VisitingPlacesId"
                                                             label="VisitingPlaces Id"
                                                             name="VisitingPlacesId"
+
                                                             value={formik.values.VisitingPlacesId}
-                                                            onChange={e => { formik.handleChange(e); }}
+                                                            onChange={e => 
+                                                                
+                                                                { 
+                                                                    const minister=e.target.value===1007  ? true : false;         
+                                                                    formik.handleChange(e); setIsShowMinister(minister) }}
+                                                            
                                                         // onChange={e => { setDepartmentId(e.target.value) }}
                                                         >
                                                             <MenuItem value="">
@@ -618,6 +632,34 @@ const Page = (props) => {
                                                         </Select>
                                                     </FormControl>
                                                 </Grid>
+                                                {isShowMinister ?
+                                                 <Grid xs={6} md={3}>
+                                                 <FormControl variant="standard" fullWidth>
+                                                     <InputLabel id="studentName">Minister Name</InputLabel>
+                                                     <Select
+                                                         labelId="ministerId"
+                                                         id="ministerId"
+                                                         label="Minister Name"
+                                                         name="ministerId"
+                                                         value={formik.values.ministerId}
+                                                         onChange={e => 
+                                                             {
+                                                                 formik.handleChange(e); }}
+                                                         //  onChange={e => { formik.setMinister(e); }}
+                                                     // onChange={e => { setDepartmentId(e.target.value) }}
+                                                     >
+                                                         <MenuItem value="">
+                                                             <em>None</em>
+                                                         </MenuItem>
+                                                         {ministerList.map(({ index, MinID, MinisterName }) => (
+                                                             <MenuItem key={index} value={MinID}>{MinisterName}
+                                                             </MenuItem>
+                                                         ))}
+                                                     </Select>
+                                                 </FormControl>
+                                             </Grid>
+                                             :"" }
+                                               
                                                 <Grid xs={6} md={3}>
                                                     <TextField
                                                         InputProps={{ style: { width: 245 } }}
@@ -673,31 +715,31 @@ const Page = (props) => {
                                                         </Select>
                                                     </FormControl>
                                                 </Grid>
-                                                <Grid xs={6} md={3}>
+                                                <Grid xs={6} md={3} style={{marginTop:"30px"}}>
                                                     <LocalizationProvider dateAdapter={AdapterDayjs} >
-                                                    <DateTimePicker
-        
-          id="FromDate"
-          slotProps={{ textField: { size: "small", error: false } }}
-          name="FromDate"
-          label="From Date"
-          disablePast
-          onChange={(value) => {
+                                                        <DateTimePicker
 
-              formik.setFieldValue("date", value, true);
-              const dayDifference = value.diff(currentDate, 'day');
-              setFromDate(value.format('YYYY-MM-DDTHH:mm:ss'));
-              setValidToDate(dayjs().add(dayDifference, 'day'));
-          }}
-          sx={{ width: 250 }}
-          InputLabelProps={{
-              shrink: true,
-          }}
-          value={fromDate}
-        //   value={value}
-        //   onChange={handleChange}
-          renderInput={(params) => <TextField {...params} />}
-        />
+                                                            id="FromDate"
+                                                            slotProps={{ textField: { size: "small", error: false } }}
+                                                            name="FromDate"
+                                                            label="From Date"
+                                                            disablePast
+                                                            onChange={(value) => {
+
+                                                               formik.setFieldValue("date", value, true);
+                                                                const dayDifference = value.diff(currentDate, 'day');
+                                                                setFromDate(value.format('YYYY-MM-DDTHH:mm:ss'));
+                                                                setValidToDate(dayjs().add(dayDifference, 'day'));
+                                                            }}
+                                                            sx={{ width: 250 }}
+                                                            InputLabelProps={{
+                                                                shrink: true,
+                                                            }}
+                                                            value={fromDate}
+                                                            //   value={value}
+                                                            //   onChange={handleChange}
+                                                            renderInput={(params) => <TextField {...params} />}
+                                                        />
                                                         {/* <DatePicker defaultValue={dayjs(new Date())} /> */}
                                                         {/* <DatePicker InputProps={{ style: { width: 245 } }}
                                                             id="FromDate"
@@ -721,7 +763,7 @@ const Page = (props) => {
                                                             helperText={formik.touched.FromDate && formik.errors.FromDate} /> */}
                                                     </LocalizationProvider>
                                                 </Grid>
-                                                <Grid xs={6} md={3}>
+                                                <Grid xs={6} md={3} style={{marginTop:"30px"}}>
                                                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                                                         <DateTimePicker InputProps={{ style: { width: 245 } }}
                                                             disablePast
@@ -748,7 +790,7 @@ const Page = (props) => {
 
 
                                                 </Grid>
-                                                <Grid xs={6} md={3}>
+                                                <Grid xs={6} md={3} style={{marginTop:"30px"}}>
                                                     <TextField
                                                         InputProps={{ style: { width: 245 } }}
                                                         margin="dense"
@@ -779,7 +821,7 @@ const Page = (props) => {
 
                                                 </Grid>
                                                 <Grid xs={6} md={6}>
-                                                <label style={{ fontSize: '15px', color: 'black' }} >Upload Document</label>
+                                                    <label style={{ fontSize: '15px', color: 'black' }} >Upload Document</label>
                                                     <div>
                                                         <input type="file" name="name" style={{ "display": "inline-block", "width": "245px", "padding": "10px 20px", "backgroundColor": "#6366F1", "color": "#fff", "border": "none", "borderRadius": "12px", "cursor": "pointer" }} onChange={handleDocumentUpload} />
 
@@ -917,7 +959,7 @@ const Page = (props) => {
                             <div>
 
 
-                               
+
                                 <Dialog open={openQR} onClose={handleCloseQR}>
                                     <DialogTitle>Scan QR code</DialogTitle>
                                     <DialogContent >

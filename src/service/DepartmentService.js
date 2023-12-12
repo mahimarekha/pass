@@ -4,7 +4,7 @@ const DepartmentService = {
 //     return Promise.resolve([{
 //         "Depid": 10001,
 //         "DepartmentCode": "SO",
-//         "DepartmentName": "Secretariat offices",
+//         "DepartmentName": "Secretariat offices",=
 //         "DepartmentStatus": true,
 //         "CreateBy": "Admin",
 //         "CreateDateTime": "2023-10-27T05:46:44.893",

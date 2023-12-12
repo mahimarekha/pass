@@ -376,7 +376,7 @@ const handleCloseQR = () => {
                         
                      </Grid>
                      
-                     <Grid xs={6} md={6}>
+                     <Grid xs={6} md={6} style={{marginTop:'30px'}}>
                          <label style={{fontWeight:"bold"}}>
                            From Date
                          </label>
@@ -386,7 +386,7 @@ const handleCloseQR = () => {
                              </div>
                         
                      </Grid>
-                     <Grid xs={6} md={6}>
+                     <Grid xs={6} md={6} style={{marginTop:'30px'}}>
                          <label style={{fontWeight:"bold"}}>
                            To Date
                          </label>
@@ -404,7 +404,7 @@ const handleCloseQR = () => {
                          {getQR?.VisitingPlace} 
                              </div>
                      </Grid> */}
-                     <Grid xs={6} md={6}>
+                     <Grid xs={6} md={6} style={{marginTop:'30px'}}>
                          <label style={{fontWeight:"bold"}}>
                            Purpose Of Visiting
                          </label>
@@ -524,8 +524,8 @@ const handleCloseQR = () => {
                         
                      </Grid>
                      
-                     <Grid xs={6} md={6}>
-                         <label style={{fontWeight:"bold"}}>
+                     <Grid xs={6} md={6} style={{ marginTop:"30px"}}>
+                         <label style={{fontWeight:"bold", marginTop:"30px"}}>
                            From Date
                          </label>
                          <div style={{fontWeight:"500", fontSize:"17px", textTransform:"uppercase"}}>
@@ -534,8 +534,8 @@ const handleCloseQR = () => {
                              </div>
                         
                      </Grid>
-                     <Grid xs={6} md={6}>
-                         <label style={{fontWeight:"bold"}}>
+                     <Grid xs={6} md={6} style={{ marginTop:"30px"}}>
+                         <label style={{fontWeight:"bold", marginTop:"30px"}}>
                            To Date
                          </label>
                          <div style={{fontWeight:"500", fontSize:"17px", textTransform:"uppercase"}}>
@@ -544,7 +544,7 @@ const handleCloseQR = () => {
                              </div>
                      </Grid>
                       
-                     <Grid xs={6} md={6}>
+                     <Grid xs={6} md={6} style={{ marginTop:"30px"}}>
                          <label style={{fontWeight:"bold"}}>
                            Purpose Of Visiting
                          </label>

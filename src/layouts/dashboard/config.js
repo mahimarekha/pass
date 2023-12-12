@@ -56,23 +56,20 @@ export const items = [
       title: 'Designations',
       path: '/designations',
       role:['Admin'],
-      // icon: (
-      //   <SvgIcon fontSize="small">
-      //     <CogIcon />
-      //   </SvgIcon>
-      // )
+     
     },
     {
       title: 'Users',
       path: '/users',
       role:['Admin'],
-      // icon: (
-      //   <SvgIcon fontSize="small">
-      //     <CogIcon />
-      //   </SvgIcon>
-      // )
+     
     },
-    
+    {
+      title: 'Minister',
+      path: '/minister',
+      role:['Admin'],
+     
+    },
     {
       title: 'Session',
       path: '/session',
@@ -172,7 +169,7 @@ export const userPermissions = (router) => {
   const stringWithoutSlash = router.startsWith('/') ? router.substring(1) : router;
   switch (userDetails.RoleName) {
     case USER_ROLE.ADMIN:
-      return ['customers','role','visitingplaces','passes','designations','users','counterpass','visitingpasses','approval','addcounter'].includes(stringWithoutSlash);
+      return ['customers','role','visitingplaces','passes','designations','users','counterpass','visitingpasses','approval','addcounter','minister'].includes(stringWithoutSlash);
     case USER_ROLE.APPLYPASS:
       return ['visitingpasses'].includes(stringWithoutSlash);
       case USER_ROLE.APPROVER:

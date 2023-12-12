@@ -164,6 +164,7 @@ CustomersTable.propTypes = {
   selected: PropTypes.array,
   editDepartment:PropTypes.func,
   editRole:PropTypes.func,
+  editMinister:PropTypes.func,
   editVisitingPlaces:PropTypes.func,
   editPass:PropTypes.func,
   editDesignations:PropTypes.func,

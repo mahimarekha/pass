@@ -17,10 +17,7 @@ import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
 import { CustomersTable } from 'src/sections/customer/customers-table';
 import { CustomersSearch } from 'src/sections/customer/customers-search';
 import { applyPagination } from 'src/utils/apply-pagination';
-import UsersService from "../service/UsersService";
-import RoleService from "../service/RoleService";
-import DepartmentService from "../service/DepartmentService";
-import DesignationsService from "../service/DesignationsService";
+import MinisterService from "../service/ministerService";
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import FormControl from '@mui/material/FormControl';
@@ -32,7 +29,6 @@ import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
 import { useRouter } from 'next/router'
 import {userPermissions} from '../layouts/dashboard/config';
 const now = new Date();
-
 const data = [
     {
         id: '5e887ac47eed253091be10cb',
@@ -194,37 +190,22 @@ const useCustomerIds = (customers) => {
     );
 };
 
-const Page = () => {
+const Page = (context) => {
     const userDetails = JSON.parse(window.sessionStorage.getItem('userDetails'));
+
     const [page, setPage] = useState(0);
     const [open, setOpen] = React.useState(false);
     const headersList = [{
-        name: 'Full Name',
-        property: 'FullName'
+        name: 'Minister Code',
+        property: 'MinisterCode'
     },
     {
-
-        name: 'Mobile No.',
-        property: 'MobileNo'
+        
+        name: 'Minister Name',
+        property: 'MinisterName'
     },
     {
-        name: 'Email Id',
-        property: 'EmailId'
-    },
-    {
-        name: 'Role',
-        property: 'RoleName'
-    },
-    {
-        name: 'Dep',
-        property: 'DepartmentName'
-    },
-    {
-        name: 'Designation',
-        property: 'Designation'
-    },
-    {
-        name: 'User Status',
+        name: 'Minister Status',
         property: 'status'
     },
     {
@@ -232,93 +213,40 @@ const Page = () => {
         property: 'Edit'
     },
     ];
+    const [status, setStatus] = useState([]);
     const [rowsPerPage, setRowsPerPage] = useState(5);
     const customers = useCustomers(page, rowsPerPage);
     const customersIds = useCustomerIds(customers);
-    const [usersList, setUsersList] = useState([]);
-    const [users, setUsers] = useState({
-        FullName: '',
-        MobileNo: '',
-        EmailId: '',
-        RoleId: '',
-        Depid: '',
-        DesignationId: '',
-        UserStatus: true,
-        UserId:'',
+    const [ministerList, setMinisterList] = useState([]);
+    const [minister, setMinister] = useState({
+        MinisterCode: '',
+        MinisterName: '',
+        MinisterStatus: true,
+        MinisterId:'',
     });
-    var [roleId, setRoleId] = useState("");
-    const [roleList, setRoleList] = useState([]);
-    var [departmentId, setDepartmentId] = useState("");
-    const [departmentList, setDepartmentList] = useState([]);
-    var [designationId, setDesignationId] = useState("");
-    const [designationList, setDesignationList] = useState([]);
     const validationSchema = Yup.object().shape({
-        FullName: Yup.string().required('FullName is required'),
-        MobileNo: Yup.string().required()
-        .matches(/^[0-9]+$/, "Must be only digits")
-        .min(10, 'Must be exactly 10 digits')
-        .max(10, 'Must be exactly 10 digits'),
-        EmailId: Yup.string().required('Email is required'),
-        RoleId: Yup.string().required('Role Id is required'),
-        Depid: Yup.string().required('Department Id is required'),
-        DesignationId: Yup.string().required('Designation Id is required'),
-        UserStatus: Yup.string(true).required('User Status is required'),
+        MinisterCode: Yup.string().required('Minister Code is required')
+        .max(2, 'Must be exactly 2 digits'),
+        MinisterName: Yup.string().required('Minister Name is required'),
+        MinisterStatus: Yup.string(true).required('Minister Status is required'),
     });
     const router = useRouter();
+    
     useEffect(() => {
-        if(!userPermissions(router.asPath)){
+          if(!userPermissions(router.asPath)){
             router.push('/unauthorized');
           }
-        getRoleList();
-        getDepartmentList();
-        getDesignationList();
-        getUsersByRole();
+          getMinisterList();
 
         return () => {
-            setUsersList([]);
-            setRoleList([]);
-            setDepartmentList([]);
-            setDesignationList([])
+            setMinisterList([]);
         }
     }, []);
-   
-   const  getUsersByRole=()=>{
-    const userDetails =JSON.parse(window.sessionStorage.getItem('userDetails'));
-    if(userDetails.RoleName.toLowerCase() == 'admin'){
-        getUsersList();
-    }
-    else{
-        getDepartmentWiseUsers(userDetails);
-    }
-   } ;
-
-    const getRoleList = () => {
-        RoleService.getAllRole().then((res) => {
-            // const result = res.map((response) => {
-                
-            // })
-            setRoleList(res);
-        }).catch((err) => {
-            // setError(err.message);
-        });
-    }
-    const getDepartmentList = () => {
-        DepartmentService.getAllDepartment().then((res) => {
-          setDepartmentList(res);
-        }).catch((err) => {
-          // setError(err.message);
-        });
-      }
-      const getDesignationList = () => {
-        DesignationsService.getAllDesignations().then((res) => {
-            setDesignationList(res);
-        }).catch((err) => {
-            // setError(err.message);
-        });
-    }
     const handleClickOpen = () => {
         setOpen(true);
         formReset();
+        setStatus("");
+        
     };
 
     const handleClose = () => {
@@ -339,76 +267,65 @@ const Page = () => {
         },
         []
     );
-    const editUsers = (users) => {
-        setUsers(users);
+    const editMinister = (minister) => {
+        setMinister(minister);
         setOpen(true);
     }
-    // const deleteRole = (roledelete) => {
-    //     if (roledelete) {
-    //         RoleService.deleteRole(roledelete).then((res) => {
-    //             getRoleList();
-    //         }).catch((err) => {
-    //         });
-    //     }
-    // };
-
-    const getUsersList = () => {
-        UsersService.getAllUsers().then((res) => {
+    const deleteMinister = (ministerdelete) => {
+        if (ministerdelete) {
+            MinisterService.deleteMinister(ministerdelete).then((res) => {
+                getMinisterList();
+            }).catch((err) => {
+            });
+        }
+    };
+    const getMinisterList = () => {
+        MinisterService.getAllMinister().then((res) => {
             const result = res.map((response) => {
                 return {
                     ...response,
-                    "status": response.UserStatus ? 'Active' : 'Inactive',
+                    "status": response.MinisterStatus ? 'Active' : 'Inactive',
                 }
             })
-            setUsersList(result);
+            setMinisterList(result);
         }).catch((err) => {
             // setError(err.message);
         });
     }
-    const getDepartmentWiseUsers= (userDet) => {
-        UsersService.getDepartmentWiseUsers(userDet).then((res) => {
-            setUsersList(res);
-        }).catch((err) => {
-            // setError(err.message);
-        });
-    }
-    const formReset = () => {
-        setUsers({
-            FullName: '',
-            MobileNo: '',
-            EmailId: '',
-            RoleId: '',
-            Depid: '',
-            DesignationId: '',
-            UserStatus: true,
-            UserId:'',
+    const formReset=()=>{
+        setMinister({
+        MinisterCode: '',
+        MinisterName: '',
+        MinisterStatus: true,
+        MinisterId:'',
         })
     }
     const formik = useFormik({
-        initialValues: users,
+        initialValues: minister,
         enableReinitialize: true,
         validationSchema: validationSchema,
         onSubmit: (values, { resetForm }) => {
-            values.CreatedBy =  userDetails ? userDetails.UserId : '';
-            if (users.UserId) {
-                UsersService.upadeUsers(values).then((res) => {
+            values.CreateBy =  userDetails ? userDetails.UserId : '';
+            if (minister.MinisterId) {
+                MinisterService.upadeMinister(values).then((res) => {
                     handleClose();
-                   
-                    getUsersByRole();
+                    getMinisterList();
                     resetForm();
                     formReset();
-                    alert(" Users Updated Successfully.");
+                    alert(" Minister Updated Successfully.");
                 }).catch((err) => {
                 });
             }
             else {
-                delete values.UserId;
-                UsersService.creteUsers(values).then((res) => {
-                    getUsersByRole();
+                delete values.MinisterId;
+                
+                MinisterService.creteMinister(values).then((res) => {
+                    debugger
+                    getMinisterList();
                     resetForm();
                     handleClose();
                     formReset();
-                    alert(" Users Added Successfully.");
+                    alert(" Minister Added Successfully.");
                     // props.history.push('/app/vendor');
                 })
                     .catch((err) => {
@@ -443,7 +360,7 @@ const Page = () => {
                         >
                             <Stack spacing={1}>
                                 <Typography variant="h4">
-                                    Users
+                                Minister
                                 </Typography>
                                 <Stack
                                     alignItems="center"
@@ -485,153 +402,68 @@ const Page = () => {
                                     Add
                                 </Button>
                                 <Dialog open={open} onClose={handleClose}>
-                                    <DialogTitle>Users</DialogTitle>
+                                    <DialogTitle>Minister</DialogTitle>
                                     <form onSubmit={formik.handleSubmit} >
                                         <DialogContent style={{ width: 308 }}>
                                             <DialogContentText>
-
                                             </DialogContentText>
-
                                             <Grid container spacing={2}>
                                                 <Grid xs={12} md={12} >
                                                     <TextField
                                                         autoFocus
                                                         style={{ width: 258 }}
-                                                        id="FullName"
-                                                        name="FullName"
-                                                        label="Full Name"
+                                                        id="MinisterCode"
+                                                        name="MinisterCode"
+                                                        label="Minister Code"
                                                         type="text"
                                                         variant="standard"
                                                         onChange={formik.handleChange}
-                                                        value={formik.values.FullName}
-                                                        error={formik.touched.FullName && Boolean(formik.errors.FullName)}
-                                                        helperText={formik.touched.FullName && formik.errors.FullName}
+                                                        value={formik.values.MinisterCode}
+                                                        error={formik.touched.MinisterCode && Boolean(formik.errors.MinisterCode)}
+                                                        helperText={formik.touched.MinisterCode && formik.errors.MinisterCode}
                                                     />
                                                 </Grid>
                                                 <Grid xs={12} md={12}>
                                                     <TextField
 
                                                         style={{ width: 258 }}
-                                                        id="MobileNo"
-                                                        name="MobileNo"
-                                                        label="Mobile Number"
+                                                        id="MinisterName"
+                                                        name="MinisterName"
+                                                        label="Minister Name"
                                                         type="text"
                                                         variant="standard"
                                                         onChange={formik.handleChange}
-                                                        value={formik.values.MobileNo}
-                                                        error={formik.touched.MobileNo && Boolean(formik.errors.MobileNo)}
-                                                        helperText={formik.touched.MobileNo && formik.errors.MobileNo}
-                                                    />
-                                                </Grid>
-                                                <Grid xs={12} md={12}>
-                                                    <TextField
-                                                        InputProps={{ style: { width: 258 } }}
-                                                        margin="dense"
-                                                        id="EmailId"
-                                                        name="EmailId"
-                                                        label="Email ID"
-                                                        type="text"
-                                                        variant="standard"
-                                                        value={formik.values.EmailId}
-                                                        onChange={formik.handleChange}
-                                                        error={formik.touched.EmailId && Boolean(formik.errors.EmailId)}
-                                                        helperText={formik.touched.EmailId && formik.errors.EmailId}
+                                                        value={formik.values.MinisterName}
+                                                        error={formik.touched.RoleName && Boolean(formik.errors.MinisterName)}
+                                                        helperText={formik.touched.MinisterName && formik.errors.MinisterName}
                                                     />
                                                 </Grid>
                                                 <Grid xs={12} md={12}>
                                                     <FormControl variant="standard" fullWidth>
-                                                        <InputLabel id="studentName">Role Id</InputLabel>
-                                                        <Select
-                                                            labelId="RoleId"
-                                                            id="RoleId"
-                                                            label="Role Name"
-                                                            name="RoleId"
-                                                            value={formik.values.RoleId}
-                                                            // value={roleId}
-                                                            onChange={e => {formik.handleChange(e);}}
-                                                        >
-                                                            <MenuItem value="">
-                                                                <em>None</em>
-                                                            </MenuItem>
-                                                            {roleList.map(({ index,RoleId, RoleName }) => (
-                                                                <MenuItem key={index} value={RoleId}>{RoleName}
-                                                                </MenuItem>
-                                                            ))}
-                                                        </Select>
-                                                    </FormControl>
-                                                </Grid>
-                                                <Grid xs={12} md={12}>
-                                                    <FormControl variant="standard" fullWidth>
-                                                        <InputLabel id="studentName">Department Id</InputLabel>
-                                                        <Select
-                                                            labelId="Depid"
-                                                            id="Depid"
-                                                            label="Department Name"
-                                                            name="Depid"
-                                                            value={formik.values.Depid}
-                                                            onChange={e => {formik.handleChange(e);}}
-                                                            // onChange={e => { setDepartmentId(e.target.value) }}
-                                                        >
-                                                            <MenuItem value="">
-                                                                <em>None</em>
-                                                            </MenuItem>
-                                                            {departmentList.map(({ index, Depid, DepartmentName }) => (
-                                                                <MenuItem key={index} value={Depid}>{DepartmentName}
-                                                                </MenuItem>
-                                                            ))}
-                                                        </Select>
-                                                    </FormControl>
-                                                </Grid>
-                                                <Grid xs={12} md={12}>
-                                                    <FormControl variant="standard" fullWidth>
-                                                        <InputLabel id="studentName">Designation Id</InputLabel>
-                                                        <Select
-                                                            labelId="DesignationId"
-                                                            id="DesignationId"
-                                                            label="Designation Id"
-                                                            name="DesignationId"
-                                                            value={formik.values.DesignationId}
-                                                            onChange={e => {formik.handleChange(e);}}
-
-                                                        >
-                                                            <MenuItem value="">
-                                                                <em>None</em>
-                                                            </MenuItem>
-                                                            {designationList.map(({ index, DesignationId, Designation }) => (
-                                                                <MenuItem key={index} value={DesignationId}>{Designation}
-                                                                </MenuItem>
-                                                            ))}
-                                                        </Select>
-                                                    </FormControl>
-                                                </Grid>
-                                                <Grid xs={12} md={12}>
-                                                    
-                                                    <FormControl variant="standard" fullWidth>
-                                                        <InputLabel id="demo-simple-select-standard-label">Status</InputLabel>
+                                                        <InputLabel id="demo-simple-select-standard-label"> Status</InputLabel>
                                                         <Select
                                                             labelId="demo-simple-select-standard-label"
                                                             id="demo-simple-select-standard"
-                                                            label="User Status"
-                                                            name="UserStatus"
-                                                            value={formik.values.UserStatus}
+                                                            label="Minister Status"
+                                                            name="MinisterStatus"
+                                                            value={formik.values.MinisterStatus}
                                                             onChange={formik.handleChange}
-                                                            error={formik.touched.UserStatus && Boolean(formik.errors.UserStatus)}
-                                                            helperText={formik.touched.UserStatus && formik.errors.UserStatus}
+                                                            error={formik.touched.MinisterStatus && Boolean(formik.errors.MinisterStatus)}
+                                                            helperText={formik.touched.MinisterStatus && formik.errors.MinisterStatus}
                                                         >
                                                             <MenuItem value="">
                                                                 <em>None</em>
                                                             </MenuItem>
                                                             <MenuItem value={true}>Active</MenuItem>
                                                             <MenuItem value={false}>In Active</MenuItem>
-                                                            
                                                         </Select>
                                                     </FormControl>
                                                 </Grid>
-                                              
+                                                
                                                 <Grid xs={12} md={12}>
 
                                                     <Button onClick={handleClose}>Cancel</Button>
-                                                    <Button type="submit">{users.UserId ? 'Update' : 'Add'}</Button>
+                                                    <Button type="submit">{minister.MinisterId?'Update':'Add'}</Button>
 
                                                 </Grid>
 
@@ -646,15 +478,15 @@ const Page = () => {
                         {/* <CustomersSearch /> */}
                         <CustomersTable
                             headersList={headersList}
-                            count={usersList.length}
-                            items={usersList}
-                            editDetails={editUsers}
+                            count={ministerList.length}
+                            items={ministerList}
+                            editDetails={editMinister}
 
                             onDeselectAll={customersSelection.handleDeselectAll}
                             onDeselectOne={customersSelection.handleDeselectOne}
                             onPageChange={handlePageChange}
                             onRowsPerPageChange={handleRowsPerPageChange}
-                            onSelectAll={customersSelection.handleSelectAll}
+                            onSelectAll={customersSelection.handleSelctAll}
                             onSelectOne={customersSelection.handleSelectOne}
                             page={page}
                             rowsPerPage={rowsPerPage}
