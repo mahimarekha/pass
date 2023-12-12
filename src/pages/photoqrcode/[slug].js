@@ -322,9 +322,7 @@ const handleCloseQR = () => {
          
                  
                }}
-            //  action={
-            //    <p style={{color:"white" ,textTransform:'uppercase'}}> {getQRDetails?.VisitingPlace} </p>
-            //  }
+             
              title="TELANGANA ASSEMBLY"
             titleTypographyProps={{color:"white",fontSize:'20px'}}
            />
@@ -417,7 +415,7 @@ const handleCloseQR = () => {
                          </label>
                          <div style={{fontWeight:"500", fontSize:"15px"}}>
      
-                         {getQRDetails?.Remarks} 
+                         {getQRDetails?.SessionID} 
                              </div>
                      </Grid>
                      <Grid xs={6} md={6} >
@@ -486,9 +484,7 @@ const handleCloseQR = () => {
          
                  
                }}
-            //  action={
-            //    <p style={{color:"white" ,textTransform:'uppercase'}}> {getQRDetails?.VisitingPlace} </p>
-            //  }
+            
              title="TELANGANA ASSEMBLY"
             titleTypographyProps={{color:"white",fontSize:'20px'}}
            />

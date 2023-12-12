@@ -698,11 +698,11 @@ const Page = (props) => {
                                                     <FormControl variant="standard" fullWidth>
                                                         <InputLabel id="studentName">Session Name</InputLabel>
                                                         <Select
-                                                            labelId="Remarks"
-                                                            id="Remarks"
-                                                            label="Remarks"
-                                                            name="Remarks" 
-                                                            value={formik.values.Remarks}
+                                                            labelId="SessionID"
+                                                            id="SessionID"
+                                                            label="Session Name"
+                                                            name="SessionID" 
+                                                            value={formik.values.SessionID}
                                                             onChange={e => { formik.handleChange(e); }}
                                                         >
                                                             <MenuItem value="">
