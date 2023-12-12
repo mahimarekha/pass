@@ -359,7 +359,7 @@ const handleCloseQR = () => {
                      <Grid xs={8} md={8} container spacing={1} >
                      <Grid xs={6} md={6}>
                          <label style={{fontWeight:"bold"}}>
-                          Full Name
+                         Visitor Name 
                          </label>
                        
                              <div style={{fontWeight:"500", fontSize:"17px", textTransform:"uppercase"}}>
@@ -519,7 +519,7 @@ const handleCloseQR = () => {
                      <Grid xs={8} md={8} container spacing={1} >
                      <Grid xs={6} md={6}>
                          <label style={{fontWeight:"bold"}}>
-                          Full Name
+                         Visitor Name
                          </label>
                        
                              <div style={{fontWeight:"500", fontSize:"17px", textTransform:"uppercase"}}>
