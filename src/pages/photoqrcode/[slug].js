@@ -322,16 +322,26 @@ const handleCloseQR = () => {
          
                  
                }}
-             
-             title="TELANGANA ASSEMBLY"
+               action={
+                <p style={{color:"white" ,textTransform:'uppercase'}}> {getQRDetails?.SessionID} </p>
+              }
+             title="TELANGANA LEGISLATIVE ASSEMBLY"
             titleTypographyProps={{color:"white",fontSize:'20px'}}
            />
-
+  {/* <Grid xs={6} md={6} >
+                         <label style={{fontWeight:"bold"}}>
+                         Session Name
+                         </label>
+                         <div style={{fontWeight:"500", fontSize:"15px"}}>
+     
+                         {getQRDetails?.SessionID} 
+                             </div>
+                     </Grid> */}
            
            <CardContent style={{backgroundColor: "gainsboro"}}>
            
                        
-                             <div style={{fontWeight:"bold", textAlign:"center", fontSize:"23px", textTransform:"uppercase"}}>
+                             <div style={{ fontWeight:"bold", textAlign:"center", fontSize:"23px", textTransform:"uppercase"}}>
                                  {getQRDetails?.VisitingPlace}
                                   </div>
                {/* <Grid xs={6} md={6}> */}
@@ -409,7 +419,7 @@ const handleCloseQR = () => {
                          {getQR?.VisitingPlace} 
                              </div>
                      </Grid> */}
-                     <Grid xs={6} md={6} >
+                     {/* <Grid xs={6} md={6} >
                          <label style={{fontWeight:"bold"}}>
                          Session Name
                          </label>
@@ -417,7 +427,7 @@ const handleCloseQR = () => {
      
                          {getQRDetails?.SessionID} 
                              </div>
-                     </Grid>
+                     </Grid> */}
                      <Grid xs={6} md={6} >
                          <label style={{fontWeight:"bold"}}>
                            Purpose Of Visiting
@@ -480,12 +490,12 @@ const handleCloseQR = () => {
                  
                 
                  bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#101010' : '#6366f1'),
-                
-         
-                 
-               }}
             
-             title="TELANGANA ASSEMBLY"
+               }}
+               action={
+                <p style={{color:"white" ,textTransform:'uppercase'}}> {getQRDetails?.SessionID} </p>
+              }
+             title="TELANGANA LEGISLATIVE ASSEMBLY"
             titleTypographyProps={{color:"white",fontSize:'20px'}}
            />
            <CardContent style={{backgroundColor: "gainsboro"}}>
@@ -568,7 +578,7 @@ const handleCloseQR = () => {
                          {getQR?.VisitingPlace} 
                              </div>
                      </Grid> */}
-                     <Grid xs={6} md={6} >
+                     {/* <Grid xs={6} md={6} >
                          <label style={{fontWeight:"bold"}}>
                          Session ID
                          </label>
@@ -576,7 +586,7 @@ const handleCloseQR = () => {
      
                          {getQRDetails?.SessionID} 
                              </div>
-                     </Grid>
+                     </Grid> */}
                      <Grid xs={6} md={6} >
                          <label style={{fontWeight:"bold"}}>
                            Purpose Of Visiting

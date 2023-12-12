@@ -667,7 +667,7 @@ const Page = (props) => {
                                                         margin="dense"
                                                         id="FullName"
                                                         name="FullName"
-                                                        label="Full Name"
+                                                        label="visitor Name"
                                                         type="text"
                                                         variant="standard"
                                                         value={formik.values.FullName}
@@ -698,17 +698,17 @@ const Page = (props) => {
                                                     <FormControl variant="standard" fullWidth>
                                                         <InputLabel id="studentName">Session Name</InputLabel>
                                                         <Select
-                                                            labelId="SessionID"
-                                                            id="SessionID"
+                                                            labelId="SessionId"
+                                                            id="SessionId"
                                                             label="Session Name"
-                                                            name="SessionID" 
-                                                            value={formik.values.SessionID}
+                                                            name="SessionId" 
+                                                            value={formik.values.SessionId}
                                                             onChange={e => { formik.handleChange(e); }}
                                                         >
                                                             <MenuItem value="">
                                                                 <em>None</em>
                                                             </MenuItem>
-                                                            {sessionList.map(({ index, Remarks, Sno }) => (
+                                                            {sessionList.map(({ index, Remarks, Sno ,SessionID}) => (
                                                                 <MenuItem key={index} value={Sno}>{Remarks}
                                                                 </MenuItem>
                                                             ))}
