@@ -534,7 +534,7 @@ const handleCloseQR = () => {
                         
                      </Grid> */}
                     
-                    
+
                      
                      <Grid xs={6} md={6} >
                          <label style={{fontWeight:"bold"}}>
@@ -571,6 +571,15 @@ const handleCloseQR = () => {
                          <div style={{fontWeight:"500", fontSize:"15px"}}>
      
                          {getQRDetails?.SessionID} 
+                             </div>
+                     </Grid>
+                     <Grid xs={6} md={6} >
+                         <label style={{fontWeight:"bold"}}>
+                           Purpose Of Visiting
+                         </label>
+                         <div style={{fontWeight:"500", fontSize:"15px"}}>
+     
+                         {getQRDetails?.PurposeVisting} 
                              </div>
                      </Grid>
                      <Grid xs={6} md={6} >
