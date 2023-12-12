@@ -71,6 +71,12 @@ export const items = [
      
     },
     {
+      title: 'legaslature party office',
+      path: '/leguslative',
+      role:['Admin'],
+     
+    },
+    {
       title: 'Session',
       path: '/session',
       role:['Admin'],
@@ -169,7 +175,7 @@ export const userPermissions = (router) => {
   const stringWithoutSlash = router.startsWith('/') ? router.substring(1) : router;
   switch (userDetails.RoleName) {
     case USER_ROLE.ADMIN:
-      return ['customers','role','visitingplaces','passes','designations','users','counterpass','visitingpasses','approval','addcounter','minister'].includes(stringWithoutSlash);
+      return ['customers','role','visitingplaces','passes','designations','users','counterpass','visitingpasses','approval','addcounter','minister','leguslative'].includes(stringWithoutSlash);
     case USER_ROLE.APPLYPASS:
       return ['visitingpasses'].includes(stringWithoutSlash);
       case USER_ROLE.APPROVER:

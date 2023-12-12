@@ -370,7 +370,7 @@ const handleCloseQR = () => {
                      </Grid>
                      <Grid xs={6} md={6}>
                          <label style={{fontWeight:"bold"}}>
-                         MobileNumber
+                         Mobile Number
                          </label>
                        
                              <div style={{fontWeight:"500", fontSize:"17px", textTransform:"uppercase"}}>
@@ -530,7 +530,7 @@ const handleCloseQR = () => {
                      </Grid>
                      <Grid xs={6} md={6}>
                          <label style={{fontWeight:"bold"}}>
-                         MobileNumber
+                         Mobile Number
                          </label>
                        
                              <div style={{fontWeight:"500", fontSize:"17px", textTransform:"uppercase"}}>
