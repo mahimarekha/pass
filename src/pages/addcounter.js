@@ -698,18 +698,18 @@ const Page = (props) => {
                                                     <FormControl variant="standard" fullWidth>
                                                         <InputLabel id="studentName">Session Name</InputLabel>
                                                         <Select
-                                                            labelId="SessionId"
-                                                            id="SessionId"
-                                                            label="Session Name"
-                                                            name="SessionId"
+                                                            labelId="Remarks"
+                                                            id="Remarks"
+                                                            label="Remarks"
+                                                            name="Remarks" 
                                                             value={formik.values.SessionId}
                                                             onChange={e => { formik.handleChange(e); }}
                                                         >
                                                             <MenuItem value="">
                                                                 <em>None</em>
                                                             </MenuItem>
-                                                            {sessionList.map(({ index, SessionID, Sno }) => (
-                                                                <MenuItem key={index} value={Sno}>{SessionID}
+                                                            {sessionList.map(({ index, Remarks, Sno }) => (
+                                                                <MenuItem key={index} value={Sno}>{Remarks}
                                                                 </MenuItem>
                                                             ))}
                                                         </Select>

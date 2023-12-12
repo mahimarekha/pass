@@ -294,7 +294,7 @@ const Page = (context) => {
        const visitingPlace = {VisitingPlacesId:'1007'}
         MinisterService.getAllMinister(visitingPlace).then((res) => {
            const minister= res.find(resp=>resp.VisitingPlacesId===1007)
-            const result = res.map((response) => {
+            const result = minister.map((response) => {
                 return {
                     ...response,
                     "status": response.MinisterStatus ? 'Active' : 'Inactive',

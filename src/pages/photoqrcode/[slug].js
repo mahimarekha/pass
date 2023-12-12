@@ -364,7 +364,7 @@ const handleCloseQR = () => {
                             
                         
                      </Grid>
-                     <Grid xs={6} md={6}>
+                     {/* <Grid xs={6} md={6}>
                          <label style={{fontWeight:"bold"}}>
                          VisitingPlace
                          </label>
@@ -374,7 +374,7 @@ const handleCloseQR = () => {
                                   </div>
                             
                         
-                     </Grid>
+                     </Grid> */}
                     
                      
                      <Grid xs={6} md={6} >
@@ -522,7 +522,7 @@ const handleCloseQR = () => {
                             
                         
                      </Grid>
-                     <Grid xs={6} md={6}>
+                     {/* <Grid xs={6} md={6}>
                          <label style={{fontWeight:"bold"}}>
                          VisitingPlace
                          </label>
@@ -532,7 +532,8 @@ const handleCloseQR = () => {
                                   </div>
                             
                         
-                     </Grid>
+                     </Grid> */}
+                    
                     
                      
                      <Grid xs={6} md={6} >
