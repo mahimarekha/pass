@@ -11,6 +11,7 @@ import { useSelection } from 'src/hooks/use-selection';
 import { useFormik } from 'formik';
 import { useEffect } from 'react';
 import MenuItem from '@mui/material/MenuItem';
+import VisitingPlacesService from "../service/VsitingPlaces";
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
 import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
@@ -213,11 +214,13 @@ const Page = (context) => {
         property: 'Edit'
     },
     ];
+    const [visitingPlacesList, setVisitingPlacesList] = useState([]);
     const [status, setStatus] = useState([]);
     const [rowsPerPage, setRowsPerPage] = useState(5);
     const customers = useCustomers(page, rowsPerPage);
     const customersIds = useCustomerIds(customers);
     const [ministerList, setMinisterList] = useState([]);
+    const [visitingPassesList, setVisitingPassesList] = useState([]);
     const [minister, setMinister] = useState({
         MinisterCode: '',
         MinisterName: '',
@@ -237,9 +240,10 @@ const Page = (context) => {
             router.push('/unauthorized');
           }
           getMinisterList();
-
+          getVisitingPlacesList()
         return () => {
             setMinisterList([]);
+            setVisitingPlacesList([]);
         }
     }, []);
     const handleClickOpen = () => {
@@ -279,8 +283,17 @@ const Page = (context) => {
             });
         }
     };
+    const getVisitingPlacesList = () => {
+        VisitingPlacesService.getAllVisitingPlaces().then((res) => {
+            setVisitingPlacesList(res);
+        }).catch((err) => {
+            // setError(err.message);
+        });
+    }
     const getMinisterList = () => {
-        MinisterService.getAllMinister().then((res) => {
+       const visitingPlace = {VisitingPlacesId:'1007'}
+        MinisterService.getAllMinister(visitingPlace).then((res) => {
+           const minister= res.find(resp=>resp.VisitingPlacesId===1007)
             const result = res.map((response) => {
                 return {
                     ...response,
@@ -305,6 +318,8 @@ const Page = (context) => {
         enableReinitialize: true,
         validationSchema: validationSchema,
         onSubmit: (values, { resetForm }) => {
+            const result = visitingPlacesList.find(({ VisitingPlace }) => VisitingPlace === "Minister Chambers");
+values.VisitingPlacesId= result? result.VisitingPlacesId:'';
             values.CreateBy =  userDetails ? userDetails.UserId : '';
             if (minister.MinisterId) {
                 MinisterService.upadeMinister(values).then((res) => {
@@ -320,7 +335,7 @@ const Page = (context) => {
                 delete values.MinisterId;
                 
                 MinisterService.creteMinister(values).then((res) => {
-                    debugger
+                    
                     getMinisterList();
                     resetForm();
                     handleClose();
@@ -408,6 +423,34 @@ const Page = (context) => {
                                             <DialogContentText>
                                             </DialogContentText>
                                             <Grid container spacing={2}>
+                                            {/* <Grid xs={12} md={12}>
+                                                    <FormControl variant="standard" fullWidth>
+                                                        <InputLabel id="studentName">VisitingPlaces Id</InputLabel>
+                                                        <Select
+                                                            labelId="VisitingPlacesId"
+                                                            id="VisitingPlacesId"
+                                                            label="VisitingPlaces Id"
+                                                            name="VisitingPlacesId"
+
+                                                            value={formik.values.VisitingPlacesId}
+                                                            onChange={e => 
+                                                                
+                                                                { 
+                                                                            
+                                                                    formik.handleChange(e) }}
+                                                            
+                                                       
+                                                        >
+                                                            <MenuItem value="">
+                                                                <em>None</em>
+                                                            </MenuItem>
+                                                            {visitingPlacesList.map(({ index, VisitingPlacesId, VisitingPlace }) => (
+                                                                <MenuItem key={index} value={VisitingPlacesId}>{VisitingPlace}
+                                                                </MenuItem>
+                                                            ))}
+                                                        </Select>
+                                                    </FormControl>
+                                                </Grid> */}
                                                 <Grid xs={12} md={12} >
                                                     <TextField
                                                         autoFocus

@@ -355,28 +355,29 @@ const handleCloseQR = () => {
                      </Grid>
                      <Grid xs={6} md={6}>
                          <label style={{fontWeight:"bold"}}>
-                         Designation
+                         MobileNumber
                          </label>
                        
                              <div style={{fontWeight:"500", fontSize:"17px", textTransform:"uppercase"}}>
-                                 {getQRDetails?.Designation}
+                                 {getQRDetails?.MobileNumber}
                                   </div>
                             
                         
                      </Grid>
                      <Grid xs={6} md={6}>
                          <label style={{fontWeight:"bold"}}>
-                         Department Name
+                         VisitingPlace
                          </label>
                        
                              <div style={{fontWeight:"500", fontSize:"17px", textTransform:"uppercase"}}>
-                                 {getQRDetails?.DepartmentName}
+                                 {getQRDetails?.VisitingPlace}
                                   </div>
                             
                         
                      </Grid>
+                    
                      
-                     <Grid xs={6} md={6} style={{marginTop:'30px'}}>
+                     <Grid xs={6} md={6} >
                          <label style={{fontWeight:"bold"}}>
                            From Date
                          </label>
@@ -386,7 +387,7 @@ const handleCloseQR = () => {
                              </div>
                         
                      </Grid>
-                     <Grid xs={6} md={6} style={{marginTop:'30px'}}>
+                     <Grid xs={6} md={6} >
                          <label style={{fontWeight:"bold"}}>
                            To Date
                          </label>
@@ -404,7 +405,16 @@ const handleCloseQR = () => {
                          {getQR?.VisitingPlace} 
                              </div>
                      </Grid> */}
-                     <Grid xs={6} md={6} style={{marginTop:'30px'}}>
+                     <Grid xs={6} md={6} >
+                         <label style={{fontWeight:"bold"}}>
+                         Session ID
+                         </label>
+                         <div style={{fontWeight:"500", fontSize:"15px"}}>
+     
+                         {getQRDetails?.SessionID} 
+                             </div>
+                     </Grid>
+                     <Grid xs={6} md={6} >
                          <label style={{fontWeight:"bold"}}>
                            Purpose Of Visiting
                          </label>
@@ -445,8 +455,8 @@ const handleCloseQR = () => {
           
       
          <Dialog open={open} >
-         {qrList.map((getQRDetails,index) => (
-                 <Container maxWidth="sm" key={index} id="divToPrint" >
+         {qrList.map((getQRDetails, index) => (
+                 <Container maxWidth="sm" id="divToPrint" key={index}>
               <Card variant='outlined' style={{width:600,height:380}}
               
               sx={{
@@ -503,39 +513,40 @@ const handleCloseQR = () => {
                      </Grid>
                      <Grid xs={6} md={6}>
                          <label style={{fontWeight:"bold"}}>
-                         Designation
+                         MobileNumber
                          </label>
                        
                              <div style={{fontWeight:"500", fontSize:"17px", textTransform:"uppercase"}}>
-                                 {getQRDetails?.Designation}
+                                 {getQRDetails?.MobileNumber}
                                   </div>
                             
                         
                      </Grid>
                      <Grid xs={6} md={6}>
                          <label style={{fontWeight:"bold"}}>
-                         Department Name
+                         VisitingPlace
                          </label>
                        
                              <div style={{fontWeight:"500", fontSize:"17px", textTransform:"uppercase"}}>
-                                 {getQRDetails?.DepartmentName}
+                                 {getQRDetails?.VisitingPlace}
                                   </div>
                             
                         
                      </Grid>
+                    
                      
-                     <Grid xs={6} md={6} style={{ marginTop:"30px"}}>
-                         <label style={{fontWeight:"bold", marginTop:"30px"}}>
+                     <Grid xs={6} md={6} >
+                         <label style={{fontWeight:"bold"}}>
                            From Date
                          </label>
                          <div style={{fontWeight:"500", fontSize:"17px", textTransform:"uppercase"}}>
+                             
                          {dayjs(getQRDetails?.FromDate).format('YYYY-MM-DD HH:mm')} 
-                         {/* {getQRDetails?.FromDate}  */}
                              </div>
                         
                      </Grid>
-                     <Grid xs={6} md={6} style={{ marginTop:"30px"}}>
-                         <label style={{fontWeight:"bold", marginTop:"30px"}}>
+                     <Grid xs={6} md={6} >
+                         <label style={{fontWeight:"bold"}}>
                            To Date
                          </label>
                          <div style={{fontWeight:"500", fontSize:"17px", textTransform:"uppercase"}}>
@@ -543,8 +554,25 @@ const handleCloseQR = () => {
                          {/* {getQRDetails?.ToDate}  */}
                              </div>
                      </Grid>
-                      
-                     <Grid xs={6} md={6} style={{ marginTop:"30px"}}>
+                      {/* <Grid xs={6} md={6}>
+                         <label style={{fontWeight:"bold"}}>
+                         Visiting Place
+                         </label>
+                         <div style={{fontWeight:"500", fontSize:"15px"}}>
+     
+                         {getQR?.VisitingPlace} 
+                             </div>
+                     </Grid> */}
+                     <Grid xs={6} md={6} >
+                         <label style={{fontWeight:"bold"}}>
+                         Session ID
+                         </label>
+                         <div style={{fontWeight:"500", fontSize:"15px"}}>
+     
+                         {getQRDetails?.SessionID} 
+                             </div>
+                     </Grid>
+                     <Grid xs={6} md={6} >
                          <label style={{fontWeight:"bold"}}>
                            Purpose Of Visiting
                          </label>
@@ -577,7 +605,7 @@ const handleCloseQR = () => {
          </Grid>
          </Grid>
          </Container>                                                 
-          ))}
+          ))} 
          
                                 </Dialog>   
           

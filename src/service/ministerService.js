@@ -1,7 +1,7 @@
 import requests from './httpService';
 const MinisterService = {
-  getAllMinister() {
-return requests.post(`/GetMinisterList`,{});
+  getAllMinister(body) {
+return requests.post(`/GetMinisterList`,body);
   },
   creteMinister(body){
     return requests.post('/PostMinisterList',body); 
