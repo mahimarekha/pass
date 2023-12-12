@@ -322,14 +322,20 @@ const handleCloseQR = () => {
          
                  
                }}
-             action={
-               <p style={{color:"white" ,textTransform:'uppercase'}}> {getQRDetails?.VisitingPlace} </p>
-             }
+            //  action={
+            //    <p style={{color:"white" ,textTransform:'uppercase'}}> {getQRDetails?.VisitingPlace} </p>
+            //  }
              title="TELANGANA ASSEMBLY"
             titleTypographyProps={{color:"white",fontSize:'20px'}}
            />
+
+           
            <CardContent style={{backgroundColor: "gainsboro"}}>
            
+                       
+                             <div style={{fontWeight:"bold", textAlign:"center", fontSize:"23px", textTransform:"uppercase"}}>
+                                 {getQRDetails?.VisitingPlace}
+                                  </div>
                {/* <Grid xs={6} md={6}> */}
                          {/* <label style={{fontWeight:"bold"}}>
                          Visiting Place
@@ -407,11 +413,11 @@ const handleCloseQR = () => {
                      </Grid> */}
                      <Grid xs={6} md={6} >
                          <label style={{fontWeight:"bold"}}>
-                         Session ID
+                         Session Name
                          </label>
                          <div style={{fontWeight:"500", fontSize:"15px"}}>
      
-                         {getQRDetails?.SessionID} 
+                         {getQRDetails?.Remarks} 
                              </div>
                      </Grid>
                      <Grid xs={6} md={6} >
@@ -480,14 +486,16 @@ const handleCloseQR = () => {
          
                  
                }}
-             action={
-               <p style={{color:"white" ,textTransform:'uppercase'}}> {getQRDetails?.VisitingPlace} </p>
-             }
+            //  action={
+            //    <p style={{color:"white" ,textTransform:'uppercase'}}> {getQRDetails?.VisitingPlace} </p>
+            //  }
              title="TELANGANA ASSEMBLY"
             titleTypographyProps={{color:"white",fontSize:'20px'}}
            />
            <CardContent style={{backgroundColor: "gainsboro"}}>
-           
+           <div style={{fontWeight:"bold", textAlign:"center", fontSize:"23px", textTransform:"uppercase"}}>
+                                 {getQRDetails?.VisitingPlace}
+                                  </div>
                {/* <Grid xs={6} md={6}> */}
                          {/* <label style={{fontWeight:"bold"}}>
                          Visiting Place

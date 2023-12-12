@@ -702,7 +702,7 @@ const Page = (props) => {
                                                             id="Remarks"
                                                             label="Remarks"
                                                             name="Remarks" 
-                                                            value={formik.values.SessionId}
+                                                            value={formik.values.Remarks}
                                                             onChange={e => { formik.handleChange(e); }}
                                                         >
                                                             <MenuItem value="">
