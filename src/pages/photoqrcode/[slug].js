@@ -389,7 +389,7 @@ const handleCloseQR = () => {
                          </label>
                          <div style={{fontWeight:"500", fontSize:"17px", textTransform:"uppercase"}}>
                              
-                         {dayjs(getQRDetails?.FromDate).format('YYYY-MM-DD HH:mm')} 
+                         {dayjs(getQRDetails?.FromDate).format('DD-MM-YYYY HH:mm')} 
                              </div>
                         
                      </Grid>
@@ -398,7 +398,7 @@ const handleCloseQR = () => {
                            To Date
                          </label>
                          <div style={{fontWeight:"500", fontSize:"17px", textTransform:"uppercase"}}>
-                         {dayjs(getQRDetails?.ToDate).format('YYYY-MM-DD HH:mm')} 
+                         {dayjs(getQRDetails?.ToDate).format('DD-MM-YYYY HH:mm')} 
                          {/* {getQRDetails?.ToDate}  */}
                              </div>
                      </Grid>
@@ -550,7 +550,7 @@ const handleCloseQR = () => {
                          </label>
                          <div style={{fontWeight:"500", fontSize:"17px", textTransform:"uppercase"}}>
                              
-                         {dayjs(getQRDetails?.FromDate).format('YYYY-MM-DD HH:mm')} 
+                         {dayjs(getQRDetails?.FromDate).format('DD-MM-YYYY HH:mm')} DD-MM-YYYY
                              </div>
                         
                      </Grid>
@@ -559,7 +559,7 @@ const handleCloseQR = () => {
                            To Date
                          </label>
                          <div style={{fontWeight:"500", fontSize:"17px", textTransform:"uppercase"}}>
-                         {dayjs(getQRDetails?.ToDate).format('YYYY-MM-DD HH:mm')} 
+                         {dayjs(getQRDetails?.ToDate).format('DD-MM-YYYY HH:mm')} 
                          {/* {getQRDetails?.ToDate}  */}
                              </div>
                      </Grid>
