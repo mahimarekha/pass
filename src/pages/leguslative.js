@@ -291,9 +291,9 @@ const Page = (context) => {
         });
     }
     const getMinisterList = () => {
-       const visitingPlace = {VisitingPlacesId:'1007'}
-        MinisterService.getAllMinister(visitingPlace).then((res) => {
-           const minister= res.find(resp=>resp.VisitingPlacesId===1007)
+    //    const visitingPlace = {VisitingPlacesId:'1007'}
+        MinisterService.getAllMinisterByVisitingPlace("1010").then((res) => {
+        //    const minister= res.find(resp=>resp.VisitingPlacesId===1007)
             const result = res.map((response) => {
                 return {
                     ...response,
@@ -314,11 +314,14 @@ const Page = (context) => {
         })
     }
     const formik = useFormik({
+
         initialValues: minister,
         enableReinitialize: true,
         validationSchema: validationSchema,
+
         onSubmit: (values, { resetForm }) => {
-            const result = visitingPlacesList.find(({ VisitingPlace }) => VisitingPlace === "Minister Chambers");
+
+            const result = visitingPlacesList.find(({ VisitingPlace }) => VisitingPlace === "Legislature party office");
 values.VisitingPlacesId= result? result.VisitingPlacesId:'';
             values.CreateBy =  userDetails ? userDetails.UserId : '';
             if (minister.MinisterId) {
@@ -327,7 +330,7 @@ values.VisitingPlacesId= result? result.VisitingPlacesId:'';
                     getMinisterList();
                     resetForm();
                     formReset();
-                    alert(" Minister Updated Successfully.");
+                    alert(" Party Updated Successfully.");
                 }).catch((err) => {
                 });
             }
@@ -340,7 +343,7 @@ values.VisitingPlacesId= result? result.VisitingPlacesId:'';
                     resetForm();
                     handleClose();
                     formReset();
-                    alert(" Minister Added Successfully.");
+                    alert(" Party Added Successfully.");
                     // props.history.push('/app/vendor');
                 })
                     .catch((err) => {

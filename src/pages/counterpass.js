@@ -246,9 +246,9 @@ const Page = (props) => {
     //     property: 'Remarks'
     // },
     {
-        name: 'Edit',
-        property: 'Edit'
-    },
+        name: 'Approval Status',
+        property: 'ApprovalStatus'
+    }
 
     ];
     const dataAddheadersList = [
@@ -497,8 +497,10 @@ const Page = (props) => {
     }
 
     const getQrCodeList = (data) => {
+        
         if (data && data.QRCodeNumber) {
-            router.push('/qrcode/' + data.QRCodeNumber);
+
+            router.push('/photoqrcode/' + data.QRCodeNumber+'?isQrcode=true');
         }
     }
     const formReset = () => {

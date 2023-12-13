@@ -112,6 +112,16 @@ export const items = [
       )
   },
   {
+    title: 'Sub-Dropdown',
+    path: '/subdropdown',
+    role:['Admin','Counter pass'],
+   icon: (
+        <SvgIcon fontSize="small">
+          <ShoppingBagIcon />
+        </SvgIcon>
+      )
+  },
+  {
     title: 'Request Pass',
     path: '/visitingpasses',
     role:['Admin',"Apply for Pass","Approver","Secretary","Counter pass"],

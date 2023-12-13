@@ -907,9 +907,7 @@ const Page = (props) => {
                                     <DialogTitle>Scan QR code</DialogTitle>
                                     <DialogContent >
                                         <DialogContentText>
-
                                         </DialogContentText>
-
                                         <Grid container spacing={2}>
                                             <img src={getQR} alt='qrcode' />
 

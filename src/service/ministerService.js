@@ -3,6 +3,10 @@ const MinisterService = {
   getAllMinister(body) {
 return requests.post(`/GetMinisterList`,body);
   },
+
+  getAllMinisterByVisitingPlace(id) {
+  return requests.get(`/MinisterListwithVisitingPlaces/${id}`);
+      },
   creteMinister(body){
     return requests.post('/PostMinisterList',body); 
   },

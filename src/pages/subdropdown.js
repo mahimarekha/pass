@@ -265,6 +265,7 @@ const Page = (props) => {
         // VisitingStatus: true,
         // Remarks: '',
         SessionId: '',
+        MinID:'',
     });
     const [validToDate, setValidToDate] = useState('');
     // const [fromDate, setFromDate] = useState('');
@@ -293,6 +294,7 @@ const Page = (props) => {
         // VisitingStatus: Yup.string(true).required('Visiting Status is required'),
         // Remarks: Yup.string().required('Remarks Status is required'),
         SessionId: Yup.string(),
+        MinID:Yup.string(),
     });
 
     useEffect(() => {
@@ -305,7 +307,7 @@ const Page = (props) => {
         getUsersList();
         getVisitingPlacesList();
         getDesignationList();
-        getMinisterList();
+        // getMinisterList();
         return () => {
             setVisitingPassesList([]);
             setUsersList([]);
@@ -454,18 +456,28 @@ const Page = (props) => {
     }
     const getVisitingPlacesList = () => {
         VisitingPlacesService.getAllVisitingPlaces().then((res) => {
-            setVisitingPlacesList(res);
+            const filterVisitingPlace = res.filter(resut=>(resut.VisitingPlacesId === 1007 || resut.VisitingPlacesId === 1010));
+            
+            setVisitingPlacesList(filterVisitingPlace);
         }).catch((err) => {
             // setError(err.message);
         });
     }
-    const getMinisterList = () => {
-        MinisterService.getAllMinister().then((res) => {
-            setMinisterList(res);
-        }).catch((err) => {
-            // setError(err.message);
-        });
-    }
+    const getMinisterList = (id) => {
+        //    const visitingPlace = {VisitingPlacesId:'1007'}
+            MinisterService.getAllMinisterByVisitingPlace(id).then((res) => {
+            //    const minister= res.find(resp=>resp.VisitingPlacesId===1007)
+                const result = res.map((response) => {
+                    return {
+                        ...response,
+                        "status": response.MinisterStatus ? 'Active' : 'Inactive',
+                    }
+                })
+                setMinisterList(result);
+            }).catch((err) => {
+                // setError(err.message);
+            });
+        }
     const getVisitingPassesList = () => {
         VisitingPassesService.getAllVisitingPasses().then((res) => {
             const result = res.map((response) => {
@@ -501,6 +513,7 @@ const Page = (props) => {
             // VisitingStatus: true,
             // Remarks: '',
             SessionId: '',
+            MinID:'',
         })
     }
     const formik = useFormik({
@@ -617,8 +630,9 @@ const Page = (props) => {
                                                             onChange={e => 
                                                                 
                                                                 { 
-                                                                    const minister=e.target.value===1007  ? true : false;         
-                                                                    formik.handleChange(e); setIsShowMinister(minister) }}
+                                                                     const minister=e.target.value===1007  ? true : false;         
+                                                                    formik.handleChange(e); getMinisterList(e.target.value);
+                                                                    setIsShowMinister(minister) }}
                                                             
                                                         // onChange={e => { setDepartmentId(e.target.value) }}
                                                         >
@@ -632,16 +646,16 @@ const Page = (props) => {
                                                         </Select>
                                                     </FormControl>
                                                 </Grid>
-                                                {isShowMinister ?
+                                                
                                                  <Grid xs={6} md={3}>
                                                  <FormControl variant="standard" fullWidth>
-                                                     <InputLabel id="studentName">Minister Name</InputLabel>
+                                                     <InputLabel id="studentName">Select Name</InputLabel>
                                                      <Select
-                                                         labelId="ministerId"
-                                                         id="ministerId"
-                                                         label="Minister Name"
-                                                         name="ministerId"
-                                                         value={formik.values.ministerId}
+                                                         labelId="MinID"
+                                                         id="MinID"
+                                                        //  label="Minister Name"
+                                                         name="MinID"
+                                                         value={formik.values.MinID}
                                                          onChange={e => 
                                                              {
                                                                  formik.handleChange(e); }}
@@ -658,11 +672,11 @@ const Page = (props) => {
                                                      </Select>
                                                  </FormControl>
                                              </Grid>
-                                             :"" }
+                                            
                                                
                                                 <Grid xs={6} md={3}>
                                                     <TextField
-                                                        InputProps={{ style: { width: 235 } }}
+                                                        InputProps={{ style: { width: 230 } }}
 
                                                         margin="dense"
                                                         id="FullName"
@@ -717,13 +731,15 @@ const Page = (props) => {
                                                 </Grid>
                                                 <Grid xs={6} md={3} style={{marginTop:"30px"}}>
                                                     <LocalizationProvider dateAdapter={AdapterDayjs} >
-                                                        <DateTimePicker  InputProps={{ style: { width: 230 } }}
+                                                        <DateTimePicker InputProps={{ style: { width: 245 } }}
+
                                                             id="FromDate"
                                                             slotProps={{ textField: { size: "small", error: false } }}
                                                             name="FromDate"
                                                             label="From Date"
                                                             disablePast
                                                             onChange={(value) => {
+
                                                                formik.setFieldValue("date", value, true);
                                                                 const dayDifference = value.diff(currentDate, 'day');
                                                                 setFromDate(value.format('YYYY-MM-DDTHH:mm:ss'));
@@ -763,7 +779,7 @@ const Page = (props) => {
                                                 </Grid>
                                                 <Grid xs={6} md={3} style={{marginTop:"30px"}}>
                                                     <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                                        <DateTimePicker InputProps={{ style: { width: 230 } }}
+                                                        <DateTimePicker InputProps={{ style: { width: 245 } }}
                                                             disablePast
                                                             onChange={(value) => {
                                                                 formik.setFieldValue("date", value, true)
@@ -866,9 +882,8 @@ const Page = (props) => {
                                                         }
                                                     </div>
                                                     <Button variant="contained" onClick={handleClickOpen1}>Capture From WebCam</Button>  OR
-                                                  
-                                                    <input type="file" style={{ "display": "inline-block", "padding": "10px 20px", "backgroundColor": "#6366F1", "color": "#fff", "border": "none", "borderRadius": "12px", "cursor": "pointer","width":"230px" }} onChange={handleImageUpload} />
-                                                   
+                                                    <input type="file" style={{"width":"230px", "display": "inline-block", "padding": "10px 20px", "backgroundColor": "#6366F1", "color": "#fff", "border": "none", "borderRadius": "12px", "cursor": "pointer" }} onChange={handleImageUpload} />
+
                                                 </Grid>
                                                 <Grid xs={6} md={6}>
                                                     <label style={{ fontSize: '15px', color: 'black' }} >Upload Document</label>

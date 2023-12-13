@@ -291,9 +291,9 @@ const Page = (context) => {
         });
     }
     const getMinisterList = () => {
-       const visitingPlace = {VisitingPlacesId:'1007'}
-        MinisterService.getAllMinister(visitingPlace).then((res) => {
-           const minister= res.find(resp=>resp.VisitingPlacesId===1007)
+    //    const visitingPlace = {VisitingPlacesId:'1007'}
+        MinisterService.getAllMinisterByVisitingPlace("1007").then((res) => {
+        //    const minister= res.find(resp=>resp.VisitingPlacesId===1007)
             const result = res.map((response) => {
                 return {
                     ...response,

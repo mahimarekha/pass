@@ -270,6 +270,34 @@ const handleCloseQR = () => {
    }
     const getQrCodeList = () => {
         
+        if(router.query.isQrcode){
+            VisitingPassesService.getQrCode(router.query.slug).then((res) => {
+                if(res.length){
+                    
+                   const result= res.map(res=>{
+                        return {...res,qrcode:"data:image/png;base64, "+res.QRCode}
+                    })
+                    setQRList(result);
+                    // const base64Data = "data:image/png;base64, "+res[0].QRCode;
+                    // res[0].qrcode = base64Data;
+                    // setQR(res[0]);
+                    setOpenQR(true);
+                    // const imageBuffer = Buffer.from(base64Data, 'base64');
+                    // const blob = new Blob([imageBuffer]);
+                    // const blobUrl = URL.createObjectURL(blob);
+                    // const link = document.createElement('a');
+                    // link.href = blobUrl;
+                    // link.click();
+                    // URL.revokeObjectURL(blobUrl);
+                }
+              
+                
+            }).catch((err) => {
+                // setError(err.message);
+            });
+        }else{
+
+        }
         VisitingPassesService.getCounterQrCode(router.query.slug).then((res) => {
             if(res.length){
                 
@@ -326,7 +354,7 @@ const handleCloseQR = () => {
           
                
                <div style={{color:"white" ,textTransform:'uppercase',  backgroundColor:"#6366f1", textAlign:"center"}}
-                > {getQRDetails?.SessionID} </div>
+                > {getQRDetails?.Remarks} </div>
                
            
   {/* <Grid xs={6} md={6} >
@@ -342,8 +370,8 @@ const handleCloseQR = () => {
            <CardContent style={{backgroundColor: "gainsboro"}}>
            
                        
-                             <div style={{ fontWeight:"bold", textAlign:"center", fontSize:"23px", textTransform:"uppercase"}}>
-                                 {getQRDetails?.VisitingPlace}
+                             <div style={{ fontWeight:"bold", textAlign:"center", fontSize:"16px", textTransform:"uppercase"}}>
+                                 {getQRDetails?.VisitingPlace}{getQRDetails?.MinisterName ? `-${getQRDetails?.MinisterName}`:''}
                                   </div>
                {/* <Grid xs={6} md={6}> */}
                          {/* <label style={{fontWeight:"bold"}}>
@@ -438,7 +466,33 @@ const handleCloseQR = () => {
                          {getQRDetails?.PurposeVisting} 
                              </div>
                      </Grid>
+                     <Grid xs={6} md={6} >
+                         <label style={{fontWeight:"bold"}}>
+                          Reference Name
+                         </label>
+                         <div style={{fontWeight:"500", fontSize:"15px"}}>
      
+                         {getQRDetails?.FirstName} 
+                             </div>
+                     </Grid>
+                     <Grid xs={6} md={6} >
+                         <label style={{fontWeight:"bold"}}>
+                          Reference Designation
+                         </label>
+                         <div style={{fontWeight:"500", fontSize:"15px"}}>
+     
+                         {getQRDetails?.MiddleName} 
+                             </div>
+                     </Grid>
+                     <Grid xs={6} md={6} >
+                         <label style={{fontWeight:"bold"}}>
+                          Reference Department
+                         </label>
+                         <div style={{fontWeight:"500", fontSize:"15px"}}>
+     
+                         {getQRDetails?.LastName} 
+                             </div>
+                     </Grid>
                     
                      </Grid>
                      <Grid xs={4} md={4}>
@@ -500,10 +554,10 @@ const handleCloseQR = () => {
             titleTypographyProps={{color:"white",fontSize:'20px', textAlign:"center"}}
            />
              <div style={{color:"white" ,textTransform:'uppercase',  backgroundColor:"#6366f1", textAlign:"center"}}
-                > {getQRDetails?.SessionID} </div>
+                > {getQRDetails?.Remarks} </div>
            <CardContent style={{backgroundColor: "gainsboro"}}>
-           <div style={{fontWeight:"bold", textAlign:"center", fontSize:"23px", textTransform:"uppercase"}}>
-                                 {getQRDetails?.VisitingPlace}
+           <div style={{fontWeight:"bold", textAlign:"center", fontSize:"16px", textTransform:"uppercase"}}>
+                                 {getQRDetails?.VisitingPlace}-{getQRDetails?.MinisterName ?`-${getQRDetails?.MinisterName}`:''}
                                   </div>
                {/* <Grid xs={6} md={6}> */}
                          {/* <label style={{fontWeight:"bold"}}>
@@ -606,6 +660,33 @@ const handleCloseQR = () => {
                          <div style={{fontWeight:"500", fontSize:"15px"}}>
      
                          {getQRDetails?.PurposeVisting} 
+                             </div>
+                     </Grid>
+                     <Grid xs={6} md={6} >
+                         <label style={{fontWeight:"bold"}}>
+                          Reference Name
+                         </label>
+                         <div style={{fontWeight:"500", fontSize:"15px"}}>
+     
+                         {getQRDetails?.FirstName} 
+                             </div>
+                     </Grid>
+                     <Grid xs={6} md={6} >
+                         <label style={{fontWeight:"bold"}}>
+                          Reference Designation
+                         </label>
+                         <div style={{fontWeight:"500", fontSize:"15px"}}>
+     
+                         {getQRDetails?.MiddleName} 
+                             </div>
+                     </Grid>
+                     <Grid xs={6} md={6} >
+                         <label style={{fontWeight:"bold"}}>
+                          Reference Department
+                         </label>
+                         <div style={{fontWeight:"500", fontSize:"15px"}}>
+     
+                         {getQRDetails?.LastName} 
                              </div>
                      </Grid>
      
