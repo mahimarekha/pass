@@ -19,15 +19,15 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import { CardHeader } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
- import dayjs from 'dayjs';
- const bull = (
-    <Box 
-      component="span"
-      sx={{ display: 'inline-block', mx: '2px', transform: 'scale(0.8)' }}
+import dayjs from 'dayjs';
+const bull = (
+    <Box
+        component="span"
+        sx={{ display: 'inline-block', mx: '2px', transform: 'scale(0.8)' }}
     >
-      
+
     </Box>
-  );
+);
 const now = new Date();
 const data = [
     {
@@ -192,8 +192,8 @@ const Page = () => {
     const [open, setOpen] = React.useState(false);
     const [openQR, setOpenQR] = React.useState(false);
     const [getQR, setQR] = React.useState({});
-  
-    const userDetails =JSON.parse(window.sessionStorage.getItem('userDetails'));
+
+    const userDetails = JSON.parse(window.sessionStorage.getItem('userDetails'));
     const [designationsList, setDesignationList] = useState([]);
     const [rowsPerPage, setRowsPerPage] = useState(5);
     const customers = useCustomers(page, rowsPerPage);
@@ -202,15 +202,15 @@ const Page = () => {
     var [departmentId, setDepartmentId] = useState("");
     const [qrList, setQRList] = useState([]);
     const [visitingPassesList, setVisitingPassesList] = useState([]);
-   
 
- 
-  
+
+
+
     const router = useRouter()
 
-const handleCloseQR = () => {
-    setOpenQR(false);
-};
+    const handleCloseQR = () => {
+        setOpenQR(false);
+    };
     useEffect(() => {
         getQrCodeList();
         getVisitingPassesList();
@@ -244,34 +244,34 @@ const handleCloseQR = () => {
             // setError(err.message);
         });
     }
-   const printTicket =()=>{
-    // const printContent = document.getElementById('divToPrint');
+    const printTicket = () => {
+        // const printContent = document.getElementById('divToPrint');
 
-    // if (printContent) {
-    //   const newWindow = window.open('', '_blank');
-    //  // newWindow.document.write('<html><head><title>Print</title></head><body>');
-    //   newWindow.document.write(printContent.innerHTML);
-    //   //newWindow.document.write('</body></html>');
-    //   newWindow.document.close();
-    //   newWindow.print();
-    // } else {
-    //   console.error('Div not found.');
-    // }
-    setOpen(true)
-    setTimeout(() => {
-        window.print(); 
-        setOpen(false)
-    }, 500);
-    
-   }
+        // if (printContent) {
+        //   const newWindow = window.open('', '_blank');
+        //  // newWindow.document.write('<html><head><title>Print</title></head><body>');
+        //   newWindow.document.write(printContent.innerHTML);
+        //   //newWindow.document.write('</body></html>');
+        //   newWindow.document.close();
+        //   newWindow.print();
+        // } else {
+        //   console.error('Div not found.');
+        // }
+        setOpen(true)
+        setTimeout(() => {
+            window.print();
+            setOpen(false)
+        }, 500);
+
+    }
     const getQrCodeList = () => {
-        
-        if(router.query.isQrcode){
+
+        if (router.query.isQrcode) {
             VisitingPassesService.getQrCode(router.query.slug).then((res) => {
-                if(res.length){
-                    
-                   const result= res.map(res=>{
-                        return {...res,qrcode:"data:image/png;base64, "+res.QRCode}
+                if (res.length) {
+
+                    const result = res.map(res => {
+                        return { ...res, qrcode: "data:image/png;base64, " + res.QRCode }
                     })
                     setQRList(result);
                     // const base64Data = "data:image/png;base64, "+res[0].QRCode;
@@ -286,19 +286,19 @@ const handleCloseQR = () => {
                     // link.click();
                     // URL.revokeObjectURL(blobUrl);
                 }
-              
-                
+
+
             }).catch((err) => {
                 // setError(err.message);
             });
-        }else{
+        } else {
 
         }
         VisitingPassesService.getCounterQrCode(router.query.slug).then((res) => {
-            if(res.length){
-                
-               const result= res.map(res=>{
-                    return {...res,qrcode:"data:image/png;base64, "+res.QRCode}
+            if (res.length) {
+
+                const result = res.map(res => {
+                    return { ...res, qrcode: "data:image/png;base64, " + res.QRCode }
                 })
                 setQRList(result);
                 // const base64Data = "data:image/png;base64, "+res[0].QRCode;
@@ -313,68 +313,69 @@ const handleCloseQR = () => {
                 // link.click();
                 // URL.revokeObjectURL(blobUrl);
             }
-          
-            
+
+
         }).catch((err) => {
             // setError(err.message);
         });
     }
     return (
         <>
-          {qrList.map((getQRDetails, index) => (
-                 <Container maxWidth="sm" id="divToPrint" key={index}>
-              <Card variant='outlined' style={{width:600,height:380}}
-              
-              sx={{
-                 boxShadow: 3,
-                
-                 bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#101010' : '#fff'),
-                 color: (theme) =>
-                   theme.palette.mode === 'dark' ? 'grey.300' : 'grey.800',
-             
-                
-              
-                 fontSize: '0.875rem',
-                 fontWeight: '700',
-               }}>
-            <CardHeader 
-             sx={{
-                 bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#101010' : '#6366f1'),
-                 
-               }}
-              
-              
-               
-              
-             title="TELANGANA LEGISLATIVE ASSEMBLY"
-            titleTypographyProps={{color:"white",fontSize:'20px',textAlign:"center"
+            {qrList.map((getQRDetails, index) => (
+                <Container maxWidth="sm" id="divToPrint" key={index}>
+                    <Card variant='outlined' style={{ width: 600, height: 480 }}
 
-        }
+                        sx={{
+                            boxShadow: 3,
+
+                            bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#101010' : '#fff'),
+                            color: (theme) =>
+                                theme.palette.mode === 'dark' ? 'grey.300' : 'grey.800',
 
 
 
-        }
-        
+                            fontSize: '0.875rem',
+                            fontWeight: '700',
+                        }}>
+                        <CardHeader
+                            sx={{
+                                bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#101010' : '#6366f1'),
 
-           />
-          
-               <div style={{color:"white" ,textTransform:'uppercase',  backgroundColor:"#6366f1", textAlign:"center"}}
-            >   <Grid container spacing={2}>
-                 <Grid xs={9} md={9}>
-                 {getQRDetails?.Remarks}
+                            }}
 
-                 </Grid>
-                 <Grid xs={3} md={3}>
-                 <img src="/assets/avatars/Government-of-Telangana-Black.svg" style={{ height: "70px", width: "70px", marginTop:'-25px'}}/>          
 
-                 </Grid>
-            </Grid>
-            </div>
-                
-                  
-               
-           
-  {/* <Grid xs={6} md={6} >
+
+
+                            title="TELANGANA LEGISLATIVE ASSEMBLY"
+                            titleTypographyProps={{
+                                color: "white", fontSize: '20px', textAlign: "center"
+
+                            }
+
+
+
+                            }
+
+
+                        />
+
+                        <div style={{ color: "white", textTransform: 'uppercase', backgroundColor: "#6366f1", textAlign: "center" }}
+                        >   <Grid container spacing={2}>
+                                <Grid xs={9} md={9}>
+                                    {getQRDetails?.Remarks}
+
+                                </Grid>
+                                <Grid xs={3} md={3}>
+                                    <img src="/assets/avatars/Government-of-Telangana-Black.svg" style={{ height: "70px", width: "70px", marginTop: '-25px' }} />
+
+                                </Grid>
+                            </Grid>
+                        </div>
+
+
+
+
+                        {/* <Grid xs={6} md={6} >
                          <label style={{fontWeight:"bold"}}>
                          Session Name
                          </label>
@@ -383,48 +384,48 @@ const handleCloseQR = () => {
                          {getQRDetails?.SessionID} 
                              </div>
                      </Grid> */}
-           
-           <CardContent style={{backgroundColor: "gainsboro"}}>
-           
-                       
-                             <div style={{ fontWeight:"bold", textAlign:"center", fontSize:"16px", textTransform:"uppercase"}}>
-                                 {getQRDetails?.VisitingPlace}{getQRDetails?.MinisterName ? `-${getQRDetails?.MinisterName}`:''}
-                                  </div>
-               {/* <Grid xs={6} md={6}> */}
-                         {/* <label style={{fontWeight:"bold"}}>
+
+                        <CardContent style={{ backgroundColor: "gainsboro" }}>
+
+
+                            <div style={{ fontWeight: "bold", textAlign: "center", fontSize: "16px", textTransform: "uppercase", marginTop:"-7px" }}>
+                                {getQRDetails?.VisitingPlace}{getQRDetails?.MinisterName ? `-${getQRDetails?.MinisterName}` : ''}
+                            </div>
+                            {/* <Grid xs={6} md={6}> */}
+                            {/* <label style={{fontWeight:"bold"}}>
                          Visiting Place
                          </label> */}
-                         {/* <div style={{fontWeight:"bold", fontSize:"20px", textAlign:'center'}}>
+                            {/* <div style={{fontWeight:"bold", fontSize:"20px", textAlign:'center'}}>
      
                          {getQR?.VisitingPlace} 
                              </div> */}
-                     {/* </Grid> */}
-           
-             <Grid style={{paddingTop:"15px"}} container spacing={2} >
-                     <Grid xs={8} md={8} container spacing={1} >
-                     <Grid xs={6} md={6}>
-                         <label style={{fontWeight:"bold"}}>
-                         Visitor Name 
-                         </label>
-                       
-                             <div style={{fontWeight:"500", fontSize:"17px", textTransform:"uppercase"}}>
-                                 {getQRDetails?.FullName}
-                                  </div>
-                            
-                        
-                     </Grid>
-                     <Grid xs={6} md={6}>
-                         <label style={{fontWeight:"bold"}}>
-                         Mobile Number
-                         </label>
-                       
-                             <div style={{fontWeight:"500", fontSize:"17px", textTransform:"uppercase"}}>
-                                 {getQRDetails?.MobileNumber}
-                                  </div>
-                            
-                        
-                     </Grid>
-                     {/* <Grid xs={6} md={6}>
+                            {/* </Grid> */}
+
+                            <Grid style={{ paddingTop: "15px" }} container spacing={2} >
+                                <Grid xs={8} md={8} container spacing={1} >
+                                    <Grid xs={6} md={6}>
+                                        <label style={{ fontWeight: "bold" }}>
+                                            Visitor Name
+                                        </label>
+
+                                        <div style={{ fontWeight: "500", fontSize: "17px", textTransform: "uppercase" }}>
+                                            {getQRDetails?.FullName}
+                                        </div>
+
+
+                                    </Grid>
+                                    <Grid xs={6} md={6}>
+                                        <label style={{ fontWeight: "bold" }}>
+                                            Mobile Number
+                                        </label>
+
+                                        <div style={{ fontWeight: "500", fontSize: "17px", textTransform: "uppercase" }}>
+                                            {getQRDetails?.MobileNumber}
+                                        </div>
+
+
+                                    </Grid>
+                                    {/* <Grid xs={6} md={6}>
                          <label style={{fontWeight:"bold"}}>
                          VisitingPlace
                          </label>
@@ -435,28 +436,28 @@ const handleCloseQR = () => {
                             
                         
                      </Grid> */}
-                    
-                     
-                     <Grid xs={6} md={6} >
-                         <label style={{fontWeight:"bold"}}>
-                           From Date
-                         </label>
-                         <div style={{fontWeight:"500", fontSize:"17px", textTransform:"uppercase"}}>
-                             
-                         {dayjs(getQRDetails?.FromDate).format('DD-MM-YYYY HH:mm')} 
-                             </div>
-                        
-                     </Grid>
-                     <Grid xs={6} md={6} >
-                         <label style={{fontWeight:"bold"}}>
-                           To Date
-                         </label>
-                         <div style={{fontWeight:"500", fontSize:"17px", textTransform:"uppercase"}}>
-                         {dayjs(getQRDetails?.ToDate).format('DD-MM-YYYY HH:mm')} 
-                         {/* {getQRDetails?.ToDate}  */}
-                             </div>
-                     </Grid>
-                      {/* <Grid xs={6} md={6}>
+
+
+                                    <Grid xs={6} md={6} >
+                                        <label style={{ fontWeight: "bold" }}>
+                                            From Date
+                                        </label>
+                                        <div style={{ fontWeight: "500", fontSize: "17px", textTransform: "uppercase" }}>
+
+                                            {dayjs(getQRDetails?.FromDate).format('DD-MM-YYYY HH:mm')}
+                                        </div>
+
+                                    </Grid>
+                                    <Grid xs={6} md={6} >
+                                        <label style={{ fontWeight: "bold" }}>
+                                            To Date
+                                        </label>
+                                        <div style={{ fontWeight: "500", fontSize: "17px", textTransform: "uppercase" }}>
+                                            {dayjs(getQRDetails?.ToDate).format('DD-MM-YYYY HH:mm')}
+                                            {/* {getQRDetails?.ToDate}  */}
+                                        </div>
+                                    </Grid>
+                                    {/* <Grid xs={6} md={6}>
                          <label style={{fontWeight:"bold"}}>
                          Visiting Place
                          </label>
@@ -465,7 +466,7 @@ const handleCloseQR = () => {
                          {getQR?.VisitingPlace} 
                              </div>
                      </Grid> */}
-                     {/* <Grid xs={6} md={6} >
+                                    {/* <Grid xs={6} md={6} >
                          <label style={{fontWeight:"bold"}}>
                          Session Name
                          </label>
@@ -474,146 +475,148 @@ const handleCloseQR = () => {
                          {getQRDetails?.SessionID} 
                              </div>
                      </Grid> */}
-                     <Grid xs={6} md={6} >
-                         <label style={{fontWeight:"bold"}}>
-                           Purpose Of Visiting
-                         </label>
-                         <div style={{fontWeight:"500", fontSize:"15px"}}>
-     
-                         {getQRDetails?.PurposeVisting} 
-                             </div>
-                     </Grid>
-                     <Grid xs={6} md={6} >
-                         <label style={{fontWeight:"bold"}}>
-                          Reference Name
-                         </label>
-                         <div style={{fontWeight:"500", fontSize:"15px"}}>
-     
-                         {getQRDetails?.FirstName} 
-                             </div>
-                     </Grid>
-                     <Grid xs={6} md={6} >
-                         <label style={{fontWeight:"bold"}}>
-                          Reference Designation
-                         </label>
-                         <div style={{fontWeight:"500", fontSize:"15px"}}>
-     
-                         {getQRDetails?.MiddleName} 
-                             </div>
-                     </Grid>
-                     <Grid xs={6} md={6} >
-                         <label style={{fontWeight:"bold"}}>
-                          Reference Department
-                         </label>
-                         <div style={{fontWeight:"500", fontSize:"15px"}}>
-     
-                         {getQRDetails?.LastName} 
-                             </div>
-                     </Grid>
-                    
-                     </Grid>
-                     <Grid xs={4} md={4}>
-                     <Typography sx={{ mb: 1.5 }} color="text.secondary">
-             <img src={getQRDetails?.qrcode} alt='qrcode' style={{ width:'100%',border:'1px solid #2f3746'}}/>
-             </Typography>
-                     </Grid>
-                 </Grid>
-           </CardContent>
-           <CardActions>
-          
-           </CardActions>
-         </Card>
-         <Grid container spacing={2}>
-         <Grid xs={12} >
-             <div style={{textAlign: "center",
-         marginTop: "35px"}}>
-                 
-        
-         </div>
-         </Grid>
-         </Grid>
-         </Container>                                                 
-          ))} 
-          <Grid xs={12} style={{textAlign: "center"}} >
-          <Button variant="contained"  onClick={printTicket}>Print</Button>
-          </Grid>
+                                    <Grid xs={6} md={6} >
+                                        <label style={{ fontWeight: "bold" }}>
+                                            Purpose Of Visiting
+                                        </label>
+                                        <div style={{ fontWeight: "500", fontSize: "15px" }}>
 
-          
-      
-         <Dialog open={open} >
-         {qrList.map((getQRDetails, index) => (
-                 <Container maxWidth="sm" id="divToPrint" key={index}>
-              <Card variant='outlined' style={{width:600,height:480}}
-              
-              sx={{
-                 boxShadow: 3,
-                
-                 bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#101010' : '#fff'),
-                 color: (theme) =>
-                   theme.palette.mode === 'dark' ? 'grey.300' : 'grey.800',
-             
-                
-              
-                 fontSize: '0.875rem',
-                 fontWeight: '700',
-               }}>
-            <CardHeader
-             sx={{
-                 
-                
-                 bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#101010' : '#6366f1'),
-            
-               }}
-            //    action={
-            //     <p style={{color:"white" ,textTransform:'uppercase'}}> {getQRDetails?.SessionID} </p>
-            //   }
-             title="TELANGANA LEGISLATIVE ASSEMBLY"
-            titleTypographyProps={{color:"white",fontSize:'20px', textAlign:"center"}}
-           />
-          <div style={{color:"white" ,textTransform:'uppercase',  backgroundColor:"#6366f1", textAlign:"center", marginTop:'-15px'}}
-                > {getQRDetails?.Remarks} </div>
-           <CardContent style={{backgroundColor: "gainsboro"}}>
-           <div style={{fontWeight:"bold", textAlign:"center", fontSize:"16px", textTransform:"uppercase"}}>
-                                 {getQRDetails?.VisitingPlace}-{getQRDetails?.MinisterName ?`-${getQRDetails?.MinisterName}`:''}
-                                  </div>
-            
-           {/* <CardContent style={{backgroundColor: "gainsboro"}}>
+                                            {getQRDetails?.PurposeVisting}
+                                        </div>
+                                    </Grid>
+                                    <Grid xs={6} md={6} >
+                                        <label style={{ fontWeight: "bold" }}>
+                                            Reference Name
+                                        </label>
+                                        <div style={{ fontWeight: "500", fontSize: "15px" }}>
+
+                                            {getQRDetails?.FirstName}
+                                        </div>
+                                    </Grid>
+                                    <Grid xs={6} md={6} >
+                                        <label style={{ fontWeight: "bold" }}>
+                                            Reference Designation
+                                        </label>
+                                        <div style={{ fontWeight: "500", fontSize: "15px" }}>
+
+                                            {getQRDetails?.MiddleName}
+                                        </div>
+                                    </Grid>
+                                    <Grid xs={6} md={6} >
+                                        <label style={{ fontWeight: "bold" }}>
+                                            Reference Department
+                                        </label>
+                                        <div style={{ fontWeight: "500", fontSize: "15px" }}>
+
+                                            {getQRDetails?.LastName}
+                                        </div>
+                                    </Grid>
+
+                                </Grid>
+                                <Grid xs={4} md={4}>
+                                    <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                                        <img src={getQRDetails?.qrcode} alt='qrcode' style={{ width: '100%', border: '1px solid #2f3746' }} />
+                                    </Typography>
+                                </Grid>
+                            </Grid>
+                        </CardContent>
+                        <CardActions>
+
+                        </CardActions>
+                    </Card>
+                    <Grid container spacing={2}>
+                        <Grid xs={12} >
+                            <div style={{
+                                textAlign: "center",
+                                marginTop: "35px"
+                            }}>
+
+
+                            </div>
+                        </Grid>
+                    </Grid>
+                </Container>
+            ))}
+            <Grid xs={12} style={{ textAlign: "center" }} >
+                <Button variant="contained" onClick={printTicket}>Print</Button>
+            </Grid>
+
+
+
+            <Dialog open={open} >
+                {qrList.map((getQRDetails, index) => (
+                    <Container maxWidth="sm" id="divToPrint" key={index}>
+                        <Card variant='outlined' style={{ width: 600, height: 480 }}
+
+                            sx={{
+                                boxShadow: 3,
+
+                                bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#101010' : '#fff'),
+                                color: (theme) =>
+                                    theme.palette.mode === 'dark' ? 'grey.300' : 'grey.800',
+
+
+
+                                fontSize: '0.875rem',
+                                fontWeight: '700',
+                            }}>
+                            <CardHeader
+                                sx={{
+
+
+                                    bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#101010' : '#6366f1'),
+
+                                }}
+                                //    action={
+                                //     <p style={{color:"white" ,textTransform:'uppercase'}}> {getQRDetails?.SessionID} </p>
+                                //   }
+                                title="TELANGANA LEGISLATIVE ASSEMBLY"
+                                titleTypographyProps={{ color: "white", fontSize: '20px', textAlign: "center" }}
+                            />
+                            <div style={{ color: "white", textTransform: 'uppercase', backgroundColor: "#6366f1", textAlign: "center", marginTop: '-15px' }}
+                            > {getQRDetails?.Remarks} </div>
+                            <CardContent style={{ backgroundColor: "gainsboro" }}>
+                                <div style={{ fontWeight: "bold", textAlign: "center", fontSize: "16px", textTransform: "uppercase", marginTop:"-7px"  }}>
+                                    {getQRDetails?.VisitingPlace}-{getQRDetails?.MinisterName ? `-${getQRDetails?.MinisterName}` : ''}
+                                </div>
+
+                                {/* <CardContent style={{backgroundColor: "gainsboro"}}>
            <div style={{fontWeight:"bold", textAlign:"center", fontSize:"16px", textTransform:"uppercase"}}>
                                  {getQRDetails?.VisitingPlace}-{getQRDetails?.MinisterName ?`-${getQRDetails?.MinisterName}`:''}
                                   </div> */}
-               {/* <Grid xs={6} md={6}> */}
-                         {/* <label style={{fontWeight:"bold"}}>
+                                {/* <Grid xs={6} md={6}> */}
+                                {/* <label style={{fontWeight:"bold"}}>
                          Visiting Place
                          </label> */}
-                         {/* <div style={{fontWeight:"bold", fontSize:"20px", textAlign:'center'}}>
+                                {/* <div style={{fontWeight:"bold", fontSize:"20px", textAlign:'center'}}>
      
                          {getQR?.VisitingPlace} 
                              </div> */}
-                     {/* </Grid> */}
-           
-             <Grid style={{paddingTop:"15px"}} container spacing={2} >
-                     <Grid xs={8} md={8} container spacing={1} >
-                     <Grid xs={6} md={6}>
-                         <label style={{fontWeight:"bold"}}>
-                         Visitor Name
-                         </label>
-                       
-                             <div style={{fontWeight:"500", fontSize:"17px", textTransform:"uppercase"}}>
-                                 {getQRDetails?.FullName}
-                                  </div>
-                     </Grid>
-                     <Grid xs={6} md={6}>
-                         <label style={{fontWeight:"bold"}}>
-                         Mobile Number
-                         </label>
-                       
-                             <div style={{fontWeight:"500", fontSize:"17px", textTransform:"uppercase"}}>
-                                 {getQRDetails?.MobileNumber}
-                                  </div>
-                            
-                        
-                     </Grid>
-                     {/* <Grid xs={6} md={6}>
+                                {/* </Grid> */}
+
+                                <Grid style={{ paddingTop: "15px" }} container spacing={2} >
+                                    <Grid xs={8} md={8} container spacing={1} >
+                                        <Grid xs={6} md={6}>
+                                            <label style={{ fontWeight: "bold" }}>
+                                                Visitor Name
+                                            </label>
+
+                                            <div style={{ fontWeight: "500", fontSize: "17px", textTransform: "uppercase" }}>
+                                                {getQRDetails?.FullName}
+                                            </div>
+                                        </Grid>
+                                        <Grid xs={6} md={6}>
+                                            <label style={{ fontWeight: "bold" }}>
+                                                Mobile Number
+                                            </label>
+
+                                            <div style={{ fontWeight: "500", fontSize: "17px", textTransform: "uppercase" }}>
+                                                {getQRDetails?.MobileNumber}
+                                            </div>
+
+
+                                        </Grid>
+                                        {/* <Grid xs={6} md={6}>
                          <label style={{fontWeight:"bold"}}>
                          VisitingPlace
                          </label>
@@ -624,29 +627,29 @@ const handleCloseQR = () => {
                             
                         
                      </Grid> */}
-                    
 
-                     
-                     <Grid xs={6} md={6} >
-                         <label style={{fontWeight:"bold"}}>
-                           From Date
-                         </label>
-                         <div style={{fontWeight:"500", fontSize:"17px", textTransform:"uppercase"}}>
-                             
-                         {dayjs(getQRDetails?.FromDate).format('DD-MM-YYYY HH:mm')} DD-MM-YYYY
-                             </div>
-                        
-                     </Grid>
-                     <Grid xs={6} md={6} >
-                         <label style={{fontWeight:"bold"}}>
-                           To Date
-                         </label>
-                         <div style={{fontWeight:"500", fontSize:"17px", textTransform:"uppercase"}}>
-                         {dayjs(getQRDetails?.ToDate).format('DD-MM-YYYY HH:mm')} 
-                         {/* {getQRDetails?.ToDate}  */}
-                             </div>
-                     </Grid>
-                      {/* <Grid xs={6} md={6}>
+
+
+                                        <Grid xs={6} md={6} >
+                                            <label style={{ fontWeight: "bold" }}>
+                                                From Date
+                                            </label>
+                                            <div style={{ fontWeight: "500", fontSize: "17px", textTransform: "uppercase" }}>
+
+                                                {dayjs(getQRDetails?.FromDate).format('DD-MM-YYYY HH:mm')} DD-MM-YYYY
+                                            </div>
+
+                                        </Grid>
+                                        <Grid xs={6} md={6} >
+                                            <label style={{ fontWeight: "bold" }}>
+                                                To Date
+                                            </label>
+                                            <div style={{ fontWeight: "500", fontSize: "17px", textTransform: "uppercase" }}>
+                                                {dayjs(getQRDetails?.ToDate).format('DD-MM-YYYY HH:mm')}
+                                                {/* {getQRDetails?.ToDate}  */}
+                                            </div>
+                                        </Grid>
+                                        {/* <Grid xs={6} md={6}>
                          <label style={{fontWeight:"bold"}}>
                          Visiting Place
                          </label>
@@ -655,7 +658,7 @@ const handleCloseQR = () => {
                          {getQR?.VisitingPlace} 
                              </div>
                      </Grid> */}
-                     {/* <Grid xs={6} md={6} >
+                                        {/* <Grid xs={6} md={6} >
                          <label style={{fontWeight:"bold"}}>
                          Session ID
                          </label>
@@ -664,79 +667,81 @@ const handleCloseQR = () => {
                          {getQRDetails?.SessionID} 
                              </div>
                      </Grid> */}
-                     <Grid xs={6} md={6} >
-                         <label style={{fontWeight:"bold"}}>
-                           Purpose Of Visiting
-                         </label>
-                         <div style={{fontWeight:"500", fontSize:"15px"}}>
-     
-                         {getQRDetails?.PurposeVisting} 
-                             </div>
-                     </Grid>
-                     <Grid xs={6} md={6} >
-                         <label style={{fontWeight:"bold"}}>
-                           Purpose Of Visiting
-                         </label>
-                         <div style={{fontWeight:"500", fontSize:"15px"}}>
-     
-                         {getQRDetails?.PurposeVisting} 
-                             </div>
-                     </Grid>
-                     <Grid xs={6} md={6} >
-                         <label style={{fontWeight:"bold"}}>
-                          Reference Name
-                         </label>
-                         <div style={{fontWeight:"500", fontSize:"15px"}}>
-     
-                         {getQRDetails?.FirstName} 
-                             </div>
-                     </Grid>
-                     <Grid xs={6} md={6} >
-                         <label style={{fontWeight:"bold"}}>
-                          Reference Designation
-                         </label>
-                         <div style={{fontWeight:"500", fontSize:"15px"}}>
-     
-                         {getQRDetails?.MiddleName} 
-                             </div>
-                     </Grid>
-                     <Grid xs={6} md={6} >
-                         <label style={{fontWeight:"bold"}}>
-                          Reference Department
-                         </label>
-                         <div style={{fontWeight:"500", fontSize:"15px"}}>
-     
-                         {getQRDetails?.LastName} 
-                             </div>
-                     </Grid>
-     
-                    
-                     </Grid>
-                     <Grid xs={4} md={4}>
-                     <Typography sx={{ mb: 1.5 }} color="text.secondary">
-             <img src={getQRDetails?.qrcode} alt='qrcode' style={{ width:'100%',border:'1px solid #2f3746'}}/>
-             </Typography>
-                     </Grid>
-                 </Grid>
-           </CardContent>
-           <CardActions>
-          
-           </CardActions>
-         </Card>
-         <Grid container spacing={2}>
-         <Grid xs={12} >
-             <div style={{textAlign: "center",
-         marginTop: "35px"}}>
-                 
-        
-         </div>
-         </Grid>
-         </Grid>
-         </Container>                                                 
-          ))} 
-         
-                                </Dialog>   
-          
+                                        <Grid xs={6} md={6} >
+                                            <label style={{ fontWeight: "bold" }}>
+                                                Purpose Of Visiting
+                                            </label>
+                                            <div style={{ fontWeight: "500", fontSize: "15px" }}>
+
+                                                {getQRDetails?.PurposeVisting}
+                                            </div>
+                                        </Grid>
+                                        <Grid xs={6} md={6} >
+                                            <label style={{ fontWeight: "bold" }}>
+                                                Purpose Of Visiting
+                                            </label>
+                                            <div style={{ fontWeight: "500", fontSize: "15px" }}>
+
+                                                {getQRDetails?.PurposeVisting}
+                                            </div>
+                                        </Grid>
+                                        <Grid xs={6} md={6} >
+                                            <label style={{ fontWeight: "bold" }}>
+                                                Reference Name
+                                            </label>
+                                            <div style={{ fontWeight: "500", fontSize: "15px" }}>
+
+                                                {getQRDetails?.FirstName}
+                                            </div>
+                                        </Grid>
+                                        <Grid xs={6} md={6} >
+                                            <label style={{ fontWeight: "bold" }}>
+                                                Reference Designation
+                                            </label>
+                                            <div style={{ fontWeight: "500", fontSize: "15px" }}>
+
+                                                {getQRDetails?.MiddleName}
+                                            </div>
+                                        </Grid>
+                                        <Grid xs={6} md={6} >
+                                            <label style={{ fontWeight: "bold" }}>
+                                                Reference Department
+                                            </label>
+                                            <div style={{ fontWeight: "500", fontSize: "15px" }}>
+
+                                                {getQRDetails?.LastName}
+                                            </div>
+                                        </Grid>
+
+
+                                    </Grid>
+                                    <Grid xs={4} md={4}>
+                                        <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                                            <img src={getQRDetails?.qrcode} alt='qrcode' style={{ width: '100%', border: '1px solid #2f3746' }} />
+                                        </Typography>
+                                    </Grid>
+                                </Grid>
+                            </CardContent>
+                            <CardActions>
+
+                            </CardActions>
+                        </Card>
+                        <Grid container spacing={2}>
+                            <Grid xs={12} >
+                                <div style={{
+                                    textAlign: "center",
+                                    marginTop: "35px"
+                                }}>
+
+
+                                </div>
+                            </Grid>
+                        </Grid>
+                    </Container>
+                ))}
+
+            </Dialog>
+
         </>
     );
 };
