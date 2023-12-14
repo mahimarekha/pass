@@ -570,12 +570,17 @@ const handleCloseQR = () => {
              title="TELANGANA LEGISLATIVE ASSEMBLY"
             titleTypographyProps={{color:"white",fontSize:'20px', textAlign:"center"}}
            />
-             <div style={{color:"white" ,textTransform:'uppercase',  backgroundColor:"#6366f1", textAlign:"center", marginTop:'-15px'}}
+          <div style={{color:"white" ,textTransform:'uppercase',  backgroundColor:"#6366f1", textAlign:"center", marginTop:'-15px'}}
                 > {getQRDetails?.Remarks} </div>
            <CardContent style={{backgroundColor: "gainsboro"}}>
            <div style={{fontWeight:"bold", textAlign:"center", fontSize:"16px", textTransform:"uppercase"}}>
                                  {getQRDetails?.VisitingPlace}-{getQRDetails?.MinisterName ?`-${getQRDetails?.MinisterName}`:''}
                                   </div>
+            
+           {/* <CardContent style={{backgroundColor: "gainsboro"}}>
+           <div style={{fontWeight:"bold", textAlign:"center", fontSize:"16px", textTransform:"uppercase"}}>
+                                 {getQRDetails?.VisitingPlace}-{getQRDetails?.MinisterName ?`-${getQRDetails?.MinisterName}`:''}
+                                  </div> */}
                {/* <Grid xs={6} md={6}> */}
                          {/* <label style={{fontWeight:"bold"}}>
                          Visiting Place
