@@ -4,24 +4,20 @@ import * as React from 'react';
 import * as Yup from 'yup';
 import { subDays, subHours } from 'date-fns';
 import { useRouter } from 'next/router'
-
 import { Box, Button, Container, Stack, SvgIcon, Typography } from '@mui/material';
 import { useSelection } from 'src/hooks/use-selection';
-
 import { useEffect } from 'react';
-
+import download from '../images/download.png';
 import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
 import UsersService from "../../service/UsersService";
 import { CustomersSearch } from 'src/sections/customer/customers-search';
 import { applyPagination } from 'src/utils/apply-pagination';
 import VisitingPassesService from "../../service/VisitingPassService";
 import Dialog from '@mui/material/Dialog';
-
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import { CardHeader } from '@mui/material';
-
 import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
  import dayjs from 'dayjs';
  const bull = (
@@ -341,20 +337,41 @@ const handleCloseQR = () => {
                  fontSize: '0.875rem',
                  fontWeight: '700',
                }}>
-            <CardHeader
+            <CardHeader 
              sx={{
                  bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#101010' : '#6366f1'),
+                 
                }}
               
               
+               
+              
              title="TELANGANA LEGISLATIVE ASSEMBLY"
-            titleTypographyProps={{color:"white",fontSize:'20px',textAlign:"center"}}
-           
+            titleTypographyProps={{color:"white",fontSize:'20px',textAlign:"center"
+
+        }
+
+
+
+        }
+        
+
            />
           
-               
                <div style={{color:"white" ,textTransform:'uppercase',  backgroundColor:"#6366f1", textAlign:"center"}}
-                > {getQRDetails?.Remarks} </div>
+            >   <Grid container spacing={2}>
+                 <Grid xs={9} md={9}>
+                 {getQRDetails?.Remarks}
+
+                 </Grid>
+                 <Grid xs={3} md={3}>
+                 <img src="/assets/avatars/Government-of-Telangana-Black.svg" style={{ height: "70px", width: "70px", marginTop:'-25px'}}/>          
+
+                 </Grid>
+            </Grid>
+            </div>
+                
+                  
                
            
   {/* <Grid xs={6} md={6} >
@@ -526,7 +543,7 @@ const handleCloseQR = () => {
          <Dialog open={open} >
          {qrList.map((getQRDetails, index) => (
                  <Container maxWidth="sm" id="divToPrint" key={index}>
-              <Card variant='outlined' style={{width:600,height:380}}
+              <Card variant='outlined' style={{width:600,height:480}}
               
               sx={{
                  boxShadow: 3,
@@ -553,7 +570,7 @@ const handleCloseQR = () => {
              title="TELANGANA LEGISLATIVE ASSEMBLY"
             titleTypographyProps={{color:"white",fontSize:'20px', textAlign:"center"}}
            />
-             <div style={{color:"white" ,textTransform:'uppercase',  backgroundColor:"#6366f1", textAlign:"center"}}
+             <div style={{color:"white" ,textTransform:'uppercase',  backgroundColor:"#6366f1", textAlign:"center", marginTop:'-15px'}}
                 > {getQRDetails?.Remarks} </div>
            <CardContent style={{backgroundColor: "gainsboro"}}>
            <div style={{fontWeight:"bold", textAlign:"center", fontSize:"16px", textTransform:"uppercase"}}>
@@ -579,8 +596,6 @@ const handleCloseQR = () => {
                              <div style={{fontWeight:"500", fontSize:"17px", textTransform:"uppercase"}}>
                                  {getQRDetails?.FullName}
                                   </div>
-                            
-                        
                      </Grid>
                      <Grid xs={6} md={6}>
                          <label style={{fontWeight:"bold"}}>
