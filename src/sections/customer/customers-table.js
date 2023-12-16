@@ -37,6 +37,7 @@ export const CustomersTable = (props) => {
     onSelectAll,
     onSelectOne,
     editDetails,
+    deleteContact,
     qrCode,
     qrcode,
     page = 0,
@@ -89,8 +90,8 @@ export const CustomersTable = (props) => {
                       if(headers.property === 'Delete'){
                         return (<TableCell
                           key={index}>
-                    <DeleteIcon style={{ cursor: 'pointer' }} onClick={() => deleteContact(customer)} />
-
+                    <DeleteIcon style={{ cursor: 'pointer' }} onClick={() => deleteContact(customer)}>
+                    </DeleteIcon>
                         </TableCell>);
                       }
                       if(headers.property === 'QrCode'){
@@ -165,6 +166,7 @@ CustomersTable.propTypes = {
   editDepartment:PropTypes.func,
   editRole:PropTypes.func,
   editMinister:PropTypes.func,
+  deleteMinister:PropTypes.func,
   editVisitingPlaces:PropTypes.func,
   editPass:PropTypes.func,
   editDesignations:PropTypes.func,

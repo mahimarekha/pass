@@ -10,8 +10,8 @@ return requests.post(`/GetMinisterList`,body);
   creteMinister(body){
     return requests.post('/PostMinisterList',body); 
   },
-  deleteRole(body){
-    return requests.delete(`/DeleteMinisterList/${body._id}`); 
+  deleteMinister(id){
+    return requests.get(`/DeleteMinisterList/${id}`); 
   },
   findMinisterList(body){
     return requests.post(`/department/find`,body); 
@@ -31,6 +31,7 @@ return requests.post(`/GetMinisterList`,body);
 //   userNameCheck(body){
 //     return requests.post(`/CheckUserLogin`,body); 
 //   }
+
   
 
 };

@@ -213,6 +213,10 @@ const Page = (context) => {
         name: 'Edit',
         property: 'Edit'
     },
+    {
+        name: 'Delete',
+        property: 'Delete'
+    },
     ];
     const [visitingPlacesList, setVisitingPlacesList] = useState([]);
     const [status, setStatus] = useState([]);
@@ -275,9 +279,10 @@ const Page = (context) => {
         setMinister(minister);
         setOpen(true);
     }
+ 
     const deleteMinister = (ministerdelete) => {
         if (ministerdelete) {
-            MinisterService.deleteMinister(ministerdelete).then((res) => {
+            MinisterService.deleteMinister(ministerdelete.MinID).then((res) => {
                 getMinisterList();
             }).catch((err) => {
             });
@@ -324,7 +329,7 @@ const Page = (context) => {
             const result = visitingPlacesList.find(({ VisitingPlace }) => VisitingPlace === "Legislature party office");
 values.VisitingPlacesId= result? result.VisitingPlacesId:'';
             values.CreateBy =  userDetails ? userDetails.UserId : '';
-            if (minister.MinisterId) {
+            if (minister.MinID) {
                 MinisterService.upadeMinister(values).then((res) => {
                     handleClose();
                     getMinisterList();
@@ -527,7 +532,7 @@ values.VisitingPlacesId= result? result.VisitingPlacesId:'';
                             count={ministerList.length}
                             items={ministerList}
                             editDetails={editMinister}
-
+                            deleteContact={deleteMinister}
                             onDeselectAll={customersSelection.handleDeselectAll}
                             onDeselectOne={customersSelection.handleDeselectOne}
                             onPageChange={handlePageChange}
