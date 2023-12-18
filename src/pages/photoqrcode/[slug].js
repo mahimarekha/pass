@@ -574,7 +574,16 @@ const Page = () => {
                                 titleTypographyProps={{ color: "white", fontSize: '20px', textAlign: "center" }}
                             />
                             <div style={{ color: "white", textTransform: 'uppercase', backgroundColor: "#6366f1", textAlign: "center", marginTop: '-15px' }}
-                            > {getQRDetails?.Remarks} </div>
+                            >  <Grid container spacing={2}>
+                            <Grid xs={9} md={9}>
+                                {getQRDetails?.Remarks}
+
+                            </Grid>
+                            <Grid xs={3} md={3}>
+                                <img src="/assets/avatars/Government-of-Telangana-Black.svg" style={{ height: "70px", width: "70px", marginTop: '-25px' }} />
+
+                            </Grid>
+                        </Grid> </div>
                             <CardContent style={{ backgroundColor: "gainsboro" }}>
                                 <div style={{ fontWeight: "bold", textAlign: "center", fontSize: "16px", textTransform: "uppercase", marginTop:"-7px"  }}>
                                     {getQRDetails?.VisitingPlace}-{getQRDetails?.MinisterName ? `-${getQRDetails?.MinisterName}` : ''}
@@ -636,7 +645,7 @@ const Page = () => {
                                             </label>
                                             <div style={{ fontWeight: "500", fontSize: "17px", textTransform: "uppercase" }}>
 
-                                                {dayjs(getQRDetails?.FromDate).format('DD-MM-YYYY HH:mm')} DD-MM-YYYY
+                                                {dayjs(getQRDetails?.FromDate).format('DD-MM-YYYY HH:mm')} 
                                             </div>
 
                                         </Grid>
