@@ -105,9 +105,9 @@ export const items = [
     title: 'Add Counter Pass',
     path: '/addcounter',
     role:['Admin','Counter pass'],
-   icon: (
+     icon: (
         <SvgIcon fontSize="small">
-          <ShoppingBagIcon />
+          <LockClosedIcon />
         </SvgIcon>
       )
   },
@@ -117,7 +117,7 @@ export const items = [
     role:['Admin','Counter pass'],
    icon: (
         <SvgIcon fontSize="small">
-          <ShoppingBagIcon />
+          <UserIcon />
         </SvgIcon>
       )
   },
@@ -137,7 +137,7 @@ export const items = [
     role:['Admin',"Approver"],
     icon: (
       <SvgIcon fontSize="small">
-        <CogIcon />
+        <UserPlusIcon />
       </SvgIcon>
     )
   },
