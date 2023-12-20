@@ -822,7 +822,7 @@ const Page = (props) => {
                                                         helperText={formik.touched.FirstName && formik.errors.FirstName}
                                                     />
                                                 </Grid>
-                                                <Grid xs={6} md={4}>
+                                                {/* <Grid xs={6} md={4}>
                                                     <TextField
                                                         InputProps={{ style: { width: 245 } }}
 
@@ -853,7 +853,7 @@ const Page = (props) => {
                                                         error={formik.touched.LastName && Boolean(formik.errors.LastName)}
                                                         helperText={formik.touched.LastName && formik.errors.LastName}
                                                     />
-                                                </Grid>
+                                                </Grid> */}
                                                 <Grid item xs={12} style={{ marginTop: '10px' }}>
                                                     <span style={{ fontSize: '17px', color: 'rgb(16 182 128)' }} >Doc Upload :</span>
                                                 </Grid>

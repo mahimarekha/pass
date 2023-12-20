@@ -361,11 +361,11 @@ const Page = () => {
 
                         <div style={{ color: "white", textTransform: 'uppercase', backgroundColor: "#6366f1", textAlign: "center" }}
                         >   <Grid container spacing={2}>
-                                <Grid xs={9} md={9}>
+                                <Grid xs={10} md={10}>
                                     {getQRDetails?.Remarks}
 
                                 </Grid>
-                                <Grid xs={3} md={3}>
+                                <Grid xs={2} md={2}>
                                     <img src="/assets/avatars/Government-of-Telangana-Black.svg" style={{ height: "70px", width: "70px", marginTop: '-25px' }} />
 
                                 </Grid>
@@ -389,7 +389,7 @@ const Page = () => {
 
 
                             <div style={{ fontWeight: "bold", textAlign: "center", fontSize: "16px", textTransform: "uppercase", marginTop:"-7px" }}>
-                                {getQRDetails?.VisitingPlace}{getQRDetails?.MinisterName ? `-${getQRDetails?.MinisterName}` : ''}
+                                {getQRDetails?.VisitingPlace}
                             </div>
                             {/* <Grid xs={6} md={6}> */}
                             {/* <label style={{fontWeight:"bold"}}>
@@ -494,6 +494,14 @@ const Page = () => {
                                         </div>
                                     </Grid>
                                     <Grid xs={6} md={6} >
+                                            <label style={{ fontWeight: "bold" }}>
+                                            Place Of Visiting
+                                            </label>
+                                            <div style={{ fontWeight: "500", fontSize: "15px" }}>
+                                                {getQRDetails?.MinisterName}
+                                            </div>
+                                        </Grid>
+                                    {/* <Grid xs={6} md={6} >
                                         <label style={{ fontWeight: "bold" }}>
                                             Reference Designation
                                         </label>
@@ -510,7 +518,7 @@ const Page = () => {
 
                                             {getQRDetails?.LastName}
                                         </div>
-                                    </Grid>
+                                    </Grid> */}
 
                                 </Grid>
                                 <Grid xs={4} md={4}>
@@ -575,18 +583,18 @@ const Page = () => {
                             />
                             <div style={{ color: "white", textTransform: 'uppercase', backgroundColor: "#6366f1", textAlign: "center", marginTop: '-15px' }}
                             >  <Grid container spacing={2}>
-                            <Grid xs={9} md={9}>
+                            <Grid xs={10} md={10}>
                                 {getQRDetails?.Remarks}
 
                             </Grid>
-                            <Grid xs={3} md={3}>
+                            <Grid xs={2} md={2}>
                                 <img src="/assets/avatars/Government-of-Telangana-Black.svg" style={{ height: "70px", width: "70px", marginTop: '-25px' }} />
 
                             </Grid>
                         </Grid> </div>
                             <CardContent style={{ backgroundColor: "gainsboro" }}>
                                 <div style={{ fontWeight: "bold", textAlign: "center", fontSize: "16px", textTransform: "uppercase", marginTop:"-7px"  }}>
-                                    {getQRDetails?.VisitingPlace}-{getQRDetails?.MinisterName ? `-${getQRDetails?.MinisterName}` : ''}
+                                    {getQRDetails?.VisitingPlace}
                                 </div>
 
                                 {/* <CardContent style={{backgroundColor: "gainsboro"}}>
@@ -705,6 +713,14 @@ const Page = () => {
                                         </Grid>
                                         <Grid xs={6} md={6} >
                                             <label style={{ fontWeight: "bold" }}>
+                                            Place Of Visiting
+                                            </label>
+                                            <div style={{ fontWeight: "500", fontSize: "15px" }}>
+                                                {getQRDetails?.MinisterName}
+                                            </div>
+                                        </Grid>
+                                        {/* <Grid xs={6} md={6} >
+                                            <label style={{ fontWeight: "bold" }}>
                                                 Reference Designation
                                             </label>
                                             <div style={{ fontWeight: "500", fontSize: "15px" }}>
@@ -720,7 +736,7 @@ const Page = () => {
 
                                                 {getQRDetails?.LastName}
                                             </div>
-                                        </Grid>
+                                        </Grid> */}
 
 
                                     </Grid>
