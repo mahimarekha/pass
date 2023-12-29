@@ -1199,10 +1199,12 @@ const Page = (props) => {
                                                     />
                                                 </Grid>
                                                 </ConditionalDisplay>
+                                                <ConditionalDisplay condition={pass.referedBy}>
                                                 <Grid item xs={12} style={{ marginTop: '10px' }}>
                                                     <span style={{ fontSize: '17px', color: 'rgb(16 182 128)' }} >Referenced By :</span>
                                                 </Grid>
-                                                <ConditionalDisplay condition={pass.referedBy}>
+
+                                                
                                                 <Grid xs={6} md={4}>
                                                     <TextField
                                                         InputProps={{ style: { width: 245 } }}
