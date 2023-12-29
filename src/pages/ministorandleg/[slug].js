@@ -4,8 +4,6 @@ import * as React from 'react';
 import * as Yup from 'yup';
 import { subDays, subHours } from 'date-fns';
 import { useRouter } from 'next/router'
-import ConditionalDisplay from '../../components/ConditionalDisplay';
-
 import { Box, Button, Container, Stack, SvgIcon, Typography } from '@mui/material';
 import { useSelection } from 'src/hooks/use-selection';
 import { useEffect } from 'react';
@@ -325,7 +323,7 @@ const Page = () => {
         <>
             {qrList.map((getQRDetails, index) => (
                 <Container maxWidth="sm" id="divToPrint" key={index}>
-                    <Card variant='outlined' style={{ width: 600, height: 414 }}
+                    <Card variant='outlined' style={{ width: 600, height: 480 }}
 
                         sx={{
                             boxShadow: 3,
@@ -374,16 +372,37 @@ const Page = () => {
                             </Grid>
                         </div>
 
+
+
+
+                        {/* <Grid xs={6} md={6} >
+                         <label style={{fontWeight:"bold"}}>
+                         Session Name
+                         </label>
+                         <div style={{fontWeight:"500", fontSize:"15px"}}>
+     
+                         {getQRDetails?.SessionID} 
+                             </div>
+                     </Grid> */}
+
                         <CardContent style={{ backgroundColor: "gainsboro" }}>
 
 
                             <div style={{ fontWeight: "bold", textAlign: "center", fontSize: "16px", textTransform: "uppercase", marginTop:"-7px" }}>
                                 {getQRDetails?.VisitingPlace}
                             </div>
-                          
+                            {/* <Grid xs={6} md={6}> */}
+                            {/* <label style={{fontWeight:"bold"}}>
+                         Visiting Place
+                         </label> */}
+                            {/* <div style={{fontWeight:"bold", fontSize:"20px", textAlign:'center'}}>
+     
+                         {getQR?.VisitingPlace} 
+                             </div> */}
+                            {/* </Grid> */}
+
                             <Grid style={{ paddingTop: "15px" }} container spacing={2} >
                                 <Grid xs={8} md={8} container spacing={1} >
-                                    
                                     <Grid xs={6} md={6}>
                                         <label style={{ fontWeight: "bold" }}>
                                             Visitor Name
@@ -406,8 +425,18 @@ const Page = () => {
 
 
                                     </Grid>
-                                   
-                                    <ConditionalDisplay condition={getQRDetails?.FromDate?true:false}>
+                                    {/* <Grid xs={6} md={6}>
+                         <label style={{fontWeight:"bold"}}>
+                         VisitingPlace
+                         </label>
+                       
+                             <div style={{fontWeight:"500", fontSize:"17px", textTransform:"uppercase"}}>
+                                 {getQRDetails?.VisitingPlace}
+                                  </div>
+                            
+                        
+                     </Grid> */}
+
 
                                     <Grid xs={6} md={6} >
                                         <label style={{ fontWeight: "bold" }}>
@@ -419,21 +448,33 @@ const Page = () => {
                                         </div>
 
                                     </Grid>
-                                    </ConditionalDisplay>
-                                    <ConditionalDisplay condition={getQRDetails?.ToDate?true:false}>
-
                                     <Grid xs={6} md={6} >
                                         <label style={{ fontWeight: "bold" }}>
                                             To Date
                                         </label>
                                         <div style={{ fontWeight: "500", fontSize: "17px", textTransform: "uppercase" }}>
                                             {dayjs(getQRDetails?.ToDate).format('DD-MM-YYYY HH:mm')}
-                                           
+                                            {/* {getQRDetails?.ToDate}  */}
                                         </div>
                                     </Grid>
-                                    </ConditionalDisplay>
-                                    <ConditionalDisplay condition={getQRDetails?.PurposeVisting?true:false}>
-
+                                    {/* <Grid xs={6} md={6}>
+                         <label style={{fontWeight:"bold"}}>
+                         Visiting Place
+                         </label>
+                         <div style={{fontWeight:"500", fontSize:"15px"}}>
+     
+                         {getQR?.VisitingPlace} 
+                             </div>
+                     </Grid> */}
+                                    {/* <Grid xs={6} md={6} >
+                         <label style={{fontWeight:"bold"}}>
+                         Session Name
+                         </label>
+                         <div style={{fontWeight:"500", fontSize:"15px"}}>
+     
+                         {getQRDetails?.SessionID} 
+                             </div>
+                     </Grid> */}
                                     <Grid xs={6} md={6} >
                                         <label style={{ fontWeight: "bold" }}>
                                             Purpose Of Visiting
@@ -443,8 +484,6 @@ const Page = () => {
                                             {getQRDetails?.PurposeVisting}
                                         </div>
                                     </Grid>
-                                    </ConditionalDisplay>
-                                    <ConditionalDisplay condition={getQRDetails?.FirstName?true:false}>
                                     <Grid xs={6} md={6} >
                                         <label style={{ fontWeight: "bold" }}>
                                             Reference Name
@@ -454,8 +493,6 @@ const Page = () => {
                                             {getQRDetails?.FirstName}
                                         </div>
                                     </Grid>
-                                    </ConditionalDisplay>
-                                    <ConditionalDisplay condition={getQRDetails?.MinisterName?true:false}>
                                     <Grid xs={6} md={6} >
                                             <label style={{ fontWeight: "bold" }}>
                                             Place Of Visiting
@@ -464,48 +501,25 @@ const Page = () => {
                                                 {getQRDetails?.MinisterName}
                                             </div>
                                         </Grid>
-                                    </ConditionalDisplay>
+                                    {/* <Grid xs={6} md={6} >
+                                        <label style={{ fontWeight: "bold" }}>
+                                            Reference Designation
+                                        </label>
+                                        <div style={{ fontWeight: "500", fontSize: "15px" }}>
 
-                                    <ConditionalDisplay condition={getQRDetails?.MinisterName?true:false}>
+                                            {getQRDetails?.MiddleName}
+                                        </div>
+                                    </Grid>
                                     <Grid xs={6} md={6} >
-                                            <label style={{ fontWeight: "bold" }}>
-                                            Minister Name                                         </label>
-                                            <div style={{ fontWeight: "500", fontSize: "15px" }}>
-                                                {getQRDetails?.MinisterName}
-                                            </div>
-                                        </Grid>
-                                    </ConditionalDisplay>
-                                    <ConditionalDisplay condition={getQRDetails?.Designation?true:false}>
-                                    <Grid xs={6} md={6} >
-                                            <label style={{ fontWeight: "bold" }}>
-                                            Designation                                       </label>
-                                            <div style={{ fontWeight: "500", fontSize: "15px" }}>
-                                                {getQRDetails?.Designation}
-                                            </div>
-                                        </Grid>
-                                    </ConditionalDisplay>
-                                    <ConditionalDisplay condition={getQRDetails?.LastName?true:false}>
-                                    <Grid xs={6} md={6} >
-                                            <label style={{ fontWeight: "bold" }}>
-                                            Organization                                       </label>
-                                            <div style={{ fontWeight: "500", fontSize: "15px" }}>
-                                                {getQRDetails?.LastName}
-                                            </div>
-                                        </Grid>
-                                    </ConditionalDisplay>
-                                    <ConditionalDisplay condition={getQRDetails?.MiddleName?true:false}>
-                                    <Grid xs={6} md={6} >
-                                            <label style={{ fontWeight: "bold" }}>
-                                            Place Of Duty                                       </label>
-                                            <div style={{ fontWeight: "500", fontSize: "15px" }}>
-                                                {getQRDetails?.MiddleName}
-                                            </div>
-                                        </Grid>
-                                    </ConditionalDisplay>
-                                  
+                                        <label style={{ fontWeight: "bold" }}>
+                                            Reference Department
+                                        </label>
+                                        <div style={{ fontWeight: "500", fontSize: "15px" }}>
 
+                                            {getQRDetails?.LastName}
+                                        </div>
+                                    </Grid> */}
 
-                                   
                                 </Grid>
                                 <Grid xs={4} md={4}>
                                     <Typography sx={{ mb: 1.5 }} color="text.secondary">
@@ -540,7 +554,7 @@ const Page = () => {
             <Dialog open={open} >
                 {qrList.map((getQRDetails, index) => (
                     <Container maxWidth="sm" id="divToPrint" key={index}>
-                        <Card variant='outlined' style={{ width: 600, height: 414 }}
+                        <Card variant='outlined' style={{ width: 600, height: 480 }}
 
                             sx={{
                                 boxShadow: 3,
@@ -578,82 +592,126 @@ const Page = () => {
 
                             </Grid>
                         </Grid> </div>
-                        <Grid style={{ paddingTop: "15px" }} container spacing={2} >
-                                <Grid xs={8} md={8} container spacing={1} >
-                                    
-                                    <Grid xs={6} md={6}>
-                                        <label style={{ fontWeight: "bold" }}>
-                                            Visitor Name
-                                        </label>
+                            <CardContent style={{ backgroundColor: "gainsboro" }}>
+                                <div style={{ fontWeight: "bold", textAlign: "center", fontSize: "16px", textTransform: "uppercase", marginTop:"-7px"  }}>
+                                    {getQRDetails?.VisitingPlace}
+                                </div>
 
-                                        <div style={{ fontWeight: "500", fontSize: "17px", textTransform: "uppercase" }}>
-                                            {getQRDetails?.FullName}
-                                        </div>
+                                {/* <CardContent style={{backgroundColor: "gainsboro"}}>
+           <div style={{fontWeight:"bold", textAlign:"center", fontSize:"16px", textTransform:"uppercase"}}>
+                                 {getQRDetails?.VisitingPlace}-{getQRDetails?.MinisterName ?`-${getQRDetails?.MinisterName}`:''}
+                                  </div> */}
+                                {/* <Grid xs={6} md={6}> */}
+                                {/* <label style={{fontWeight:"bold"}}>
+                         Visiting Place
+                         </label> */}
+                                {/* <div style={{fontWeight:"bold", fontSize:"20px", textAlign:'center'}}>
+     
+                         {getQR?.VisitingPlace} 
+                             </div> */}
+                                {/* </Grid> */}
+
+                                <Grid style={{ paddingTop: "15px" }} container spacing={2} >
+                                    <Grid xs={8} md={8} container spacing={1} >
+                                        <Grid xs={6} md={6}>
+                                            <label style={{ fontWeight: "bold" }}>
+                                                Visitor Name
+                                            </label>
+
+                                            <div style={{ fontWeight: "500", fontSize: "17px", textTransform: "uppercase" }}>
+                                                {getQRDetails?.FullName}
+                                            </div>
+                                        </Grid>
+                                        <Grid xs={6} md={6}>
+                                            <label style={{ fontWeight: "bold" }}>
+                                                Mobile Number
+                                            </label>
+
+                                            <div style={{ fontWeight: "500", fontSize: "17px", textTransform: "uppercase" }}>
+                                                {getQRDetails?.MobileNumber}
+                                            </div>
 
 
-                                    </Grid>
-                                    <Grid xs={6} md={6}>
-                                        <label style={{ fontWeight: "bold" }}>
-                                            Mobile Number
-                                        </label>
+                                        </Grid>
+                                        {/* <Grid xs={6} md={6}>
+                         <label style={{fontWeight:"bold"}}>
+                         VisitingPlace
+                         </label>
+                       
+                             <div style={{fontWeight:"500", fontSize:"17px", textTransform:"uppercase"}}>
+                                 {getQRDetails?.VisitingPlace}
+                                  </div>
+                            
+                        
+                     </Grid> */}
 
-                                        <div style={{ fontWeight: "500", fontSize: "17px", textTransform: "uppercase" }}>
-                                            {getQRDetails?.MobileNumber}
-                                        </div>
 
 
-                                    </Grid>
-                                   
-                                    <ConditionalDisplay condition={getQRDetails?.FromDate?true:false}>
+                                        <Grid xs={6} md={6} >
+                                            <label style={{ fontWeight: "bold" }}>
+                                                From Date
+                                            </label>
+                                            <div style={{ fontWeight: "500", fontSize: "17px", textTransform: "uppercase" }}>
 
-                                    <Grid xs={6} md={6} >
-                                        <label style={{ fontWeight: "bold" }}>
-                                            From Date
-                                        </label>
-                                        <div style={{ fontWeight: "500", fontSize: "17px", textTransform: "uppercase" }}>
+                                                {dayjs(getQRDetails?.FromDate).format('DD-MM-YYYY HH:mm')} 
+                                            </div>
 
-                                            {dayjs(getQRDetails?.FromDate).format('DD-MM-YYYY HH:mm')}
-                                        </div>
+                                        </Grid>
+                                        <Grid xs={6} md={6} >
+                                            <label style={{ fontWeight: "bold" }}>
+                                                To Date
+                                            </label>
+                                            <div style={{ fontWeight: "500", fontSize: "17px", textTransform: "uppercase" }}>
+                                                {dayjs(getQRDetails?.ToDate).format('DD-MM-YYYY HH:mm')}
+                                                {/* {getQRDetails?.ToDate}  */}
+                                            </div>
+                                        </Grid>
+                                        {/* <Grid xs={6} md={6}>
+                         <label style={{fontWeight:"bold"}}>
+                         Visiting Place
+                         </label>
+                         <div style={{fontWeight:"500", fontSize:"15px"}}>
+     
+                         {getQR?.VisitingPlace} 
+                             </div>
+                     </Grid> */}
+                                        {/* <Grid xs={6} md={6} >
+                         <label style={{fontWeight:"bold"}}>
+                         Session ID
+                         </label>
+                         <div style={{fontWeight:"500", fontSize:"15px"}}>
+     
+                         {getQRDetails?.SessionID} 
+                             </div>
+                     </Grid> */}
+                                        <Grid xs={6} md={6} >
+                                            <label style={{ fontWeight: "bold" }}>
+                                                Purpose Of Visiting
+                                            </label>
+                                            <div style={{ fontWeight: "500", fontSize: "15px" }}>
 
-                                    </Grid>
-                                    </ConditionalDisplay>
-                                    <ConditionalDisplay condition={getQRDetails?.ToDate?true:false}>
+                                                {getQRDetails?.PurposeVisting}
+                                            </div>
+                                        </Grid>
+                                        <Grid xs={6} md={6} >
+                                            <label style={{ fontWeight: "bold" }}>
+                                                Purpose Of Visiting
+                                            </label>
+                                            <div style={{ fontWeight: "500", fontSize: "15px" }}>
 
-                                    <Grid xs={6} md={6} >
-                                        <label style={{ fontWeight: "bold" }}>
-                                            To Date
-                                        </label>
-                                        <div style={{ fontWeight: "500", fontSize: "17px", textTransform: "uppercase" }}>
-                                            {dayjs(getQRDetails?.ToDate).format('DD-MM-YYYY HH:mm')}
-                                           
-                                        </div>
-                                    </Grid>
-                                    </ConditionalDisplay>
-                                    <ConditionalDisplay condition={getQRDetails?.PurposeVisting?true:false}>
+                                                {getQRDetails?.PurposeVisting}
+                                            </div>
+                                        </Grid>
+                                        <Grid xs={6} md={6} >
+                                            <label style={{ fontWeight: "bold" }}>
+                                                Reference Name
+                                            </label>
+                                            <div style={{ fontWeight: "500", fontSize: "15px" }}>
 
-                                    <Grid xs={6} md={6} >
-                                        <label style={{ fontWeight: "bold" }}>
-                                            Purpose Of Visiting
-                                        </label>
-                                        <div style={{ fontWeight: "500", fontSize: "15px" }}>
-
-                                            {getQRDetails?.PurposeVisting}
-                                        </div>
-                                    </Grid>
-                                    </ConditionalDisplay>
-                                    <ConditionalDisplay condition={getQRDetails?.FirstName?true:false}>
-                                    <Grid xs={6} md={6} >
-                                        <label style={{ fontWeight: "bold" }}>
-                                            Reference Name
-                                        </label>
-                                        <div style={{ fontWeight: "500", fontSize: "15px" }}>
-
-                                            {getQRDetails?.FirstName}
-                                        </div>
-                                    </Grid>
-                                    </ConditionalDisplay>
-                                    <ConditionalDisplay condition={getQRDetails?.MinisterName?true:false}>
-                                    <Grid xs={6} md={6} >
+                                                {getQRDetails?.FirstName}
+                                            </div>
+                                        </Grid>
+                                        <Grid xs={6} md={6} >
                                             <label style={{ fontWeight: "bold" }}>
                                             Place Of Visiting
                                             </label>
@@ -661,55 +719,34 @@ const Page = () => {
                                                 {getQRDetails?.MinisterName}
                                             </div>
                                         </Grid>
-                                    </ConditionalDisplay>
+                                        {/* <Grid xs={6} md={6} >
+                                            <label style={{ fontWeight: "bold" }}>
+                                                Reference Designation
+                                            </label>
+                                            <div style={{ fontWeight: "500", fontSize: "15px" }}>
 
-                                    <ConditionalDisplay condition={getQRDetails?.MinisterName?true:false}>
-                                    <Grid xs={6} md={6} >
-                                            <label style={{ fontWeight: "bold" }}>
-                                            Minister Name                                         </label>
-                                            <div style={{ fontWeight: "500", fontSize: "15px" }}>
-                                                {getQRDetails?.MinisterName}
-                                            </div>
-                                        </Grid>
-                                    </ConditionalDisplay>
-                                    <ConditionalDisplay condition={getQRDetails?.Designation?true:false}>
-                                    <Grid xs={6} md={6} >
-                                            <label style={{ fontWeight: "bold" }}>
-                                            Designation                                       </label>
-                                            <div style={{ fontWeight: "500", fontSize: "15px" }}>
-                                                {getQRDetails?.Designation}
-                                            </div>
-                                        </Grid>
-                                    </ConditionalDisplay>
-                                    <ConditionalDisplay condition={getQRDetails?.LastName?true:false}>
-                                    <Grid xs={6} md={6} >
-                                            <label style={{ fontWeight: "bold" }}>
-                                            Organization                                       </label>
-                                            <div style={{ fontWeight: "500", fontSize: "15px" }}>
-                                                {getQRDetails?.LastName}
-                                            </div>
-                                        </Grid>
-                                    </ConditionalDisplay>
-                                    <ConditionalDisplay condition={getQRDetails?.MiddleName?true:false}>
-                                    <Grid xs={6} md={6} >
-                                            <label style={{ fontWeight: "bold" }}>
-                                            Place Of Duty                                       </label>
-                                            <div style={{ fontWeight: "500", fontSize: "15px" }}>
                                                 {getQRDetails?.MiddleName}
                                             </div>
                                         </Grid>
-                                    </ConditionalDisplay>
-                                  
+                                        <Grid xs={6} md={6} >
+                                            <label style={{ fontWeight: "bold" }}>
+                                                Reference Department
+                                            </label>
+                                            <div style={{ fontWeight: "500", fontSize: "15px" }}>
+
+                                                {getQRDetails?.LastName}
+                                            </div>
+                                        </Grid> */}
 
 
-                                   
+                                    </Grid>
+                                    <Grid xs={4} md={4}>
+                                        <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                                            <img src={getQRDetails?.qrcode} alt='qrcode' style={{ width: '100%', border: '1px solid #2f3746' }} />
+                                        </Typography>
+                                    </Grid>
                                 </Grid>
-                                <Grid xs={4} md={4}>
-                                    <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                                        <img src={getQRDetails?.qrcode} alt='qrcode' style={{ width: '100%', border: '1px solid #2f3746' }} />
-                                    </Typography>
-                                </Grid>
-                            </Grid>
+                            </CardContent>
                             <CardActions>
 
                             </CardActions>

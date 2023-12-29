@@ -494,7 +494,7 @@ const Page = (props) => {
 
     const getQrCodeList = (id) => {
         if (id) {
-            router.push('/photoqrcode/' + id);
+            router.push('/subdropdown/' + id);
         }
     }
     const formReset = () => {

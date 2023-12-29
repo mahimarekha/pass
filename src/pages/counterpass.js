@@ -556,10 +556,7 @@ const Page = (props) => {
 
         },
     });
-    const checkPermission = (e)=>{
-        console.log(e)
-debugger
-    }
+
     const multiple = () => {
 
 
