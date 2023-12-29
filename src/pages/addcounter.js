@@ -533,7 +533,7 @@ const Page = (props) => {
                     "ministerPortfolio":false,
                     "lpOffice":false,
                     "session":true,
-                    "validUpto": false,
+                    "validUpto": true,
                     "fileupload":true,
                 };
                 break;
@@ -558,7 +558,7 @@ const Page = (props) => {
                     "ministerPortfolio":false,
                     "lpOffice":false,
                     "session":true,
-                    "validUpto": false,
+                    "validUpto": true,
                     "fileupload":true,
                 };
                 break;

@@ -112,7 +112,7 @@ export const items = [
       )
   },
   {
-    title: 'Sub-Dropdown',
+    title: 'Minister and Leguslative',
     path: '/subdropdown',
     role:['Admin','Counter pass'],
    icon: (
