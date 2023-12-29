@@ -556,6 +556,10 @@ const Page = (props) => {
 
         },
     });
+    const checkPermission = (e)=>{
+        console.log(e)
+debugger
+    }
     const multiple = () => {
 
 
@@ -645,14 +649,16 @@ const Page = (props) => {
                                             <Grid container spacing={2}>
                                                 <Grid xs={6} md={4}>
                                                     <FormControl variant="standard" fullWidth>
-                                                        <InputLabel id="studentName">VisitingPlaces Id</InputLabel>
+                                                        <InputLabel id="studentName">VisitingPlaces</InputLabel>
                                                         <Select
                                                             labelId="VisitingPlacesId"
                                                             id="VisitingPlacesId"
                                                             label="VisitingPlaces Id"
                                                             name="VisitingPlacesId"
                                                             value={formik.values.VisitingPlacesId}
-                                                            onChange={e => { formik.handleChange(e); }}
+                                                            onChange={e => { formik.handleChange(e); 
+                                                            checkPermission(e)
+                                                            }}
                                                         // onChange={e => { setDepartmentId(e.target.value) }}
                                                         >
                                                             <MenuItem value="">

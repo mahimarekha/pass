@@ -6,6 +6,7 @@ import { subDays, subHours } from 'date-fns';
 import ArrowDownOnSquareIcon from '@heroicons/react/24/solid/ArrowDownOnSquareIcon';
 import ArrowUpOnSquareIcon from '@heroicons/react/24/solid/ArrowUpOnSquareIcon';
 import PlusIcon from '@heroicons/react/24/solid/PlusIcon';
+import ConditionalDisplay from '../components/ConditionalDisplay';
 import { Box, Button, Container, Stack, SvgIcon, Typography } from '@mui/material';
 import { useSelection } from 'src/hooks/use-selection';
 import { useFormik } from 'formik';
@@ -250,6 +251,26 @@ const Page = (props) => {
 
     const [docSrc, setDocSrc] = useState(null);
     const [mirrored, setMirrored] = useState(false);
+    const [pass, setPass] = useState({
+                    "name": true,
+                    "ministor":false,
+                    "designation": true,
+                    "department": true,
+                    "mobileNo": true,
+                    "validUpto": true,
+                    "photo": true,
+                    "time": false,
+                    "placeOfDuty": true,
+                    "organization": true,
+                    "referedBy": true,
+                    "date": false,
+                    "purposeOfVisit": false,
+                    "visitorName":false,
+                    "ministerPortfolio":false,
+                    "lpOffice":false,
+                    "session":true,
+                    "fileupload":true,
+    });
     const [visitingPasses, setVisitingPasses] = useState({
         //UserId: '',
         // DepId: '',
@@ -278,18 +299,21 @@ const Page = (props) => {
     const tomorrow = dayjs().add(3, 'day');
     const validationSchema = Yup.object().shape({
         //UserId: Yup.string().required('User Id is required'),
-        // DepId: Yup.string().required('Department Id is required'),
-        // DesignationId: Yup.string().required('Designation Id is required'),
-        VisitingPlacesId: Yup.string().required('VisitingPlacesId  is required'),
-        FullName: Yup.string().required('Full Name is required'),
-        MobileNumber: Yup.string().required()
+        DepId: Yup.string(),
+        DesignationId: Yup.string(),
+        VisitingPlacesId: Yup.string(),
+        FullName: Yup.string(),
+        FirstName: Yup.string(),
+        MiddleName: Yup.string(),
+        LastName: Yup.string(),
+        MobileNumber: Yup.string()
             .matches(/^[0-9]+$/, "Must be only digits")
             .min(10, 'Must be exactly 10 digits')
             .max(10, 'Must be exactly 10 digits'),
         // VisitorPhotoPath: Yup.string().required('Visitor Photo Path is required'),
         FromDate: Yup.string(),
         ToDate: Yup.string(),
-        PurposeVisting: Yup.string().required('Purpose Visting is required'),
+        PurposeVisting: Yup.string(),
         // VisitingStatus: Yup.string(true).required('Visiting Status is required'),
         // Remarks: Yup.string().required('Remarks Status is required'),
         SessionId: Yup.string(),
@@ -345,6 +369,277 @@ const Page = (props) => {
         }
     };
 
+    const checkPermission = (e) => {
+        console.log(e.target.value)
+        let monthName;
+
+        debugger
+        switch (e.target.value) {
+            case 1001:
+                // OFFICERS BOX PAS
+                monthName = {
+                    "name": true,
+                    "ministor":false,
+                    "designation": true,
+                    "department": true,
+                    "mobileNo": true,
+                    "validUpto": true,
+                    "photo": true,
+                    "time": false,
+                    "placeOfDuty": false,
+                    "organization": false,
+                    "referedBy": true,
+                    "date": false,
+                    "purposeOfVisit": false,
+                    "visitorName":false,
+                    "ministerPortfolio":false,
+                    "lpOffice":false,
+                    "session":true,
+                    "fileupload":true,
+                };
+                break;
+              
+            case 1011:
+                // OFFICERS GALLERY PASS
+                monthName = {
+                    "name": true,
+                    "designation": true,
+                    "ministor":false,
+                    "department": true,
+                    "mobileNo": true,
+                    "validUpto": true,
+                    "photo": true,
+                    "time": true,
+                    "placeOfDuty": false,
+                    "organization": false,
+                    "referedBy": true,
+                    "date": false,
+                    "purposeOfVisit": false,
+                    "visitorName":false,
+                    "ministerPortfolio":false,
+                    "lpOffice":false,
+                    "session":true,
+                    "fileupload":true,
+                };
+                break;
+            case 1012:
+                // OFFICER DUTY PASS:
+                monthName = {
+                    "name": true,
+                    "designation": true,
+                    "ministor":false,
+                    "department": true,
+                    "mobileNo": true,
+                    "validUpto": true,
+                    "photo": true,
+                    "time": false,
+                    "placeOfDuty": false,
+                    "organization": false,
+                    "referedBy": false,
+                    "date": false,
+                    "purposeOfVisit": false,
+                    "visitorName":false,
+                    "ministerPortfolio":false,
+                    "lpOffice":false,
+                    "session":true,
+                    "fileupload":true,
+                };
+                break;
+            case 1013:
+                // TEMPORARY STAFF PASS:
+                monthName = {
+                    "name": true,
+                    "ministor":false,
+                    "designation": true,
+                    "department": true,
+                    "mobileNo": true,
+                    "validUpto": true,
+                    "photo": true,
+                    "time": false,
+                    "placeOfDuty": false,
+                    "organization": false,
+                    "referedBy": false,
+                    "date": false,
+                    "purposeOfVisit": false,
+                    "visitorName":false,
+                    "ministerPortfolio":false,
+                    "lpOffice":false,
+                    "session":true,
+                    "fileupload":true,
+                };
+                break;
+            case 1014:
+                // POLICE OFFICER PASS:
+                monthName = {
+                    "name": true,
+                    "ministor":false,
+                    "designation": true,
+                    "department": true,
+                    "placeOfDuty": true,
+                    "mobileNo": true,
+                    "validUpto": true,
+                    "photo": true,
+                    "time": false,
+                    "organization": false,
+                    "referedBy": false,
+                    "date": false,
+                    "purposeOfVisit": false,
+                    "visitorName":false,
+                    "ministerPortfolio":false,
+                    "lpOffice":false,
+                    "session":true,
+                    "fileupload":true,
+                };
+                break;
+            case 1002:
+                // MEDIA POINT PASS:
+                monthName = {
+                    "name": true,
+                    "department": false,
+                    "ministor":false,
+                    "designation": true,
+                    "organization": true,
+                    "mobileNo": true,
+                    "validUpto": true,
+                    "photo": true,
+                    "time": false,
+                    "placeOfDuty": false,
+                    "referedBy": false,
+                    "date": false,
+                    "purposeOfVisit": false,
+                    "visitorName":false,
+                    "ministerPortfolio":false,
+                    "lpOffice":false,
+                    "session":true,
+                    "fileupload":true,
+                };
+                break;
+            case 1015:
+                // VISITORS GALLERY PASS:
+                monthName = {
+                    "name": true,
+                    "department": false,
+                    "designation": false,
+                    "ministor":false,
+                    "referedBy": true,
+                    "date": true,
+                    "time": true,
+                    "purposeOfVisit": true,
+                    "mobileNo": true,
+                    "photo": true,
+                    "placeOfDuty": false,
+                    "organization": false,
+                    "visitorName":false,
+                    "ministerPortfolio":false,
+                    "lpOffice":false,
+                    "session":true,
+                    "validUpto": false,
+                    "fileupload":true,
+                };
+                break;
+
+            case 1016:
+                // HON'BLE SPEAKERS GALLERY PASS:
+         
+                monthName = {
+                    "name": true,
+                    "department": false,
+                    "designation": false,
+                    "ministor":false,
+                    "referedBy": true,
+                    "date": true,
+                    "time": true,
+                    "purposeOfVisit": true,
+                    "mobileNo": true,
+                    "photo": true,
+                    "placeOfDuty": false,
+                    "organization": false,
+                    "visitorName":false,
+                    "ministerPortfolio":false,
+                    "lpOffice":false,
+                    "session":true,
+                    "validUpto": false,
+                    "fileupload":true,
+                };
+                break;
+                //minister
+                
+                case 1007:
+                    monthName = {
+                        "visitorName":true,
+                        "ministor":true,
+                        "department": false,
+                    "designation": false,
+                        "ministerPortfolio":true,
+                        "mobileNo":true,
+                        "date":true,
+                        "time": true,
+                        "referedBy": true,
+                        "photo":true,
+                        "name": false,
+                        "purposeOfVisit": false,
+                        "placeOfDuty": false,
+                        "organization": false,
+                        "lpOffice":false,
+                        "session":true,
+                        "validUpto": false,
+                        "fileupload":true,
+                    };
+                    
+                    break;
+                    
+                    case 1010:
+                        // LEGISLATURE PARTY OFFICE PASS:
+                        
+                    monthName = {
+                        "visitorName":true,
+                        "mobileNo":true,
+                        "department": false,
+                    "designation": false,
+                        "ministor":true,
+                        "date":true,
+                        "time": true,
+                        "referedBy": true,
+                        "purposeOfVisit":true,
+                        "lpOffice":true,
+                        "photo":true,
+                        "name": false,
+                        "placeOfDuty": false,
+                        "organization": false,
+                        "ministerPortfolio":false,
+                        "session":true,
+                        "validUpto": false,
+                        "fileupload":true,
+                    };
+                    break;
+            default:
+                monthName = {
+                    "name": false,
+                    "ministor":false,
+                    "designation": true,
+                    "department": true,
+                    "mobileNo": true,
+                    "validUpto": true,
+                    "photo": true,
+                    "time": false,
+                    "placeOfDuty": false,
+                    "organization": false,
+                    "referedBy": false,
+                    "date": false,
+                    "purposeOfVisit": false,
+                    "visitorName":false,
+                    "ministerPortfolio":false,
+                    "lpOffice":false,
+                    "session":true,
+                    "fileupload":true,
+                    "fileupload":true,
+
+                };
+
+        }
+        setPass(monthName);
+        console.log(monthName);
+    }
     const handleDocumentUpload = (e) => {
         const file = e.target.files[0];
 
@@ -511,10 +806,10 @@ const Page = (props) => {
         onSubmit: (values, { resetForm }) => {
             const result = departmentList.find(({ DepartmentName }) => DepartmentName === "Counter Pass");
             values.UserId = userDetails ? userDetails.UserId : '';
-            
 
-            values.FromDate = typeof fromDate === 'string' ? fromDate:dayjs(fromDate).format('YYYY-MM-DDTHH:mm:ss');
-            values.ToDate = typeof toDate === 'string' ? toDate:dayjs(toDate).format('YYYY-MM-DDTHH:mm:ss'); ;
+
+            values.FromDate = typeof fromDate === 'string' ? fromDate : dayjs(fromDate).format('YYYY-MM-DDTHH:mm:ss');
+            values.ToDate = typeof toDate === 'string' ? toDate : dayjs(toDate).format('YYYY-MM-DDTHH:mm:ss');;
             // values.VisitingStatus = status;
             values.CreatedBy = userDetails ? userDetails.UserId : '';
             values.DepId = result.Depid;
@@ -593,6 +888,10 @@ const Page = (props) => {
                             <Stack spacing={1}>
                                 <Typography variant="h5">
                                     Add Counter Pass
+
+                                    {/* <ConditionalDisplay condition={pass.name}>
+
+                                    </ConditionalDisplay> */}
                                 </Typography>
                                 <Stack
                                     alignItems="center"
@@ -604,6 +903,7 @@ const Page = (props) => {
 
 
                                             <Grid container spacing={2}>
+                                                
                                                 <Grid xs={6} md={3}>
                                                     <FormControl variant="standard" fullWidth>
                                                         <InputLabel id="studentName">VisitingPlaces Id</InputLabel>
@@ -614,12 +914,12 @@ const Page = (props) => {
                                                             name="VisitingPlacesId"
 
                                                             value={formik.values.VisitingPlacesId}
-                                                            onChange={e => 
-                                                                
-                                                                { 
-                                                                    const minister=e.target.value===1007  ? true : false;         
-                                                                    formik.handleChange(e); setIsShowMinister(minister) }}
-                                                            
+                                                            onChange={e => {
+                                                                checkPermission(e);
+                                                                const minister = e.target.value === 1007 ? true : false;
+                                                                formik.handleChange(e); setIsShowMinister(minister)
+                                                            }}
+
                                                         // onChange={e => { setDepartmentId(e.target.value) }}
                                                         >
                                                             <MenuItem value="">
@@ -632,34 +932,83 @@ const Page = (props) => {
                                                         </Select>
                                                     </FormControl>
                                                 </Grid>
-                                                {isShowMinister ?
-                                                 <Grid xs={6} md={3}>
-                                                 <FormControl variant="standard" fullWidth>
-                                                     <InputLabel id="studentName">Minister Name</InputLabel>
-                                                     <Select
-                                                         labelId="ministerId"
-                                                         id="ministerId"
-                                                         label="Minister Name"
-                                                         name="ministerId"
-                                                         value={formik.values.ministerId}
-                                                         onChange={e => 
-                                                             {
-                                                                 formik.handleChange(e); }}
-                                                         //  onChange={e => { formik.setMinister(e); }}
-                                                     // onChange={e => { setDepartmentId(e.target.value) }}
-                                                     >
-                                                         <MenuItem value="">
-                                                             <em>None</em>
-                                                         </MenuItem>
-                                                         {ministerList.map(({ index, MinID, MinisterName }) => (
-                                                             <MenuItem key={index} value={MinID}>{MinisterName}
-                                                             </MenuItem>
-                                                         ))}
-                                                     </Select>
-                                                 </FormControl>
-                                             </Grid>
-                                             :"" }
-                                               
+                                                <ConditionalDisplay condition={pass.ministor}>
+                                                    <Grid xs={6} md={3}>
+                                                        <FormControl variant="standard" fullWidth>
+                                                            <InputLabel id="studentName">Minister Name</InputLabel>
+                                                            <Select
+                                                                labelId="ministerId"
+                                                                id="ministerId"
+                                                                label="Minister Name"
+                                                                name="ministerId"
+                                                                value={formik.values.ministerId}
+                                                                onChange={e => {
+                                                                    formik.handleChange(e);
+                                                                }}
+                                                            //  onChange={e => { formik.setMinister(e); }}
+                                                            // onChange={e => { setDepartmentId(e.target.value) }}
+                                                            >
+                                                                <MenuItem value="">
+                                                                    <em>None</em>
+                                                                </MenuItem>
+                                                                {ministerList.map(({ index, MinID, MinisterName }) => (
+                                                                    <MenuItem key={index} value={MinID}>{MinisterName}
+                                                                    </MenuItem>
+                                                                ))}
+                                                            </Select>
+                                                        </FormControl>
+                                                    </Grid>
+                                                  </ConditionalDisplay>
+                                                  <ConditionalDisplay condition={pass.designation}>
+                                                  <Grid xs={6} md={3}>
+                                                    <FormControl variant="standard" fullWidth>
+                                                        <InputLabel id="studentName">Designation Name</InputLabel>
+                                                        <Select
+                                                            labelId="DesignationId"
+                                                            id="DesignationId"
+                                                            label="Designation Name"
+                                                            name="DesignationId"
+                                                            value={formik.values.DesignationId}
+                                                            onChange={e => { formik.handleChange(e); }}
+                                                        // onChange={e => { setDepartmentId(e.target.value) }}
+                                                        >
+                                                            <MenuItem value="">
+                                                                <em>None</em>
+                                                            </MenuItem>
+                                                            {designationsList.map(({ index, DesignationId, Designation }) => (
+                                                                <MenuItem key={index} value={DesignationId}>{Designation}
+                                                                </MenuItem>
+                                                            ))}
+                                                        </Select>
+                                                    </FormControl>
+                                                </Grid>
+                                                </ConditionalDisplay>
+                                                  <ConditionalDisplay condition={pass.department}>
+                                                  <Grid xs={6} md={3}>
+                                                    <FormControl variant="standard" fullWidth>
+                                                        <InputLabel id="studentName">Department Name</InputLabel>
+                                                        <Select
+                                                            labelId="Depid"
+                                                            id="Depid"
+                                                            label="Department Name"
+                                                            name="DepId"
+                                                            disabled={userDetails?.RoleName === 'Admin' ? false : true}
+                                                            value={formik.values.DepId}
+                                                            onChange={e => { formik.handleChange(e); }}
+                                                        // onChange={e => { setDepartmentId(e.target.value) }}
+                                                        >
+                                                            <MenuItem value="">
+                                                                <em>None</em>
+                                                            </MenuItem>
+                                                            {departmentList.map(({ index, Depid, DepartmentName }) => (
+                                                                <MenuItem key={index} value={Depid}>{DepartmentName}
+                                                                </MenuItem>
+                                                            ))}
+                                                        </Select>
+                                                    </FormControl>
+                                                </Grid>
+                                                </ConditionalDisplay>
+                                                  <ConditionalDisplay condition={pass.name}>
                                                 <Grid xs={6} md={3}>
                                                     <TextField
                                                         InputProps={{ style: { width: 235 } }}
@@ -676,6 +1025,8 @@ const Page = (props) => {
                                                         helperText={formik.touched.FullName && formik.errors.FullName}
                                                     />
                                                 </Grid>
+                                                </ConditionalDisplay>
+                                                <ConditionalDisplay condition={pass.mobileNo}>
                                                 <Grid xs={6} md={3}>
                                                     <TextField
                                                         InputProps={{ style: { width: 245 } }}
@@ -694,6 +1045,8 @@ const Page = (props) => {
                                                         helperText={formik.touched.MobileNumber && formik.errors.MobileNumber}
                                                     />
                                                 </Grid>
+                                                </ConditionalDisplay>
+                                                <ConditionalDisplay condition={pass.session}>
                                                 <Grid xs={6} md={3}>
                                                     <FormControl variant="standard" fullWidth>
                                                         <InputLabel id="studentName">Session Name</InputLabel>
@@ -701,30 +1054,32 @@ const Page = (props) => {
                                                             labelId="SessionId"
                                                             id="SessionId"
                                                             label="Session Name"
-                                                            name="SessionId" 
+                                                            name="SessionId"
                                                             value={formik.values.SessionId}
                                                             onChange={e => { formik.handleChange(e); }}
                                                         >
                                                             <MenuItem value="">
                                                                 <em>None</em>
                                                             </MenuItem>
-                                                            {sessionList.map(({ index, Remarks, Sno ,SessionID}) => (
+                                                            {sessionList.map(({ index, Remarks, Sno, SessionID }) => (
                                                                 <MenuItem key={index} value={Sno}>{Remarks}
                                                                 </MenuItem>
                                                             ))}
                                                         </Select>
                                                     </FormControl>
                                                 </Grid>
-                                                <Grid xs={6} md={3} style={{marginTop:"30px"}}>
+                                                </ConditionalDisplay>
+                                                <ConditionalDisplay condition={pass.validUpto}>
+                                                <Grid xs={6} md={3} style={{ marginTop: "30px" }}>
                                                     <LocalizationProvider dateAdapter={AdapterDayjs} >
-                                                        <DateTimePicker  InputProps={{ style: { width: 230 } }}
+                                                        <DateTimePicker InputProps={{ style: { width: 230 } }}
                                                             id="FromDate"
                                                             slotProps={{ textField: { size: "small", error: false } }}
                                                             name="FromDate"
                                                             label="From Date"
                                                             disablePast
                                                             onChange={(value) => {
-                                                               formik.setFieldValue("date", value, true);
+                                                                formik.setFieldValue("date", value, true);
                                                                 const dayDifference = value.diff(currentDate, 'day');
                                                                 setFromDate(value.format('YYYY-MM-DDTHH:mm:ss'));
                                                                 setValidToDate(dayjs().add(dayDifference, 'day'));
@@ -738,8 +1093,8 @@ const Page = (props) => {
                                                             //   onChange={handleChange}
                                                             renderInput={(params) => <TextField {...params} />}
                                                         />
-                                                        {/* <DatePicker defaultValue={dayjs(new Date())} /> */}
-                                                        {/* <DatePicker InputProps={{ style: { width: 245 } }}
+                                                        {/* <DatePicker defaultValue={dayjs(new Date())} />
+                                                        <DatePicker InputProps={{ style: { width: 245 } }}
                                                             id="FromDate"
                                                             slotProps={{ textField: { size: "small", error: false } }}
                                                             name="FromDate"
@@ -761,7 +1116,9 @@ const Page = (props) => {
                                                             helperText={formik.touched.FromDate && formik.errors.FromDate} /> */}
                                                     </LocalizationProvider>
                                                 </Grid>
-                                                <Grid xs={6} md={3} style={{marginTop:"30px"}}>
+                                                </ConditionalDisplay>
+                                                <ConditionalDisplay condition={pass.validUpto}>
+                                                <Grid xs={6} md={3} style={{ marginTop: "30px" }}>
                                                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                                                         <DateTimePicker InputProps={{ style: { width: 230 } }}
                                                             disablePast
@@ -788,7 +1145,9 @@ const Page = (props) => {
 
 
                                                 </Grid>
-                                                <Grid xs={6} md={3} style={{marginTop:"30px"}}>
+                                                </ConditionalDisplay>
+                                                <ConditionalDisplay condition={pass.purposeOfVisit}>
+                                                <Grid xs={6} md={3} style={{ marginTop: "30px" }}>
                                                     <TextField
                                                         InputProps={{ style: { width: 245 } }}
                                                         margin="dense"
@@ -803,9 +1162,47 @@ const Page = (props) => {
                                                         helperText={formik.touched.PurposeVisting && formik.errors.PurposeVisting}
                                                     />
                                                 </Grid>
+                                                </ConditionalDisplay>
+                                                <ConditionalDisplay condition={pass.placeOfDuty}>
+                                                <Grid xs={6} md={4}>
+                                                    <TextField
+                                                        InputProps={{ style: { width: 245 } }}
+
+                                                        margin="dense"
+                                                        id="MiddleName"
+                                                        name="MiddleName"
+                                                        label="Place of duety"
+                                                        type="text"
+                                                        variant="standard"
+                                                        value={formik.values.MiddleName}
+                                                        onChange={formik.handleChange}
+                                                        error={formik.touched.MiddleName && Boolean(formik.errors.MiddleName)}
+                                                        helperText={formik.touched.MiddleName && formik.errors.MiddleName}
+                                                    />
+                                                </Grid>
+                                                </ConditionalDisplay>
+                                                <ConditionalDisplay condition={pass.organization}>
+                                                <Grid xs={6} md={4}>
+                                                    <TextField
+                                                        InputProps={{ style: { width: 245 } }}
+
+                                                        margin="dense"
+                                                        id="LastName"
+                                                        name="LastName"
+                                                        label="Organization"
+                                                        type="text"
+                                                        variant="standard"
+                                                        value={formik.values.LastName}
+                                                        onChange={formik.handleChange}
+                                                        error={formik.touched.LastName && Boolean(formik.errors.LastName)}
+                                                        helperText={formik.touched.LastName && formik.errors.LastName}
+                                                    />
+                                                </Grid>
+                                                </ConditionalDisplay>
                                                 <Grid item xs={12} style={{ marginTop: '10px' }}>
                                                     <span style={{ fontSize: '17px', color: 'rgb(16 182 128)' }} >Referenced By :</span>
                                                 </Grid>
+                                                <ConditionalDisplay condition={pass.referedBy}>
                                                 <Grid xs={6} md={4}>
                                                     <TextField
                                                         InputProps={{ style: { width: 245 } }}
@@ -822,41 +1219,15 @@ const Page = (props) => {
                                                         helperText={formik.touched.FirstName && formik.errors.FirstName}
                                                     />
                                                 </Grid>
-                                                {/* <Grid xs={6} md={4}>
-                                                    <TextField
-                                                        InputProps={{ style: { width: 245 } }}
-
-                                                        margin="dense"
-                                                        id="MiddleName"
-                                                        name="MiddleName"
-                                                        label="Designation"
-                                                        type="text"
-                                                        variant="standard"
-                                                        value={formik.values.MiddleName}
-                                                        onChange={formik.handleChange}
-                                                        error={formik.touched.MiddleName && Boolean(formik.errors.MiddleName)}
-                                                        helperText={formik.touched.MiddleName && formik.errors.MiddleName}
-                                                    />
-                                                </Grid>
-                                                <Grid xs={6} md={4}>
-                                                    <TextField
-                                                        InputProps={{ style: { width: 245 } }}
-
-                                                        margin="dense"
-                                                        id="LastName"
-                                                        name="LastName"
-                                                        label="Department"
-                                                        type="text"
-                                                        variant="standard"
-                                                        value={formik.values.LastName}
-                                                        onChange={formik.handleChange}
-                                                        error={formik.touched.LastName && Boolean(formik.errors.LastName)}
-                                                        helperText={formik.touched.LastName && formik.errors.LastName}
-                                                    />
-                                                </Grid> */}
+                                                </ConditionalDisplay>
+                                              
+                                              
+                                                
                                                 <Grid item xs={12} style={{ marginTop: '10px' }}>
+
                                                     <span style={{ fontSize: '17px', color: 'rgb(16 182 128)' }} >Doc Upload :</span>
                                                 </Grid>
+                                                <ConditionalDisplay condition={pass.fileupload}>
                                                 <Grid xs={6} md={6}>
                                                     <label style={{ fontSize: '15px', color: 'black' }} >Upload Photo</label>
                                                     <div>
@@ -866,10 +1237,12 @@ const Page = (props) => {
                                                         }
                                                     </div>
                                                     <Button variant="contained" onClick={handleClickOpen1}>Capture From WebCam</Button>  OR
-                                                  
-                                                    <input type="file" style={{ "display": "inline-block", "padding": "10px 20px", "backgroundColor": "#6366F1", "color": "#fff", "border": "none", "borderRadius": "12px", "cursor": "pointer","width":"230px" }} onChange={handleImageUpload} />
-                                                   
+
+                                                    <input type="file" style={{ "display": "inline-block", "padding": "10px 20px", "backgroundColor": "#6366F1", "color": "#fff", "border": "none", "borderRadius": "12px", "cursor": "pointer", "width": "230px" }} onChange={handleImageUpload} />
+
                                                 </Grid>
+                                                </ConditionalDisplay>
+                                                <ConditionalDisplay condition={pass.fileupload}>
                                                 <Grid xs={6} md={6}>
                                                     <label style={{ fontSize: '15px', color: 'black' }} >Upload Document</label>
                                                     <div>
@@ -877,7 +1250,7 @@ const Page = (props) => {
 
                                                     </div>
                                                 </Grid>
-
+                                               
                                                 <Dialog open={open1} onClose={handleClose} PaperProps={{
                                                     sx: {
                                                         height: '400'
@@ -913,8 +1286,8 @@ const Page = (props) => {
                                                     </div>
 
                                                 </Dialog>
+                                                </ConditionalDisplay>
 
-                                               
                                                 {/* <Grid xs={12} md={12}>
                                                     <Button onClick={handleClose}>Cancel</Button>
                                                     <Button type="submit">{visitingPasses.VisitingPassesId ? 'Update' : 'Add'}</Button>
