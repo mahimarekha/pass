@@ -494,7 +494,7 @@ const Page = (props) => {
 
     const getQrCodeList = (id) => {
         if (id) {
-            router.push('/subdropdown/' + id);
+            router.push('/ministorandleg/' + id);
         }
     }
     const formReset = () => {
