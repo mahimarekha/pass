@@ -276,6 +276,8 @@ const Page = (props) => {
         // DepId: '',
         VisitingPassesId: '',
         VisitingPlacesId: '',
+        DesignationName:'',
+        DepartmentName:'',
         // DesignationId: '',
         FullName: '',
         MobileNumber: '',
@@ -314,6 +316,8 @@ const Page = (props) => {
         FromDate: Yup.string(),
         ToDate: Yup.string(),
         PurposeVisting: Yup.string(),
+        DesignationName: Yup.string(),
+        DepartmentName: Yup.string(),
         // VisitingStatus: Yup.string(true).required('Visiting Status is required'),
         // Remarks: Yup.string().required('Remarks Status is required'),
         SessionId: Yup.string(),
@@ -961,51 +965,38 @@ const Page = (props) => {
                                                   </ConditionalDisplay>
                                                   <ConditionalDisplay condition={pass.designation}>
                                                   <Grid xs={6} md={3}>
-                                                    <FormControl variant="standard" fullWidth>
-                                                        <InputLabel id="studentName">Designation Name</InputLabel>
-                                                        <Select
-                                                            labelId="DesignationId"
-                                                            id="DesignationId"
-                                                            label="Designation Name"
-                                                            name="DesignationId"
-                                                            value={formik.values.DesignationId}
-                                                            onChange={e => { formik.handleChange(e); }}
-                                                        // onChange={e => { setDepartmentId(e.target.value) }}
-                                                        >
-                                                            <MenuItem value="">
-                                                                <em>None</em>
-                                                            </MenuItem>
-                                                            {designationsList.map(({ index, DesignationId, Designation }) => (
-                                                                <MenuItem key={index} value={DesignationId}>{Designation}
-                                                                </MenuItem>
-                                                            ))}
-                                                        </Select>
-                                                    </FormControl>
+                                                  <TextField
+                                                        InputProps={{ style: { width: 235 } }}
+
+                                                        margin="dense"
+                                                        id="DesignationName"
+                                                        name="DesignationName"
+                                                        label="Designation Name"
+                                                        type="text"
+                                                        variant="standard"
+                                                        value={formik.values.DesignationName}
+                                                        onChange={formik.handleChange}
+                                                        error={formik.touched.DesignationName && Boolean(formik.errors.DesignationName)}
+                                                        helperText={formik.touched.DesignationName && formik.errors.DesignationName}
+                                                    />
                                                 </Grid>
                                                 </ConditionalDisplay>
                                                   <ConditionalDisplay condition={pass.department}>
                                                   <Grid xs={6} md={3}>
-                                                    <FormControl variant="standard" fullWidth>
-                                                        <InputLabel id="studentName">Department Name</InputLabel>
-                                                        <Select
-                                                            labelId="Depid"
-                                                            id="Depid"
-                                                            label="Department Name"
-                                                            name="DepId"
-                                                            disabled={userDetails?.RoleName === 'Admin' ? false : true}
-                                                            value={formik.values.DepId}
-                                                            onChange={e => { formik.handleChange(e); }}
-                                                        // onChange={e => { setDepartmentId(e.target.value) }}
-                                                        >
-                                                            <MenuItem value="">
-                                                                <em>None</em>
-                                                            </MenuItem>
-                                                            {departmentList.map(({ index, Depid, DepartmentName }) => (
-                                                                <MenuItem key={index} value={Depid}>{DepartmentName}
-                                                                </MenuItem>
-                                                            ))}
-                                                        </Select>
-                                                    </FormControl>
+                                                  <TextField
+                                                        InputProps={{ style: { width: 235 } }}
+
+                                                        margin="dense"
+                                                        id="DepartmentName"
+                                                        name="DepartmentName"
+                                                        label="Department Name"
+                                                        type="text"
+                                                        variant="standard"
+                                                        value={formik.values.DepartmentName}
+                                                        onChange={formik.handleChange}
+                                                        error={formik.touched.DepartmentName && Boolean(formik.errors.DepartmentName)}
+                                                        helperText={formik.touched.DepartmentName && formik.errors.DepartmentName}
+                                                    />
                                                 </Grid>
                                                 </ConditionalDisplay>
                                                   <ConditionalDisplay condition={pass.name}>
@@ -1076,7 +1067,7 @@ const Page = (props) => {
                                                             id="FromDate"
                                                             slotProps={{ textField: { size: "small", error: false } }}
                                                             name="FromDate"
-                                                            label="From Date"
+                                                            label="Issueing Date"
                                                             disablePast
                                                             onChange={(value) => {
                                                                 formik.setFieldValue("date", value, true);
@@ -1130,7 +1121,7 @@ const Page = (props) => {
                                                             id="ToDate"
                                                             slotProps={{ textField: { size: "small", error: false } }}
                                                             name="ToDate"
-                                                            label="ToDate"
+                                                            label="Validing Up To"
                                                             type="date"
                                                             sx={{ width: 230 }}
                                                             InputLabelProps={{
@@ -1171,7 +1162,7 @@ const Page = (props) => {
                                                         margin="dense"
                                                         id="MiddleName"
                                                         name="MiddleName"
-                                                        label="Place of duety"
+                                                        label="Entry Upto"
                                                         type="text"
                                                         variant="standard"
                                                         value={formik.values.MiddleName}

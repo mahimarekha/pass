@@ -10,9 +10,10 @@ return requests.post(`/GetUsers`,{});
   creteUsers(body){
     return requests.post('/PostUsers',body); 
   },
-//   deleteDesignations(body){
-//     return requests.delete(`/RemoveDesignations/${body._id}`); 
-//   },
+  
+  deleteUsers(id){
+    return requests.get(`/DeleteUser/${id}`); 
+  },
 //   findDepartmentList(body){
 //     return requests.post(`/department/find`,body); 
 //   },

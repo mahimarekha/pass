@@ -231,6 +231,10 @@ const Page = () => {
         name: 'Edit',
         property: 'Edit'
     },
+    {
+        name: 'Delete',
+        property: 'Delete'
+    },
     ];
     const [rowsPerPage, setRowsPerPage] = useState(5);
     const customers = useCustomers(page, rowsPerPage);
@@ -343,14 +347,15 @@ const Page = () => {
         setUsers(users);
         setOpen(true);
     }
-    // const deleteRole = (roledelete) => {
-    //     if (roledelete) {
-    //         RoleService.deleteRole(roledelete).then((res) => {
-    //             getRoleList();
-    //         }).catch((err) => {
-    //         });
-    //     }
-    // };
+    const deleteUsers = (usersdelete) => {
+        
+        if (usersdelete) {
+            UsersService.deleteUsers(usersdelete.UserId).then((res) => {
+                getUsersList();
+            }).catch((err) => {
+            });
+        }
+    };
 
     const getUsersList = () => {
         UsersService.getAllUsers().then((res) => {
@@ -649,7 +654,7 @@ const Page = () => {
                             count={usersList.length}
                             items={usersList}
                             editDetails={editUsers}
-
+                            deleteContact={deleteUsers}
                             onDeselectAll={customersSelection.handleDeselectAll}
                             onDeselectOne={customersSelection.handleDeselectOne}
                             onPageChange={handlePageChange}

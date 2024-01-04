@@ -224,6 +224,10 @@ const Page = () => {
         name: 'Edit',
         property: 'Edit'
     },
+    // {
+    //     name: 'Delete',
+    //     property: 'Delete'
+    // },
     ];
     const [rowsPerPage, setRowsPerPage] = useState(5);
     const customers = useCustomers(page, rowsPerPage);
@@ -298,9 +302,17 @@ const Page = () => {
         setVisitingPlaces(visitingPlaces);
        setOpen(true);
     }
+    // const deleteMinister = (ministerdelete) => {
+    //     if (ministerdelete) {
+    //         MinisterService.deleteMinister(ministerdelete.MinID).then((res) => {
+    //             getMinisterList();
+    //         }).catch((err) => {
+    //         });
+    //     }
+    // };
     const deleteVisitingPlaces = (visitingPlacesdelete) => {
         if (visitingPlacesdelete) {
-            VisitingPlacesService.deleteVisitingPlaces(visitingPlacesdelete).then((res) => {
+            VisitingPlacesService.deleteVisitingPlacesRole(visitingPlacesdelete.VisitingPlacesId).then((res) => {
                 getVisitingPlacesList();
             }).catch((err) => {
             });
@@ -561,7 +573,7 @@ const Page = () => {
                             count={visitingPlacesList.length}
                             items={visitingPlacesList}
                             editDetails={editVisitingPlaces}
-
+                            deleteContact={deleteVisitingPlaces}
                             onDeselectAll={customersSelection.handleDeselectAll}
                             onDeselectOne={customersSelection.handleDeselectOne}
                             onPageChange={handlePageChange}

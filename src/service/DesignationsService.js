@@ -10,6 +10,7 @@ return requests.post(`/GetDesignations`,{});
   creteDesignations(body){
     return requests.post('/PostDesignations',body); 
   },
+  
   deleteDesignations(body){
     return requests.delete(`/RemoveDesignations/${body._id}`); 
   },

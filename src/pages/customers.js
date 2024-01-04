@@ -221,6 +221,10 @@ const Page = () => {
     name: 'Edit',
     property: 'Edit'
   },
+  // {
+  //   name: 'Delete',
+  //   property: 'Delete'
+  // },
   ];
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const customers = useCustomers(page, rowsPerPage);
@@ -283,9 +287,10 @@ const Page = () => {
     setDepartment(department);
     setOpen(true);
   }
+
   const deleteDepartment = (departmentdelete) => {
     if (departmentdelete) {
-      DepartmentService.deleteDepartment(departmentdelete).then((res) => {
+      DepartmentService.deleteDepartment(departmentdelete.Depid).then((res) => {
         getDepartmentList();
       }).catch((err) => {
       });
@@ -525,7 +530,7 @@ const Page = () => {
               count={departmentList.length}
               items={departmentList}
               editDetails={editDepartment}
-
+              deleteContact={deleteDepartment}
               onDeselectAll={customersSelection.handleDeselectAll}
               onDeselectOne={customersSelection.handleDeselectOne}
               onPageChange={handlePageChange}

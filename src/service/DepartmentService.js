@@ -20,8 +20,8 @@ return requests.post(`/GetDepartments`,{});
   creteDepartment(body){
     return requests.post('/PostDepartments',body); 
   },
-  deleteDepartment(body){
-    return requests.delete(`/department/${body._id}`); 
+  deleteDepartment(id){
+    return requests.delete(`/DeleteDepartments/${id}`); 
   },
   findDepartmentList(body){
     return requests.post(`/department/find`,body); 

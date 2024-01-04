@@ -325,7 +325,7 @@ const Page = () => {
         <>
             {qrList.map((getQRDetails, index) => (
                 <Container maxWidth="sm" id="divToPrint" key={index}>
-                    <Card variant='outlined' style={{ width: 600, height: 414 }}
+                    <Card variant='outlined' style={{ width: 600, height: 435 }}
 
                         sx={{
                             boxShadow: 3,
@@ -395,6 +395,33 @@ const Page = () => {
 
 
                                     </Grid>
+                                    <ConditionalDisplay condition={getQRDetails?.DesignationName?true:false}>
+                                    <Grid xs={6} md={6} >
+                                            <label style={{ fontWeight: "bold" }}>
+                                            Designation                                       </label>
+                                            <div style={{ fontWeight: "500", fontSize: "15px" }}>
+                                                {getQRDetails?.DesignationName}
+                                            </div>
+                                        </Grid>
+                                    </ConditionalDisplay>
+                                    <ConditionalDisplay condition={getQRDetails?.DepartmentName1?true:false}>
+                                    <Grid xs={6} md={6} >
+                                            <label style={{ fontWeight: "bold" }}>
+                                            Department                                       </label>
+                                            <div style={{ fontWeight: "500", fontSize: "15px" }}>
+                                                {getQRDetails?.DepartmentName1}
+                                            </div>
+                                        </Grid>
+                                    </ConditionalDisplay>
+                                    <ConditionalDisplay condition={getQRDetails?.LastName?true:false}>
+                                    <Grid xs={6} md={6} >
+                                            <label style={{ fontWeight: "bold" }}>
+                                            Organization                                       </label>
+                                            <div style={{ fontWeight: "500", fontSize: "15px" }}>
+                                                {getQRDetails?.LastName}
+                                            </div>
+                                        </Grid>
+                                    </ConditionalDisplay>
                                     <Grid xs={6} md={6}>
                                         <label style={{ fontWeight: "bold" }}>
                                             Mobile Number
@@ -475,24 +502,7 @@ const Page = () => {
                                             </div>
                                         </Grid>
                                     </ConditionalDisplay>
-                                    <ConditionalDisplay condition={getQRDetails?.Designation?true:false}>
-                                    <Grid xs={6} md={6} >
-                                            <label style={{ fontWeight: "bold" }}>
-                                            Designation                                       </label>
-                                            <div style={{ fontWeight: "500", fontSize: "15px" }}>
-                                                {getQRDetails?.Designation}
-                                            </div>
-                                        </Grid>
-                                    </ConditionalDisplay>
-                                    <ConditionalDisplay condition={getQRDetails?.LastName?true:false}>
-                                    <Grid xs={6} md={6} >
-                                            <label style={{ fontWeight: "bold" }}>
-                                            Organization                                       </label>
-                                            <div style={{ fontWeight: "500", fontSize: "15px" }}>
-                                                {getQRDetails?.LastName}
-                                            </div>
-                                        </Grid>
-                                    </ConditionalDisplay>
+                                  
                                     <ConditionalDisplay condition={getQRDetails?.MiddleName?true:false}>
                                     <Grid xs={6} md={6} >
                                             <label style={{ fontWeight: "bold" }}>
@@ -502,7 +512,20 @@ const Page = () => {
                                             </div>
                                         </Grid>
                                     </ConditionalDisplay>
-                                  
+                                    <Grid xs={6} md={6} >
+                                       <br></br>
+                                       <br></br>
+                                            <label style={{ fontWeight: "bold"}}> Issuing Authority</label>
+                                            
+                                        </Grid>
+                                        <Grid xs={6} md={6} >
+                                        <br></br>
+                                       <br></br>
+                                            <label style={{ fontWeight: "bold" }}>
+                                            Secretary To Legislature                                      </label>
+                                            
+                                        </Grid>
+                                        
 
 
                                    
@@ -540,7 +563,7 @@ const Page = () => {
             <Dialog open={open} >
                 {qrList.map((getQRDetails, index) => (
                     <Container maxWidth="sm" id="divToPrint" key={index}>
-                        <Card variant='outlined' style={{ width: 600, height: 414 }}
+                        <Card variant='outlined' style={{ width: 600, height: 435 }}
 
                             sx={{
                                 boxShadow: 3,
@@ -592,6 +615,33 @@ const Page = () => {
 
 
                                     </Grid>
+                                    <ConditionalDisplay condition={getQRDetails?.DesignationName?true:false}>
+                                    <Grid xs={6} md={6} >
+                                            <label style={{ fontWeight: "bold" }}>
+                                            Designation                                       </label>
+                                            <div style={{ fontWeight: "500", fontSize: "15px" }}>
+                                                {getQRDetails?.DesignationName}
+                                            </div>
+                                        </Grid>
+                                    </ConditionalDisplay>
+                                    <ConditionalDisplay condition={getQRDetails?.DepartmentName1?true:false}>
+                                    <Grid xs={6} md={6} >
+                                            <label style={{ fontWeight: "bold" }}>
+                                            Department                                       </label>
+                                            <div style={{ fontWeight: "500", fontSize: "15px" }}>
+                                                {getQRDetails?.DepartmentName1}
+                                            </div>
+                                        </Grid>
+                                    </ConditionalDisplay>
+                                    <ConditionalDisplay condition={getQRDetails?.LastName?true:false}>
+                                    <Grid xs={6} md={6} >
+                                            <label style={{ fontWeight: "bold" }}>
+                                            Organization                                       </label>
+                                            <div style={{ fontWeight: "500", fontSize: "15px" }}>
+                                                {getQRDetails?.LastName}
+                                            </div>
+                                        </Grid>
+                                    </ConditionalDisplay>
                                     <Grid xs={6} md={6}>
                                         <label style={{ fontWeight: "bold" }}>
                                             Mobile Number
@@ -672,24 +722,7 @@ const Page = () => {
                                             </div>
                                         </Grid>
                                     </ConditionalDisplay>
-                                    <ConditionalDisplay condition={getQRDetails?.Designation?true:false}>
-                                    <Grid xs={6} md={6} >
-                                            <label style={{ fontWeight: "bold" }}>
-                                            Designation                                       </label>
-                                            <div style={{ fontWeight: "500", fontSize: "15px" }}>
-                                                {getQRDetails?.Designation}
-                                            </div>
-                                        </Grid>
-                                    </ConditionalDisplay>
-                                    <ConditionalDisplay condition={getQRDetails?.LastName?true:false}>
-                                    <Grid xs={6} md={6} >
-                                            <label style={{ fontWeight: "bold" }}>
-                                            Organization                                       </label>
-                                            <div style={{ fontWeight: "500", fontSize: "15px" }}>
-                                                {getQRDetails?.LastName}
-                                            </div>
-                                        </Grid>
-                                    </ConditionalDisplay>
+                                    
                                     <ConditionalDisplay condition={getQRDetails?.MiddleName?true:false}>
                                     <Grid xs={6} md={6} >
                                             <label style={{ fontWeight: "bold" }}>
@@ -700,7 +733,19 @@ const Page = () => {
                                         </Grid>
                                     </ConditionalDisplay>
                                   
-
+                                    <Grid xs={6} md={6} >
+                                       <br></br>
+                                       <br></br>
+                                            <label style={{ fontWeight: "bold"}}> Issuing Authority</label>
+                                            
+                                        </Grid>
+                                        <Grid xs={6} md={6} >
+                                        <br></br>
+                                       <br></br>
+                                            <label style={{ fontWeight: "bold" }}>
+                                            Secretary To Legislature                                      </label>
+                                            
+                                        </Grid>
 
                                    
                                 </Grid>
