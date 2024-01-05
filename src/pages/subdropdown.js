@@ -456,7 +456,8 @@ const Page = (props) => {
     }
     const getVisitingPlacesList = () => {
         VisitingPlacesService.getAllVisitingPlaces().then((res) => {
-            const filterVisitingPlace = res.filter(resut=>(resut.VisitingPlacesId === 1007 || resut.VisitingPlacesId === 1010));
+            debugger
+            const filterVisitingPlace = res.filter(resut=>(resut.VisitingPlacesId === 1017 || resut.VisitingPlacesId === 1018));
             
             setVisitingPlacesList(filterVisitingPlace);
         }).catch((err) => {
@@ -605,7 +606,7 @@ const Page = (props) => {
                         >
                             <Stack spacing={1}>
                                 <Typography variant="h5">
-                                    Add Counter Pass
+                                   Minister And Leguslature Party Office
                                 </Typography>
                                 <Stack
                                     alignItems="center"
