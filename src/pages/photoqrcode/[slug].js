@@ -601,6 +601,14 @@ const Page = () => {
 
                             </Grid>
                         </Grid> </div>
+                        
+                        <CardContent style={{ backgroundColor: "gainsboro" }}>
+
+
+                            <div style={{ fontWeight: "bold", textAlign: "center", fontSize: "16px", textTransform: "uppercase", marginTop:"-7px" }}>
+                                {getQRDetails?.VisitingPlace}
+                            </div>
+                          
                         <Grid style={{ paddingTop: "15px" }} container spacing={2} >
                                 <Grid xs={8} md={8} container spacing={1} >
                                     
@@ -755,6 +763,7 @@ const Page = () => {
                                     </Typography>
                                 </Grid>
                             </Grid>
+                            </CardContent >
                             <CardActions>
 
                             </CardActions>
