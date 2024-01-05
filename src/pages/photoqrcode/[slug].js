@@ -438,7 +438,7 @@ const Page = () => {
 
                                     <Grid xs={6} md={6} >
                                         <label style={{ fontWeight: "bold" }}>
-                                            From Date
+                                        Issueing Date
                                         </label>
                                         <div style={{ fontWeight: "500", fontSize: "17px", textTransform: "uppercase" }}>
 
@@ -451,7 +451,7 @@ const Page = () => {
 
                                     <Grid xs={6} md={6} >
                                         <label style={{ fontWeight: "bold" }}>
-                                            To Date
+                                        Validing UpTo
                                         </label>
                                         <div style={{ fontWeight: "500", fontSize: "17px", textTransform: "uppercase" }}>
                                             {dayjs(getQRDetails?.ToDate).format('DD-MM-YYYY HH:mm')}
@@ -658,7 +658,7 @@ const Page = () => {
 
                                     <Grid xs={6} md={6} >
                                         <label style={{ fontWeight: "bold" }}>
-                                            From Date
+                                        Issuing Date
                                         </label>
                                         <div style={{ fontWeight: "500", fontSize: "17px", textTransform: "uppercase" }}>
 
@@ -671,7 +671,7 @@ const Page = () => {
 
                                     <Grid xs={6} md={6} >
                                         <label style={{ fontWeight: "bold" }}>
-                                            To Date
+                                        Validing Upto
                                         </label>
                                         <div style={{ fontWeight: "500", fontSize: "17px", textTransform: "uppercase" }}>
                                             {dayjs(getQRDetails?.ToDate).format('DD-MM-YYYY HH:mm')}

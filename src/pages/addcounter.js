@@ -2,7 +2,10 @@ import { useCallback, useMemo, useState } from 'react';
 import Head from 'next/head';
 import * as React from 'react';
 import * as Yup from 'yup';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
 import { subDays, subHours } from 'date-fns';
+// import FormLabel from '@mui/material/FormLabel';
 import ArrowDownOnSquareIcon from '@heroicons/react/24/solid/ArrowDownOnSquareIcon';
 import ArrowUpOnSquareIcon from '@heroicons/react/24/solid/ArrowUpOnSquareIcon';
 import PlusIcon from '@heroicons/react/24/solid/PlusIcon';
@@ -25,6 +28,8 @@ import { applyPagination } from 'src/utils/apply-pagination';
 import VisitingPassesService from "../service/VisitingPassService";
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
+// import FormControlLabel from '@mui/material/FormControlLabel';
+// import FormLabel from '@mui/material/FormLabel';
 import FormControl from '@mui/material/FormControl';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -238,6 +243,7 @@ const Page = (props) => {
     const customers = useCustomers(page, rowsPerPage);
     const customersIds = useCustomerIds(customers);
     const [usersList, setUsersList] = useState([]);
+    const [isShowCalender, setIsShowCalender] = useState(false);
     var [departmentId, setDepartmentId] = useState("");
     const [departmentList, setDepartmentList] = useState([]);
     const [visitingPassesList, setVisitingPassesList] = useState([]);
@@ -377,7 +383,7 @@ const Page = (props) => {
         console.log(e.target.value)
         let monthName;
 
-        debugger
+     
         switch (e.target.value) {
             case 1001:
                 // OFFICERS BOX PAS
@@ -1133,7 +1139,18 @@ const Page = (props) => {
                                                         />
 
                                                     </LocalizationProvider>
-
+{/* <FormControl>
+      <FormLabel id="demo-row-radio-buttons-group-label">Gender</FormLabel>
+      <RadioGroup
+        row
+        aria-labelledby="demo-row-radio-buttons-group-label"
+        name="row-radio-buttons-group"
+      >
+        <FormControlLabel value="true" control={<Radio />} label="Text Box" />
+        <FormControlLabel value="false" control={<Radio />} label="Calander" />
+       
+      </RadioGroup>
+    </FormControl> */}
 
                                                 </Grid>
                                                 </ConditionalDisplay>
