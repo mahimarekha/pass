@@ -305,7 +305,8 @@ const Page = (context) => {
     //   };
     const getMinisterList = () => {
     //    const visitingPlace = {VisitingPlacesId:'1007'}
-        MinisterService.getAllMinisterByVisitingPlace("1007").then((res) => {
+        MinisterService.getAllMinisterByVisitingPlace("1017").then((res) => {
+            debugger
         //    const minister= res.find(resp=>resp.VisitingPlacesId===1007)
             const result = res.map((response) => {
                 return {
@@ -331,10 +332,11 @@ const Page = (context) => {
         enableReinitialize: true,
         validationSchema: validationSchema,
         onSubmit: (values, { resetForm }) => {
-            const result = visitingPlacesList.find(({ VisitingPlace }) => VisitingPlace === "Minister Chambers");
+            const result = visitingPlacesList.find(({ VisitingPlace,VisitingPlacesId }) => VisitingPlacesId == 1017);
+            debugger
 values.VisitingPlacesId= result? result.VisitingPlacesId:'';
             values.CreateBy =  userDetails ? userDetails.UserId : '';
-            debugger
+        debugger
             if (minister.MinID) {
                 MinisterService.upadeMinister(values).then((res) => {
                     handleClose();

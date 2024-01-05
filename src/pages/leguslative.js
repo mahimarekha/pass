@@ -297,7 +297,7 @@ const Page = (context) => {
     }
     const getMinisterList = () => {
     //    const visitingPlace = {VisitingPlacesId:'1007'}
-        MinisterService.getAllMinisterByVisitingPlace("1010").then((res) => {
+        MinisterService.getAllMinisterByVisitingPlace("1018").then((res) => {
         //    const minister= res.find(resp=>resp.VisitingPlacesId===1007)
             const result = res.map((response) => {
                 return {
@@ -326,8 +326,9 @@ const Page = (context) => {
 
         onSubmit: (values, { resetForm }) => {
 
-            const result = visitingPlacesList.find(({ VisitingPlace }) => VisitingPlace === "Legislature party office");
+            const result = visitingPlacesList.find(({ VisitingPlace,VisitingPlacesId }) => VisitingPlacesId == 1018);
 values.VisitingPlacesId= result? result.VisitingPlacesId:'';
+
             values.CreateBy =  userDetails ? userDetails.UserId : '';
             if (minister.MinID) {
                 MinisterService.upadeMinister(values).then((res) => {

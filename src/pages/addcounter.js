@@ -823,6 +823,7 @@ const Page = (props) => {
             // values.VisitingStatus = status;
             values.CreatedBy = userDetails ? userDetails.UserId : '';
             values.DepId = result.Depid;
+            
             values.VisitorPhotoPath = imgSrc ? imgSrc : '';
             values.UploadPath = docSrc ? docSrc : '';
             if (!fromDate) {
