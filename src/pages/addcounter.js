@@ -1085,7 +1085,7 @@ const Page = (props) => {
                                                             id="FromDate"
                                                             slotProps={{ textField: { size: "small", error: false } }}
                                                             name="FromDate"
-                                                            label="Issueing Date"
+                                                            label="Issuing Date"
                                                             disablePast
                                                             onChange={(value) => {
                                                                 formik.setFieldValue("date", value, true);
@@ -1105,7 +1105,7 @@ const Page = (props) => {
                                                         id="FromDate"
                                                         slotProps={{ textField: { size: "small", error: false } }}
                                                         name="FromDate"
-                                                        label="Issueing Date"
+                                                        label="Issuing Date"
                                                         disablePast
                                                         onChange={(value) => {
                                                             formik.setFieldValue("date", value, true);
@@ -1160,7 +1160,7 @@ const Page = (props) => {
                                                             id="ToDate"
                                                             slotProps={{ textField: { size: "small", error: false } }}
                                                             name="ToDate"
-                                                            label="Validing Up To"
+                                                            label="Validity Upto"
                                                             type="date"
                                                             sx={{ width: 230 }}
                                                             InputLabelProps={{
@@ -1179,7 +1179,7 @@ const Page = (props) => {
                                                         id="ToDate"
                                                         slotProps={{ textField: { size: "small", error: false } }}
                                                         name="ToDate"
-                                                        label="Validing Up To"
+                                                        label="Validity Upto"
                                                         type="date"
                                                         sx={{ width: 230 }}
                                                         InputLabelProps={{

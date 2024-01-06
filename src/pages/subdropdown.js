@@ -790,7 +790,7 @@ const Page = (props) => {
                                                             id="ToDate"
                                                             slotProps={{ textField: { size: "small", error: false } }}
                                                             name="ToDate"
-                                                            label="Validing UpTo"
+                                                            label="Validity UpTo"
                                                             type="date"
                                                             sx={{ width: 230 }}
                                                             InputLabelProps={{

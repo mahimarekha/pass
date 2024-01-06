@@ -451,7 +451,7 @@ const Page = () => {
 
                                     <Grid xs={6} md={6} >
                                         <label style={{ fontWeight: "bold" }}>
-                                        Validing UpTo
+                                        Validity UpTo
                                         </label>
                                         <div style={{ fontWeight: "500", fontSize: "17px", textTransform: "uppercase" }}>
                                             {dayjs(getQRDetails?.ToDate).format('DD-MM-YYYY HH:mm')}
