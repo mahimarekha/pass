@@ -264,6 +264,7 @@ const Page = (props) => {
                     "department": true,
                     "mobileNo": true,
                     "validUpto": true,
+                    "showDateTime": false,
                     "photo": true,
                     "time": false,
                     "placeOfDuty": true,
@@ -394,6 +395,7 @@ const Page = (props) => {
                     "department": true,
                     "mobileNo": true,
                     "validUpto": true,
+                    "showDateTime": false,
                     "photo": true,
                     "time": false,
                     "placeOfDuty": false,
@@ -418,6 +420,7 @@ const Page = (props) => {
                     "department": true,
                     "mobileNo": true,
                     "validUpto": true,
+                    "showDateTime": true,
                     "photo": true,
                     "time": true,
                     "placeOfDuty": false,
@@ -441,6 +444,7 @@ const Page = (props) => {
                     "department": true,
                     "mobileNo": true,
                     "validUpto": true,
+                    "showDateTime": false,
                     "photo": true,
                     "time": false,
                     "placeOfDuty": false,
@@ -464,6 +468,7 @@ const Page = (props) => {
                     "department": true,
                     "mobileNo": true,
                     "validUpto": true,
+                    "showDateTime": false,
                     "photo": true,
                     "time": false,
                     "placeOfDuty": false,
@@ -488,6 +493,7 @@ const Page = (props) => {
                     "placeOfDuty": true,
                     "mobileNo": true,
                     "validUpto": true,
+                    "showDateTime": false,
                     "photo": true,
                     "time": false,
                     "organization": false,
@@ -511,6 +517,7 @@ const Page = (props) => {
                     "organization": true,
                     "mobileNo": true,
                     "validUpto": true,
+                    "showDateTime": false,
                     "photo": true,
                     "time": false,
                     "placeOfDuty": false,
@@ -544,6 +551,7 @@ const Page = (props) => {
                     "lpOffice":false,
                     "session":true,
                     "validUpto": true,
+                    "showDateTime": true,
                     "fileupload":true,
                 };
                 break;
@@ -569,6 +577,7 @@ const Page = (props) => {
                     "lpOffice":false,
                     "session":true,
                     "validUpto": true,
+                    "showDateTime": true,
                     "fileupload":true,
                 };
                 break;
@@ -593,6 +602,7 @@ const Page = (props) => {
                         "lpOffice":false,
                         "session":true,
                         "validUpto": false,
+                        "showDateTime": false,
                         "fileupload":true,
                     };
                     
@@ -619,6 +629,7 @@ const Page = (props) => {
                         "ministerPortfolio":false,
                         "session":true,
                         "validUpto": false,
+                        "showDateTime": true,
                         "fileupload":true,
                     };
                     break;
@@ -1070,7 +1081,7 @@ const Page = (props) => {
                                                 <ConditionalDisplay condition={pass.validUpto}>
                                                 <Grid xs={6} md={3} style={{ marginTop: "30px" }}>
                                                     <LocalizationProvider dateAdapter={AdapterDayjs} >
-                                                        <DateTimePicker InputProps={{ style: { width: 230 } }}
+                                                        {pass.showDateTime ?  <DateTimePicker InputProps={{ style: { width: 230 } }}
                                                             id="FromDate"
                                                             slotProps={{ textField: { size: "small", error: false } }}
                                                             name="FromDate"
@@ -1090,7 +1101,27 @@ const Page = (props) => {
                                                             //   value={value}
                                                             //   onChange={handleChange}
                                                             renderInput={(params) => <TextField {...params} />}
-                                                        />
+                                                        /> :  <DatePicker InputProps={{ style: { width: 230 } }}
+                                                        id="FromDate"
+                                                        slotProps={{ textField: { size: "small", error: false } }}
+                                                        name="FromDate"
+                                                        label="Issueing Date"
+                                                        disablePast
+                                                        onChange={(value) => {
+                                                            formik.setFieldValue("date", value, true);
+                                                            const dayDifference = value.diff(currentDate, 'day');
+                                                            setFromDate(value.format('YYYY-MM-DDTHH:mm:ss'));
+                                                            setValidToDate(dayjs().add(dayDifference, 'day'));
+                                                        }}
+                                                        sx={{ width: 230 }}
+                                                        InputLabelProps={{
+                                                            shrink: true,
+                                                        }}
+                                                        value={fromDate}
+                                                        //   value={value}
+                                                        //   onChange={handleChange}
+                                                        renderInput={(params) => <TextField {...params} />}
+                                                    /> }
                                                         {/* <DatePicker defaultValue={dayjs(new Date())} />
                                                         <DatePicker InputProps={{ style: { width: 245 } }}
                                                             id="FromDate"
@@ -1118,6 +1149,7 @@ const Page = (props) => {
                                                 <ConditionalDisplay condition={pass.validUpto}>
                                                 <Grid xs={6} md={3} style={{ marginTop: "30px" }}>
                                                     <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                                        {pass.showDateTime ? 
                                                         <DateTimePicker InputProps={{ style: { width: 230 } }}
                                                             disablePast
                                                             onChange={(value) => {
@@ -1137,7 +1169,26 @@ const Page = (props) => {
                                                             value={toDate}
                                                             error={formik.touched.ToDate && Boolean(formik.errors.ToDate)}
                                                             helperText={formik.touched.ToDate && formik.errors.ToDate}
-                                                        />
+                                                        /> : <DatePicker InputProps={{ style: { width: 230 } }}
+                                                        disablePast
+                                                        onChange={(value) => {
+                                                            formik.setFieldValue("date", value, true)
+                                                            setToDate(value.format('YYYY-MM-DDTHH:mm:ss'));
+                                                        }}
+                                                        minDate={validToDate}
+                                                        id="ToDate"
+                                                        slotProps={{ textField: { size: "small", error: false } }}
+                                                        name="ToDate"
+                                                        label="Validing Up To"
+                                                        type="date"
+                                                        sx={{ width: 230 }}
+                                                        InputLabelProps={{
+                                                            shrink: true,
+                                                        }}
+                                                        value={toDate}
+                                                        error={formik.touched.ToDate && Boolean(formik.errors.ToDate)}
+                                                        helperText={formik.touched.ToDate && formik.errors.ToDate}
+                                                    />}
 
                                                     </LocalizationProvider>
 {/* <FormControl>

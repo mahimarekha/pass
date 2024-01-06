@@ -438,7 +438,7 @@ const Page = () => {
 
                                     <Grid xs={6} md={6} >
                                         <label style={{ fontWeight: "bold" }}>
-                                        Issueing Date
+                                        Issuing Date
                                         </label>
                                         <div style={{ fontWeight: "500", fontSize: "17px", textTransform: "uppercase" }}>
 
@@ -525,10 +525,6 @@ const Page = () => {
                                             Secretary To Legislature                                      </label>
                                             
                                         </Grid>
-                                        
-
-
-                                   
                                 </Grid>
                                 <Grid xs={4} md={4}>
                                     <Typography sx={{ mb: 1.5 }} color="text.secondary">
@@ -567,7 +563,6 @@ const Page = () => {
 
                             sx={{
                                 boxShadow: 3,
-
                                 bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#101010' : '#fff'),
                                 color: (theme) =>
                                     theme.palette.mode === 'dark' ? 'grey.300' : 'grey.800',

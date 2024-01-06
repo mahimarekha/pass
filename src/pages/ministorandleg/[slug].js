@@ -323,7 +323,7 @@ const Page = () => {
         <>
             {qrList.map((getQRDetails, index) => (
                 <Container maxWidth="sm" id="divToPrint" key={index}>
-                    <Card variant='outlined' style={{ width: 600, height: 480 }}
+                    <Card variant='outlined' style={{ width: 650, height: 535 }}
 
                         sx={{
                             boxShadow: 3,
@@ -388,7 +388,7 @@ const Page = () => {
                         <CardContent style={{ backgroundColor: "gainsboro" }}>
 
 
-                            <div style={{ fontWeight: "bold", textAlign: "center", fontSize: "16px", textTransform: "uppercase", marginTop:"-7px" }}>
+                            <div style={{ fontWeight: "bold", textAlign: "center", fontSize: "16px", textTransform: "uppercase", marginTop: "-7px" }}>
                                 {getQRDetails?.VisitingPlace}
                             </div>
                             {/* <Grid xs={6} md={6}> */}
@@ -440,7 +440,7 @@ const Page = () => {
 
                                     <Grid xs={6} md={6} >
                                         <label style={{ fontWeight: "bold" }}>
-                                            From Date
+                                            Issuing Date
                                         </label>
                                         <div style={{ fontWeight: "500", fontSize: "17px", textTransform: "uppercase" }}>
 
@@ -450,7 +450,7 @@ const Page = () => {
                                     </Grid>
                                     <Grid xs={6} md={6} >
                                         <label style={{ fontWeight: "bold" }}>
-                                            To Date
+                                            Validing UpTo
                                         </label>
                                         <div style={{ fontWeight: "500", fontSize: "17px", textTransform: "uppercase" }}>
                                             {dayjs(getQRDetails?.ToDate).format('DD-MM-YYYY HH:mm')}
@@ -494,13 +494,14 @@ const Page = () => {
                                         </div>
                                     </Grid>
                                     <Grid xs={6} md={6} >
-                                            <label style={{ fontWeight: "bold" }}>
-                                            Place Of Visiting
-                                            </label>
-                                            <div style={{ fontWeight: "500", fontSize: "15px" }}>
-                                                {getQRDetails?.MinisterName}
-                                            </div>
-                                        </Grid>
+                                        <label style={{ fontWeight: "bold" }}>
+                                            Entry Upto
+                                        </label>
+                                        <div style={{ fontWeight: "500", fontSize: "15px" }}>
+                                            {getQRDetails?.MinisterName}
+                                        </div>
+                                    </Grid>
+
                                     {/* <Grid xs={6} md={6} >
                                         <label style={{ fontWeight: "bold" }}>
                                             Reference Designation
@@ -519,8 +520,24 @@ const Page = () => {
                                             {getQRDetails?.LastName}
                                         </div>
                                     </Grid> */}
-
+                                    <Grid container spacing={12} >
+                                    
+                                    <Grid xs={6} md={6} >
+                                       <br></br>
+                                       <br></br>
+                                            <label style={{ fontWeight: "bold"}}> Issuing Authority</label>
+                                            
+                                        </Grid>
+                                        <Grid xs={6} md={6} >
+                                        <br></br>
+                                       <br></br>
+                                            <label style={{ fontWeight: "bold" }}>
+                                            Secretary To Legislature                                      </label>
+                                            
+                                        </Grid>
+                                        </Grid>
                                 </Grid>
+
                                 <Grid xs={4} md={4}>
                                     <Typography sx={{ mb: 1.5 }} color="text.secondary">
                                         <img src={getQRDetails?.qrcode} alt='qrcode' style={{ width: '100%', border: '1px solid #2f3746' }} />
@@ -554,7 +571,7 @@ const Page = () => {
             <Dialog open={open} >
                 {qrList.map((getQRDetails, index) => (
                     <Container maxWidth="sm" id="divToPrint" key={index}>
-                        <Card variant='outlined' style={{ width: 600, height: 480 }}
+                        <Card variant='outlined' style={{ width: 650, height: 535 }}
 
                             sx={{
                                 boxShadow: 3,
@@ -583,17 +600,17 @@ const Page = () => {
                             />
                             <div style={{ color: "white", textTransform: 'uppercase', backgroundColor: "#6366f1", textAlign: "center", marginTop: '-15px' }}
                             >  <Grid container spacing={2}>
-                            <Grid xs={10} md={10}>
-                                {getQRDetails?.Remarks}
+                                    <Grid xs={10} md={10}>
+                                        {getQRDetails?.Remarks}
 
-                            </Grid>
-                            <Grid xs={2} md={2}>
-                                <img src="/assets/avatars/Government-of-Telangana-Black.svg" style={{ height: "70px", width: "70px", marginTop: '-25px' }} />
+                                    </Grid>
+                                    <Grid xs={2} md={2}>
+                                        <img src="/assets/avatars/Government-of-Telangana-Black.svg" style={{ height: "70px", width: "70px", marginTop: '-25px' }} />
 
-                            </Grid>
-                        </Grid> </div>
+                                    </Grid>
+                                </Grid> </div>
                             <CardContent style={{ backgroundColor: "gainsboro" }}>
-                                <div style={{ fontWeight: "bold", textAlign: "center", fontSize: "16px", textTransform: "uppercase", marginTop:"-7px"  }}>
+                                <div style={{ fontWeight: "bold", textAlign: "center", fontSize: "16px", textTransform: "uppercase", marginTop: "-7px" }}>
                                     {getQRDetails?.VisitingPlace}
                                 </div>
 
@@ -649,17 +666,17 @@ const Page = () => {
 
                                         <Grid xs={6} md={6} >
                                             <label style={{ fontWeight: "bold" }}>
-                                                From Date
+                                                Issuing Date
                                             </label>
                                             <div style={{ fontWeight: "500", fontSize: "17px", textTransform: "uppercase" }}>
 
-                                                {dayjs(getQRDetails?.FromDate).format('DD-MM-YYYY HH:mm')} 
+                                                {dayjs(getQRDetails?.FromDate).format('DD-MM-YYYY HH:mm')}
                                             </div>
 
                                         </Grid>
                                         <Grid xs={6} md={6} >
                                             <label style={{ fontWeight: "bold" }}>
-                                                To Date
+                                                Validing UpTo
                                             </label>
                                             <div style={{ fontWeight: "500", fontSize: "17px", textTransform: "uppercase" }}>
                                                 {dayjs(getQRDetails?.ToDate).format('DD-MM-YYYY HH:mm')}
@@ -693,15 +710,7 @@ const Page = () => {
                                                 {getQRDetails?.PurposeVisting}
                                             </div>
                                         </Grid>
-                                        <Grid xs={6} md={6} >
-                                            <label style={{ fontWeight: "bold" }}>
-                                                Purpose Of Visiting
-                                            </label>
-                                            <div style={{ fontWeight: "500", fontSize: "15px" }}>
-
-                                                {getQRDetails?.PurposeVisting}
-                                            </div>
-                                        </Grid>
+                                       
                                         <Grid xs={6} md={6} >
                                             <label style={{ fontWeight: "bold" }}>
                                                 Reference Name
@@ -713,7 +722,7 @@ const Page = () => {
                                         </Grid>
                                         <Grid xs={6} md={6} >
                                             <label style={{ fontWeight: "bold" }}>
-                                            Place Of Visiting
+                                                Entry Upto
                                             </label>
                                             <div style={{ fontWeight: "500", fontSize: "15px" }}>
                                                 {getQRDetails?.MinisterName}
@@ -737,7 +746,22 @@ const Page = () => {
                                                 {getQRDetails?.LastName}
                                             </div>
                                         </Grid> */}
-
+                                       <Grid container spacing={12} >
+                                    
+                                    <Grid xs={6} md={6} >
+                                       <br></br>
+                                       <br></br>
+                                            <label style={{ fontWeight: "bold"}}> Issuing Authority</label>
+                                            
+                                        </Grid>
+                                        <Grid xs={6} md={6} >
+                                        <br></br>
+                                       <br></br>
+                                            <label style={{ fontWeight: "bold" }}>
+                                            Secretary To Legislature                                      </label>
+                                            
+                                        </Grid>
+                                        </Grid>
 
                                     </Grid>
                                     <Grid xs={4} md={4}>

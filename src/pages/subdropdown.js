@@ -737,7 +737,7 @@ const Page = (props) => {
                                                             id="FromDate"
                                                             slotProps={{ textField: { size: "small", error: false } }}
                                                             name="FromDate"
-                                                            label="From Date"
+                                                            label="Issueing Date"
                                                             disablePast
                                                             onChange={(value) => {
 
@@ -790,7 +790,7 @@ const Page = (props) => {
                                                             id="ToDate"
                                                             slotProps={{ textField: { size: "small", error: false } }}
                                                             name="ToDate"
-                                                            label="ToDate"
+                                                            label="Validing UpTo"
                                                             type="date"
                                                             sx={{ width: 230 }}
                                                             InputLabelProps={{
