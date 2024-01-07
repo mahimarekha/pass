@@ -441,8 +441,9 @@ const Page = () => {
                                         Issuing Date
                                         </label>
                                         <div style={{ fontWeight: "500", fontSize: "17px", textTransform: "uppercase" }}>
+                                        {dayjs(getQRDetails?.FromDate).format( getQRDetails?.VisitingPlace.toLocaleLowerCase().includes("gallery") ?  'DD-MM-YYYY HH:mm': 'DD-MM-YYYY')}
 
-                                            {dayjs(getQRDetails?.FromDate).format('DD-MM-YYYY HH:mm')}
+                                            {/* {dayjs(getQRDetails?.FromDate).format('DD-MM-YYYY HH:mm')} */}
                                         </div>
 
                                     </Grid>
@@ -454,7 +455,9 @@ const Page = () => {
                                         Validity UpTo
                                         </label>
                                         <div style={{ fontWeight: "500", fontSize: "17px", textTransform: "uppercase" }}>
-                                            {dayjs(getQRDetails?.ToDate).format('DD-MM-YYYY HH:mm')}
+
+                                            { dayjs(getQRDetails?.ToDate).isValid()?
+ dayjs(getQRDetails?.ToDate).format( getQRDetails?.VisitingPlace.toLocaleLowerCase().includes("gallery") ?  'DD-MM-YYYY HH:mm': 'DD-MM-YYYY') :  getQRDetails?.ToDate}
                                            
                                         </div>
                                     </Grid>
@@ -665,7 +668,7 @@ const Page = () => {
                                         </label>
                                         <div style={{ fontWeight: "500", fontSize: "17px", textTransform: "uppercase" }}>
 
-                                            {dayjs(getQRDetails?.FromDate).format('DD-MM-YYYY HH:mm')}
+                                            {dayjs(getQRDetails?.FromDate).format( getQRDetails?.VisitingPlace.toLocaleLowerCase().includes("gallery") ?  'DD-MM-YYYY HH:mm': 'DD-MM-YYYY')}
                                         </div>
 
                                     </Grid>
@@ -674,11 +677,12 @@ const Page = () => {
 
                                     <Grid xs={6} md={6} >
                                         <label style={{ fontWeight: "bold" }}>
-                                        Validing Upto
+                                        Validity Upto
                                         </label>
                                         <div style={{ fontWeight: "500", fontSize: "17px", textTransform: "uppercase" }}>
-                                            {dayjs(getQRDetails?.ToDate).format('DD-MM-YYYY HH:mm')}
-                                           
+                                        { dayjs(getQRDetails?.ToDate).isValid()?
+ dayjs(getQRDetails?.ToDate).format( getQRDetails?.VisitingPlace.toLocaleLowerCase().includes("gallery") ?  'DD-MM-YYYY HH:mm': 'DD-MM-YYYY') :  getQRDetails?.ToDate}
+                                                                                      
                                         </div>
                                     </Grid>
                                     </ConditionalDisplay>

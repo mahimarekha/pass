@@ -5,6 +5,9 @@ import * as Yup from 'yup';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import { subDays, subHours } from 'date-fns';
+import Checkbox from '@mui/material/Checkbox';
+import FormControlLabel from '@mui/material/FormControlLabel';
+
 // import FormLabel from '@mui/material/FormLabel';
 import ArrowDownOnSquareIcon from '@heroicons/react/24/solid/ArrowDownOnSquareIcon';
 import ArrowUpOnSquareIcon from '@heroicons/react/24/solid/ArrowUpOnSquareIcon';
@@ -243,7 +246,7 @@ const Page = (props) => {
     const customers = useCustomers(page, rowsPerPage);
     const customersIds = useCustomerIds(customers);
     const [usersList, setUsersList] = useState([]);
-    const [isShowCalender, setIsShowCalender] = useState(false);
+    const [isShowCalender, setIsShowCalender] = useState(true);
     var [departmentId, setDepartmentId] = useState("");
     const [departmentList, setDepartmentList] = useState([]);
     const [visitingPassesList, setVisitingPassesList] = useState([]);
@@ -830,7 +833,7 @@ const Page = (props) => {
 
 
             values.FromDate = typeof fromDate === 'string' ? fromDate : dayjs(fromDate).format('YYYY-MM-DDTHH:mm:ss');
-            values.ToDate = typeof toDate === 'string' ? toDate : dayjs(toDate).format('YYYY-MM-DDTHH:mm:ss');;
+            values.ToDate =  values.ToDate ? values.ToDate : typeof toDate === 'string' ? toDate : dayjs(toDate).format('YYYY-MM-DDTHH:mm:ss');
             // values.VisitingStatus = status;
             values.CreatedBy = userDetails ? userDetails.UserId : '';
             values.DepId = result.Depid;
@@ -841,6 +844,8 @@ const Page = (props) => {
                 alert("Please select  date ");
                 return;
             }
+
+            setIsShowCalender(true);
             if (visitingPasses.VisitingPassesId) {
                 VisitingPassesService.upadeVisitingPasses(values).then((res) => {
                     handleClose();
@@ -857,6 +862,10 @@ const Page = (props) => {
             }
         },
     });
+
+    const handleChange = (event)=>{
+        setIsShowCalender(event.target.checked);
+    }
     const multiple = () => {
         if (!multipleRequest.length) {
             alert("Please Enter Required Details");
@@ -1036,7 +1045,7 @@ const Page = (props) => {
                                                 </Grid>
                                                 </ConditionalDisplay>
                                                 <ConditionalDisplay condition={pass.mobileNo}>
-                                                <Grid xs={6} md={3}>
+                                                <Grid xs={6} md={6}>
                                                     <TextField
                                                         InputProps={{ style: { width: 245 } }}
 
@@ -1056,7 +1065,7 @@ const Page = (props) => {
                                                 </Grid>
                                                 </ConditionalDisplay>
                                                 <ConditionalDisplay condition={pass.session}>
-                                                <Grid xs={6} md={3}>
+                                                <Grid xs={6} md={6}>
                                                     <FormControl variant="standard" fullWidth>
                                                         <InputLabel id="studentName">Session Name</InputLabel>
                                                         <Select
@@ -1079,7 +1088,21 @@ const Page = (props) => {
                                                 </Grid>
                                                 </ConditionalDisplay>
                                                 <ConditionalDisplay condition={pass.validUpto}>
-                                                <Grid xs={6} md={3} style={{ marginTop: "30px" }}>
+                                                <Grid xs={6} md={4} style={{ marginTop: "30px" }}>
+                                                <FormControlLabel
+        label="Show ToDate as Calendar"
+        control={<Checkbox
+            checked={isShowCalender}
+            onChange={handleChange}
+            inputProps={{ 'aria-label': 'controlled' }}
+        />}
+      />
+                                                    
+                                                    </Grid>
+                                                </ConditionalDisplay>
+                                                
+                                                <ConditionalDisplay condition={pass.validUpto}>
+                                                <Grid xs={6} md={4} style={{ marginTop: "30px" }}>
                                                     <LocalizationProvider dateAdapter={AdapterDayjs} >
                                                         {pass.showDateTime ?  <DateTimePicker InputProps={{ style: { width: 230 } }}
                                                             id="FromDate"
@@ -1146,9 +1169,10 @@ const Page = (props) => {
                                                     </LocalizationProvider>
                                                 </Grid>
                                                 </ConditionalDisplay>
+
                                                 <ConditionalDisplay condition={pass.validUpto}>
-                                                <Grid xs={6} md={3} style={{ marginTop: "30px" }}>
-                                                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                                <Grid xs={6} md={4} style={{ marginTop: "30px" }}>
+                                                    {isShowCalender? <LocalizationProvider dateAdapter={AdapterDayjs}>
                                                         {pass.showDateTime ? 
                                                         <DateTimePicker InputProps={{ style: { width: 230 } }}
                                                             disablePast
@@ -1190,7 +1214,20 @@ const Page = (props) => {
                                                         helperText={formik.touched.ToDate && formik.errors.ToDate}
                                                     />}
 
-                                                    </LocalizationProvider>
+                                                    </LocalizationProvider>:<TextField
+                                                        InputProps={{ style: { width: 245 } }}
+                                                        margin="dense"
+                                                        id="PurposeVisting"
+                                                        name="ToDate"
+                                                        label="ToDate"
+                                                        type="text"
+                                                        variant="standard"
+                                                        value={formik.values.ToDate}
+                                                        onChange={formik.handleChange}
+                                                        error={formik.touched.ToDate && Boolean(formik.errors.ToDate)}
+                                                        helperText={formik.touched.ToDate && formik.errors.ToDate}
+                                                    />}
+                                                   
 {/* <FormControl>
       <FormLabel id="demo-row-radio-buttons-group-label">Gender</FormLabel>
       <RadioGroup
@@ -1206,6 +1243,7 @@ const Page = (props) => {
 
                                                 </Grid>
                                                 </ConditionalDisplay>
+                                                
                                                 <ConditionalDisplay condition={pass.purposeOfVisit}>
                                                 <Grid xs={6} md={3} style={{ marginTop: "30px" }}>
                                                     <TextField
@@ -1291,14 +1329,19 @@ const Page = (props) => {
                                                 </Grid>
                                                 <ConditionalDisplay condition={pass.fileupload}>
                                                 <Grid xs={6} md={6}>
-                                                    <label style={{ fontSize: '15px', color: 'black' }} >Upload Photo</label>
+                                                    <label style={{ fontSize: '15px', color: 'black' }} >Upload Photo:</label>
                                                     <div>
                                                         {imgSrc ? (
                                                             <img src={imgSrc} alt="webcam" height={100} width={100} />
                                                         ) : ''
                                                         }
                                                     </div>
-                                                    <Button variant="contained" onClick={handleClickOpen1}>Capture From WebCam</Button>  OR
+                                                    <Button variant="contained" onClick={handleClickOpen1}>Capture From WebCam</Button> 
+                                                  
+                                                    <div>
+                                                    <span style={{textAlign:'center'}}>OR</span> 
+
+                                                    </div>
 
                                                     <input type="file" style={{ "display": "inline-block", "padding": "10px 20px", "backgroundColor": "#6366F1", "color": "#fff", "border": "none", "borderRadius": "12px", "cursor": "pointer", "width": "230px" }} onChange={handleImageUpload} />
 
