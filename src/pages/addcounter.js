@@ -993,7 +993,7 @@ const Page = (props) => {
                                                   <ConditionalDisplay condition={pass.designation}>
                                                   <Grid xs={6} md={3}>
                                                   <TextField
-                                                        InputProps={{ style: { width: 235 } }}
+                                                        InputProps={{ style: { width: 225 } }}
 
                                                         margin="dense"
                                                         id="DesignationName"
@@ -1011,7 +1011,7 @@ const Page = (props) => {
                                                   <ConditionalDisplay condition={pass.department}>
                                                   <Grid xs={6} md={3}>
                                                   <TextField
-                                                        InputProps={{ style: { width: 235 } }}
+                                                        InputProps={{ style: { width: 225 } }}
 
                                                         margin="dense"
                                                         id="DepartmentName"
