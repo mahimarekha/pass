@@ -520,22 +520,28 @@ const Page = () => {
                                             {getQRDetails?.LastName}
                                         </div>
                                     </Grid> */}
-                                    <Grid container spacing={12} >
+                                    {/* <Grid container spacing={12} >
                                     
                                     <Grid xs={6} md={6} >
                                        <br></br>
                                        <br></br>
+                                       <br></br>
+                                      
                                             <label style={{ fontWeight: "bold"}}> Issuing Authority</label>
                                             
                                         </Grid>
                                         <Grid xs={6} md={6} >
                                         <br></br>
-                                       <br></br>
+                                       
+                                       <div style={{ fontWeight: "500", fontSize: "15px" }}>
+
+Dr.V.Narasimha Charyulu
+</div>
                                             <label style={{ fontWeight: "bold" }}>
                                             Secretary To Legislature                                      </label>
                                             
                                         </Grid>
-                                        </Grid>
+                                        </Grid> */}
                                 </Grid>
 
                                 <Grid xs={4} md={4}>
@@ -544,6 +550,25 @@ const Page = () => {
                                     </Typography>
                                 </Grid>
                             </Grid>
+                            <Grid container spacing={2}>
+                            <Grid xs={6} md={6} >
+                            <br></br>  <br></br>
+                        
+                                            <label style={{ fontWeight: "bold"}}> Issuing Authority</label>
+                                            
+                                        </Grid>
+                                        <Grid xs={6} md={6} >
+                                        <br></br>
+                                       
+                                       <div style={{ fontWeight: "500", fontSize: "15px" }}>
+
+Dr.V.Narasimha Charyulu
+</div>
+                                            <label style={{ fontWeight: "bold" }}>
+                                            Secretary To Legislature                                      </label>
+                                            
+                                        </Grid>
+                                </Grid>
                         </CardContent>
                         <CardActions>
 
@@ -746,22 +771,7 @@ const Page = () => {
                                                 {getQRDetails?.LastName}
                                             </div>
                                         </Grid> */}
-                                       <Grid container spacing={12} >
-                                    
-                                    <Grid xs={6} md={6} >
-                                       <br></br>
-                                       <br></br>
-                                            <label style={{ fontWeight: "bold"}}> Issuing Authority</label>
-                                            
-                                        </Grid>
-                                        <Grid xs={6} md={6} >
-                                        <br></br>
-                                       <br></br>
-                                            <label style={{ fontWeight: "bold" }}>
-                                            Secretary To Legislature                                      </label>
-                                            
-                                        </Grid>
-                                        </Grid>
+                                      
 
                                     </Grid>
                                     <Grid xs={4} md={4}>
@@ -769,6 +779,25 @@ const Page = () => {
                                             <img src={getQRDetails?.qrcode} alt='qrcode' style={{ width: '100%', border: '1px solid #2f3746' }} />
                                         </Typography>
                                     </Grid>
+                                </Grid>
+                                <Grid container spacing={2}>
+                            <Grid xs={6} md={6} >
+                            <br></br>
+                            <br></br>     
+                                            <label style={{ fontWeight: "bold"}}> Issuing Authority</label>
+                                            
+                                        </Grid>
+                                        <Grid xs={6} md={6} >
+                                        <br></br>
+                                       
+                                       <div style={{ fontWeight: "500", fontSize: "15px" }}>
+
+Dr.V.Narasimha Charyulu
+</div>
+                                            <label style={{ fontWeight: "bold" }}>
+                                            Secretary To Legislature                                      </label>
+                                            
+                                        </Grid>
                                 </Grid>
                             </CardContent>
                             <CardActions>

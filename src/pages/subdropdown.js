@@ -732,7 +732,7 @@ const Page = (props) => {
                                                 </Grid>
                                                 <Grid xs={6} md={3} style={{marginTop:"30px"}}>
                                                     <LocalizationProvider dateAdapter={AdapterDayjs} >
-                                                        <DateTimePicker InputProps={{ style: { width: 245 } }}
+                                                        <DatePicker InputProps={{ style: { width: 245 } }}
 
                                                             id="FromDate"
                                                             slotProps={{ textField: { size: "small", error: false } }}
@@ -780,7 +780,7 @@ const Page = (props) => {
                                                 </Grid>
                                                 <Grid xs={6} md={3} style={{marginTop:"30px"}}>
                                                     <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                                        <DateTimePicker InputProps={{ style: { width: 245 } }}
+                                                        <DatePicker InputProps={{ style: { width: 245 } }}
                                                             disablePast
                                                             onChange={(value) => {
                                                                 formik.setFieldValue("date", value, true)

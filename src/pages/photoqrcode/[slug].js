@@ -325,7 +325,7 @@ const Page = () => {
         <>
             {qrList.map((getQRDetails, index) => (
                 <Container maxWidth="sm" id="divToPrint" key={index}>
-                    <Card variant='outlined' style={{ width: 600, height: 435 }}
+                    <Card variant='outlined' style={{ width: 600, height: 500 }}
 
                         sx={{
                             boxShadow: 3,
@@ -518,12 +518,17 @@ const Page = () => {
                                     <Grid xs={6} md={6} >
                                        <br></br>
                                        <br></br>
+                                       <br></br>
                                             <label style={{ fontWeight: "bold"}}> Issuing Authority</label>
                                             
                                         </Grid>
                                         <Grid xs={6} md={6} >
                                         <br></br>
-                                       <br></br>
+                                       
+                                       <div style={{ fontWeight: "500", fontSize: "15px" }}>
+
+Dr.V.Narasimha Charyulu
+</div>
                                             <label style={{ fontWeight: "bold" }}>
                                             Secretary To Legislature                                      </label>
                                             
@@ -562,7 +567,7 @@ const Page = () => {
             <Dialog open={open} >
                 {qrList.map((getQRDetails, index) => (
                     <Container maxWidth="sm" id="divToPrint" key={index}>
-                        <Card variant='outlined' style={{ width: 600, height: 435 }}
+                        <Card variant='outlined' style={{ width: 600, height: 500 }}
 
                             sx={{
                                 boxShadow: 3,
@@ -743,12 +748,17 @@ const Page = () => {
                                     <Grid xs={6} md={6} >
                                        <br></br>
                                        <br></br>
+                                       <br></br>
                                             <label style={{ fontWeight: "bold"}}> Issuing Authority</label>
                                             
                                         </Grid>
                                         <Grid xs={6} md={6} >
                                         <br></br>
-                                       <br></br>
+                                       
+                                       <div style={{ fontWeight: "500", fontSize: "15px" }}>
+
+Dr.V.Narasimha Charyulu
+</div>
                                             <label style={{ fontWeight: "bold" }}>
                                             Secretary To Legislature                                      </label>
                                             
