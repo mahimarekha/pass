@@ -444,7 +444,7 @@ const Page = () => {
                                         </label>
                                         <div style={{ fontWeight: "500", fontSize: "17px", textTransform: "uppercase" }}>
 
-                                            {dayjs(getQRDetails?.FromDate).format('DD-MM-YYYY HH:mm')}
+                                            {dayjs(getQRDetails?.FromDate).format('DD-MM-YYYY ')}
                                         </div>
 
                                     </Grid>
@@ -453,7 +453,7 @@ const Page = () => {
                                             Validity UpTo
                                         </label>
                                         <div style={{ fontWeight: "500", fontSize: "17px", textTransform: "uppercase" }}>
-                                            {dayjs(getQRDetails?.ToDate).format('DD-MM-YYYY HH:mm')}
+                                            {dayjs(getQRDetails?.ToDate).format('DD-MM-YYYY ')}
                                             {/* {getQRDetails?.ToDate}  */}
                                         </div>
                                     </Grid>
@@ -695,7 +695,7 @@ Dr.V.Narasimha Charyulu
                                             </label>
                                             <div style={{ fontWeight: "500", fontSize: "17px", textTransform: "uppercase" }}>
 
-                                                {dayjs(getQRDetails?.FromDate).format('DD-MM-YYYY HH:mm')}
+                                                {dayjs(getQRDetails?.FromDate).format('DD-MM-YYYY ')}
                                             </div>
 
                                         </Grid>
@@ -704,7 +704,7 @@ Dr.V.Narasimha Charyulu
                                                 Validity UpTo
                                             </label>
                                             <div style={{ fontWeight: "500", fontSize: "17px", textTransform: "uppercase" }}>
-                                                {dayjs(getQRDetails?.ToDate).format('DD-MM-YYYY HH:mm')}
+                                                {dayjs(getQRDetails?.ToDate).format('DD-MM-YYYY ')}
                                                 {/* {getQRDetails?.ToDate}  */}
                                             </div>
                                         </Grid>

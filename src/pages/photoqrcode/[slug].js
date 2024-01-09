@@ -377,13 +377,13 @@ const Page = () => {
                         <CardContent style={{ backgroundColor: "gainsboro" }}>
 
 
-                            <div style={{ fontWeight: "bold", textAlign: "center", fontSize: "16px", textTransform: "uppercase", marginTop:"-7px" }}>
+                            <div style={{ fontWeight: "bold", textAlign: "center", fontSize: "16px", textTransform: "uppercase", marginTop: "-7px" }}>
                                 {getQRDetails?.VisitingPlace}
                             </div>
-                          
+
                             <Grid style={{ paddingTop: "15px" }} container spacing={2} >
                                 <Grid xs={8} md={8} container spacing={1} >
-                                    
+
                                     <Grid xs={6} md={6}>
                                         <label style={{ fontWeight: "bold" }}>
                                             Visitor Name
@@ -395,28 +395,28 @@ const Page = () => {
 
 
                                     </Grid>
-                                    <ConditionalDisplay condition={getQRDetails?.DesignationName?true:false}>
-                                    <Grid xs={6} md={6} >
+                                    <ConditionalDisplay condition={getQRDetails?.DesignationName ? true : false}>
+                                        <Grid xs={6} md={6} >
                                             <label style={{ fontWeight: "bold" }}>
-                                            Designation                                       </label>
+                                                Designation                                       </label>
                                             <div style={{ fontWeight: "500", fontSize: "15px" }}>
                                                 {getQRDetails?.DesignationName}
                                             </div>
                                         </Grid>
                                     </ConditionalDisplay>
-                                    <ConditionalDisplay condition={getQRDetails?.DepartmentName1?true:false}>
-                                    <Grid xs={6} md={6} >
+                                    <ConditionalDisplay condition={getQRDetails?.DepartmentName1 ? true : false}>
+                                        <Grid xs={6} md={6} >
                                             <label style={{ fontWeight: "bold" }}>
-                                            Department                                       </label>
+                                                Department                                       </label>
                                             <div style={{ fontWeight: "500", fontSize: "15px" }}>
                                                 {getQRDetails?.DepartmentName1}
                                             </div>
                                         </Grid>
                                     </ConditionalDisplay>
-                                    <ConditionalDisplay condition={getQRDetails?.LastName?true:false}>
-                                    <Grid xs={6} md={6} >
+                                    <ConditionalDisplay condition={getQRDetails?.LastName ? true : false}>
+                                        <Grid xs={6} md={6} >
                                             <label style={{ fontWeight: "bold" }}>
-                                            Organization                                       </label>
+                                                Organization                                       </label>
                                             <div style={{ fontWeight: "500", fontSize: "15px" }}>
                                                 {getQRDetails?.LastName}
                                             </div>
@@ -433,62 +433,62 @@ const Page = () => {
 
 
                                     </Grid>
-                                   
-                                    <ConditionalDisplay condition={getQRDetails?.FromDate?true:false}>
 
-                                    <Grid xs={6} md={6} >
-                                        <label style={{ fontWeight: "bold" }}>
-                                        Issuing Date
-                                        </label>
-                                        <div style={{ fontWeight: "500", fontSize: "17px", textTransform: "uppercase" }}>
-                                        {dayjs(getQRDetails?.FromDate).format( getQRDetails?.VisitingPlace.toLocaleLowerCase().includes("gallery") ?  'DD-MM-YYYY HH:mm': 'DD-MM-YYYY')}
+                                    <ConditionalDisplay condition={getQRDetails?.FromDate ? true : false}>
 
-                                            {/* {dayjs(getQRDetails?.FromDate).format('DD-MM-YYYY HH:mm')} */}
-                                        </div>
-
-                                    </Grid>
-                                    </ConditionalDisplay>
-                                    <ConditionalDisplay condition={getQRDetails?.ToDate?true:false}>
-
-                                    <Grid xs={6} md={6} >
-                                        <label style={{ fontWeight: "bold" }}>
-                                        Validity UpTo
-                                        </label>
-                                        <div style={{ fontWeight: "500", fontSize: "17px", textTransform: "uppercase" }}>
-
-                                            { dayjs(getQRDetails?.ToDate).isValid()?
- dayjs(getQRDetails?.ToDate).format( getQRDetails?.VisitingPlace.toLocaleLowerCase().includes("gallery") ?  'DD-MM-YYYY HH:mm': 'DD-MM-YYYY') :  getQRDetails?.ToDate}
-                                           
-                                        </div>
-                                    </Grid>
-                                    </ConditionalDisplay>
-                                    <ConditionalDisplay condition={getQRDetails?.PurposeVisting?true:false}>
-
-                                    <Grid xs={6} md={6} >
-                                        <label style={{ fontWeight: "bold" }}>
-                                            Purpose Of Visiting
-                                        </label>
-                                        <div style={{ fontWeight: "500", fontSize: "15px" }}>
-
-                                            {getQRDetails?.PurposeVisting}
-                                        </div>
-                                    </Grid>
-                                    </ConditionalDisplay>
-                                    <ConditionalDisplay condition={getQRDetails?.FirstName?true:false}>
-                                    <Grid xs={6} md={6} >
-                                        <label style={{ fontWeight: "bold" }}>
-                                            Reference Name
-                                        </label>
-                                        <div style={{ fontWeight: "500", fontSize: "15px" }}>
-
-                                            {getQRDetails?.FirstName}
-                                        </div>
-                                    </Grid>
-                                    </ConditionalDisplay>
-                                    <ConditionalDisplay condition={getQRDetails?.MinisterName?true:false}>
-                                    <Grid xs={6} md={6} >
+                                        <Grid xs={6} md={6} >
                                             <label style={{ fontWeight: "bold" }}>
-                                            Place Of Visiting
+                                                Issuing Date
+                                            </label>
+                                            <div style={{ fontWeight: "500", fontSize: "17px", textTransform: "uppercase" }}>
+                                                {dayjs(getQRDetails?.FromDate).format(getQRDetails?.VisitingPlace.toLocaleLowerCase().includes("gallery") ? 'DD-MM-YYYY HH:mm' : 'DD-MM-YYYY')}
+
+                                                {/* {dayjs(getQRDetails?.FromDate).format('DD-MM-YYYY HH:mm')} */}
+                                            </div>
+
+                                        </Grid>
+                                    </ConditionalDisplay>
+                                    <ConditionalDisplay condition={getQRDetails?.ToDate ? true : false}>
+
+                                        <Grid xs={6} md={6} >
+                                            <label style={{ fontWeight: "bold" }}>
+                                                Validity UpTo
+                                            </label>
+                                            <div style={{ fontWeight: "500", fontSize: "17px", textTransform: "uppercase" }}>
+
+                                                {dayjs(getQRDetails?.ToDate).isValid() ?
+                                                    dayjs(getQRDetails?.ToDate).format(getQRDetails?.VisitingPlace.toLocaleLowerCase().includes("gallery") ? 'DD-MM-YYYY HH:mm' : 'DD-MM-YYYY') : getQRDetails?.ToDate}
+
+                                            </div>
+                                        </Grid>
+                                    </ConditionalDisplay>
+                                    <ConditionalDisplay condition={getQRDetails?.PurposeVisting ? true : false}>
+
+                                        <Grid xs={6} md={6} >
+                                            <label style={{ fontWeight: "bold" }}>
+                                                Purpose Of Visiting
+                                            </label>
+                                            <div style={{ fontWeight: "500", fontSize: "15px" }}>
+
+                                                {getQRDetails?.PurposeVisting}
+                                            </div>
+                                        </Grid>
+                                    </ConditionalDisplay>
+                                    <ConditionalDisplay condition={getQRDetails?.FirstName ? true : false}>
+                                        <Grid xs={6} md={6} >
+                                            <label style={{ fontWeight: "bold" }}>
+                                                Reference Name
+                                            </label>
+                                            <div style={{ fontWeight: "500", fontSize: "15px" }}>
+
+                                                {getQRDetails?.FirstName}
+                                            </div>
+                                        </Grid>
+                                    </ConditionalDisplay>
+                                    <ConditionalDisplay condition={getQRDetails?.MinisterName ? true : false}>
+                                        <Grid xs={6} md={6} >
+                                            <label style={{ fontWeight: "bold" }}>
+                                                Place Of Visiting
                                             </label>
                                             <div style={{ fontWeight: "500", fontSize: "15px" }}>
                                                 {getQRDetails?.MinisterName}
@@ -496,43 +496,27 @@ const Page = () => {
                                         </Grid>
                                     </ConditionalDisplay>
 
-                                    <ConditionalDisplay condition={getQRDetails?.MinisterName?true:false}>
-                                    <Grid xs={6} md={6} >
+                                    <ConditionalDisplay condition={getQRDetails?.MinisterName ? true : false}>
+                                        <Grid xs={6} md={6} >
                                             <label style={{ fontWeight: "bold" }}>
-                                            Minister Name                                         </label>
+                                                Minister Name                                         </label>
                                             <div style={{ fontWeight: "500", fontSize: "15px" }}>
                                                 {getQRDetails?.MinisterName}
                                             </div>
                                         </Grid>
                                     </ConditionalDisplay>
-                                  
-                                    <ConditionalDisplay condition={getQRDetails?.MiddleName?true:false}>
-                                    <Grid xs={6} md={6} >
+
+                                    <ConditionalDisplay condition={getQRDetails?.MiddleName ? true : false}>
+                                        <Grid xs={6} md={6} >
                                             <label style={{ fontWeight: "bold" }}>
-                                            Place Of Duty                                       </label>
+                                                Place Of Duty                                       </label>
                                             <div style={{ fontWeight: "500", fontSize: "15px" }}>
                                                 {getQRDetails?.MiddleName}
                                             </div>
                                         </Grid>
                                     </ConditionalDisplay>
-                                    <Grid xs={6} md={6} >
-                                       <br></br>
-                                       <br></br>
-                                       <br></br>
-                                            <label style={{ fontWeight: "bold"}}> Issuing Authority</label>
-                                            
-                                        </Grid>
-                                        <Grid xs={6} md={6} >
-                                        <br></br>
-                                       
-                                       <div style={{ fontWeight: "500", fontSize: "15px" }}>
-
-Dr.V.Narasimha Charyulu
-</div>
-                                            <label style={{ fontWeight: "bold" }}>
-                                            Secretary To Legislature                                      </label>
-                                            
-                                        </Grid>
+                                    
+                                  
                                 </Grid>
                                 <Grid xs={4} md={4}>
                                     <Typography sx={{ mb: 1.5 }} color="text.secondary">
@@ -540,6 +524,25 @@ Dr.V.Narasimha Charyulu
                                     </Typography>
                                 </Grid>
                             </Grid>
+                            <Grid container spacing={2}>
+                                        <Grid xs={6} md={6} >
+                                            <br></br>  <br></br>
+
+                                            <label style={{ fontWeight: "bold" }}> Issuing Authority</label>
+
+                                        </Grid>
+                                        <Grid xs={6} md={6} >
+                                            <br></br>
+
+                                            <div style={{ fontWeight: "500", fontSize: "15px" }}>
+
+                                                Dr.V.Narasimha Charyulu
+                                            </div>
+                                            <label style={{ fontWeight: "bold" }}>
+                                                Secretary To Legislature                                      </label>
+
+                                        </Grid>
+                                    </Grid>
                         </CardContent>
                         <CardActions>
 
@@ -595,183 +598,184 @@ Dr.V.Narasimha Charyulu
                             />
                             <div style={{ color: "white", textTransform: 'uppercase', backgroundColor: "#6366f1", textAlign: "center", marginTop: '-15px' }}
                             >  <Grid container spacing={2}>
-                            <Grid xs={10} md={10}>
-                                {getQRDetails?.Remarks}
-
-                            </Grid>
-                            <Grid xs={2} md={2}>
-                                <img src="/assets/avatars/Government-of-Telangana-Black.svg" style={{ height: "70px", width: "70px", marginTop: '-25px' }} />
-
-                            </Grid>
-                        </Grid> </div>
-                        
-                        <CardContent style={{ backgroundColor: "gainsboro" }}>
-
-
-                            <div style={{ fontWeight: "bold", textAlign: "center", fontSize: "16px", textTransform: "uppercase", marginTop:"-7px" }}>
-                                {getQRDetails?.VisitingPlace}
-                            </div>
-                          
-                        <Grid style={{ paddingTop: "15px" }} container spacing={2} >
-                                <Grid xs={8} md={8} container spacing={1} >
-                                    
-                                    <Grid xs={6} md={6}>
-                                        <label style={{ fontWeight: "bold" }}>
-                                            Visitor Name
-                                        </label>
-
-                                        <div style={{ fontWeight: "500", fontSize: "17px", textTransform: "uppercase" }}>
-                                            {getQRDetails?.FullName}
-                                        </div>
-
+                                    <Grid xs={10} md={10}>
+                                        {getQRDetails?.Remarks}
 
                                     </Grid>
-                                    <ConditionalDisplay condition={getQRDetails?.DesignationName?true:false}>
-                                    <Grid xs={6} md={6} >
+                                    <Grid xs={2} md={2}>
+                                        <img src="/assets/avatars/Government-of-Telangana-Black.svg" style={{ height: "70px", width: "70px", marginTop: '-25px' }} />
+
+                                    </Grid>
+                                </Grid> </div>
+
+                            <CardContent style={{ backgroundColor: "gainsboro" }}>
+
+
+                                <div style={{ fontWeight: "bold", textAlign: "center", fontSize: "16px", textTransform: "uppercase", marginTop: "-7px" }}>
+                                    {getQRDetails?.VisitingPlace}
+                                </div>
+
+                                <Grid style={{ paddingTop: "15px" }} container spacing={2} >
+                                    <Grid xs={8} md={8} container spacing={1} >
+
+                                        <Grid xs={6} md={6}>
                                             <label style={{ fontWeight: "bold" }}>
-                                            Designation                                       </label>
-                                            <div style={{ fontWeight: "500", fontSize: "15px" }}>
-                                                {getQRDetails?.DesignationName}
-                                            </div>
-                                        </Grid>
-                                    </ConditionalDisplay>
-                                    <ConditionalDisplay condition={getQRDetails?.DepartmentName1?true:false}>
-                                    <Grid xs={6} md={6} >
-                                            <label style={{ fontWeight: "bold" }}>
-                                            Department                                       </label>
-                                            <div style={{ fontWeight: "500", fontSize: "15px" }}>
-                                                {getQRDetails?.DepartmentName1}
-                                            </div>
-                                        </Grid>
-                                    </ConditionalDisplay>
-                                    <ConditionalDisplay condition={getQRDetails?.LastName?true:false}>
-                                    <Grid xs={6} md={6} >
-                                            <label style={{ fontWeight: "bold" }}>
-                                            Organization                                       </label>
-                                            <div style={{ fontWeight: "500", fontSize: "15px" }}>
-                                                {getQRDetails?.LastName}
-                                            </div>
-                                        </Grid>
-                                    </ConditionalDisplay>
-                                    <Grid xs={6} md={6}>
-                                        <label style={{ fontWeight: "bold" }}>
-                                            Mobile Number
-                                        </label>
-
-                                        <div style={{ fontWeight: "500", fontSize: "17px", textTransform: "uppercase" }}>
-                                            {getQRDetails?.MobileNumber}
-                                        </div>
-
-
-                                    </Grid>
-                                   
-                                    <ConditionalDisplay condition={getQRDetails?.FromDate?true:false}>
-
-                                    <Grid xs={6} md={6} >
-                                        <label style={{ fontWeight: "bold" }}>
-                                        Issuing Date
-                                        </label>
-                                        <div style={{ fontWeight: "500", fontSize: "17px", textTransform: "uppercase" }}>
-
-                                            {dayjs(getQRDetails?.FromDate).format( getQRDetails?.VisitingPlace.toLocaleLowerCase().includes("gallery") ?  'DD-MM-YYYY HH:mm': 'DD-MM-YYYY')}
-                                        </div>
-
-                                    </Grid>
-                                    </ConditionalDisplay>
-                                    <ConditionalDisplay condition={getQRDetails?.ToDate?true:false}>
-
-                                    <Grid xs={6} md={6} >
-                                        <label style={{ fontWeight: "bold" }}>
-                                        Validity Upto
-                                        </label>
-                                        <div style={{ fontWeight: "500", fontSize: "17px", textTransform: "uppercase" }}>
-                                        { dayjs(getQRDetails?.ToDate).isValid()?
- dayjs(getQRDetails?.ToDate).format( getQRDetails?.VisitingPlace.toLocaleLowerCase().includes("gallery") ?  'DD-MM-YYYY HH:mm': 'DD-MM-YYYY') :  getQRDetails?.ToDate}
-                                                                                      
-                                        </div>
-                                    </Grid>
-                                    </ConditionalDisplay>
-                                    <ConditionalDisplay condition={getQRDetails?.PurposeVisting?true:false}>
-
-                                    <Grid xs={6} md={6} >
-                                        <label style={{ fontWeight: "bold" }}>
-                                            Purpose Of Visiting
-                                        </label>
-                                        <div style={{ fontWeight: "500", fontSize: "15px" }}>
-
-                                            {getQRDetails?.PurposeVisting}
-                                        </div>
-                                    </Grid>
-                                    </ConditionalDisplay>
-                                    <ConditionalDisplay condition={getQRDetails?.FirstName?true:false}>
-                                    <Grid xs={6} md={6} >
-                                        <label style={{ fontWeight: "bold" }}>
-                                            Reference Name
-                                        </label>
-                                        <div style={{ fontWeight: "500", fontSize: "15px" }}>
-
-                                            {getQRDetails?.FirstName}
-                                        </div>
-                                    </Grid>
-                                    </ConditionalDisplay>
-                                    <ConditionalDisplay condition={getQRDetails?.MinisterName?true:false}>
-                                    <Grid xs={6} md={6} >
-                                            <label style={{ fontWeight: "bold" }}>
-                                            Place Of Visiting
+                                                Visitor Name
                                             </label>
-                                            <div style={{ fontWeight: "500", fontSize: "15px" }}>
-                                                {getQRDetails?.MinisterName}
-                                            </div>
-                                        </Grid>
-                                    </ConditionalDisplay>
 
-                                    <ConditionalDisplay condition={getQRDetails?.MinisterName?true:false}>
-                                    <Grid xs={6} md={6} >
-                                            <label style={{ fontWeight: "bold" }}>
-                                            Minister Name                                         </label>
-                                            <div style={{ fontWeight: "500", fontSize: "15px" }}>
-                                                {getQRDetails?.MinisterName}
+                                            <div style={{ fontWeight: "500", fontSize: "17px", textTransform: "uppercase" }}>
+                                                {getQRDetails?.FullName}
                                             </div>
+
+
                                         </Grid>
-                                    </ConditionalDisplay>
-                                    
-                                    <ConditionalDisplay condition={getQRDetails?.MiddleName?true:false}>
-                                    <Grid xs={6} md={6} >
+                                        <ConditionalDisplay condition={getQRDetails?.DesignationName ? true : false}>
+                                            <Grid xs={6} md={6} >
+                                                <label style={{ fontWeight: "bold" }}>
+                                                    Designation                                       </label>
+                                                <div style={{ fontWeight: "500", fontSize: "15px" }}>
+                                                    {getQRDetails?.DesignationName}
+                                                </div>
+                                            </Grid>
+                                        </ConditionalDisplay>
+                                        <ConditionalDisplay condition={getQRDetails?.DepartmentName1 ? true : false}>
+                                            <Grid xs={6} md={6} >
+                                                <label style={{ fontWeight: "bold" }}>
+                                                    Department                                       </label>
+                                                <div style={{ fontWeight: "500", fontSize: "15px" }}>
+                                                    {getQRDetails?.DepartmentName1}
+                                                </div>
+                                            </Grid>
+                                        </ConditionalDisplay>
+                                        <ConditionalDisplay condition={getQRDetails?.LastName ? true : false}>
+                                            <Grid xs={6} md={6} >
+                                                <label style={{ fontWeight: "bold" }}>
+                                                    Organization                                       </label>
+                                                <div style={{ fontWeight: "500", fontSize: "15px" }}>
+                                                    {getQRDetails?.LastName}
+                                                </div>
+                                            </Grid>
+                                        </ConditionalDisplay>
+                                        <Grid xs={6} md={6}>
                                             <label style={{ fontWeight: "bold" }}>
-                                            Place Of Duty                                       </label>
-                                            <div style={{ fontWeight: "500", fontSize: "15px" }}>
-                                                {getQRDetails?.MiddleName}
+                                                Mobile Number
+                                            </label>
+
+                                            <div style={{ fontWeight: "500", fontSize: "17px", textTransform: "uppercase" }}>
+                                                {getQRDetails?.MobileNumber}
                                             </div>
-                                        </Grid>
-                                    </ConditionalDisplay>
-                                  
-                                    <Grid xs={6} md={6} >
-                                       <br></br>
-                                       <br></br>
-                                       <br></br>
-                                            <label style={{ fontWeight: "bold"}}> Issuing Authority</label>
-                                            
-                                        </Grid>
-                                        <Grid xs={6} md={6} >
-                                        <br></br>
-                                       
-                                       <div style={{ fontWeight: "500", fontSize: "15px" }}>
 
-Dr.V.Narasimha Charyulu
-</div>
-                                            <label style={{ fontWeight: "bold" }}>
-                                            Secretary To Legislature                                      </label>
-                                            
+
                                         </Grid>
 
-                                   
+                                        <ConditionalDisplay condition={getQRDetails?.FromDate ? true : false}>
+
+                                            <Grid xs={6} md={6} >
+                                                <label style={{ fontWeight: "bold" }}>
+                                                    Issuing Date
+                                                </label>
+                                                <div style={{ fontWeight: "500", fontSize: "17px", textTransform: "uppercase" }}>
+
+                                                    {dayjs(getQRDetails?.FromDate).format(getQRDetails?.VisitingPlace.toLocaleLowerCase().includes("gallery") ? 'DD-MM-YYYY HH:mm' : 'DD-MM-YYYY')}
+                                                </div>
+
+                                            </Grid>
+                                        </ConditionalDisplay>
+                                        <ConditionalDisplay condition={getQRDetails?.ToDate ? true : false}>
+
+                                            <Grid xs={6} md={6} >
+                                                <label style={{ fontWeight: "bold" }}>
+                                                    Validity Upto
+                                                </label>
+                                                <div style={{ fontWeight: "500", fontSize: "17px", textTransform: "uppercase" }}>
+                                                    {dayjs(getQRDetails?.ToDate).isValid() ?
+                                                        dayjs(getQRDetails?.ToDate).format(getQRDetails?.VisitingPlace.toLocaleLowerCase().includes("gallery") ? 'DD-MM-YYYY HH:mm' : 'DD-MM-YYYY') : getQRDetails?.ToDate}
+
+                                                </div>
+                                            </Grid>
+                                        </ConditionalDisplay>
+                                        <ConditionalDisplay condition={getQRDetails?.PurposeVisting ? true : false}>
+
+                                            <Grid xs={6} md={6} >
+                                                <label style={{ fontWeight: "bold" }}>
+                                                    Purpose Of Visiting
+                                                </label>
+                                                <div style={{ fontWeight: "500", fontSize: "15px" }}>
+
+                                                    {getQRDetails?.PurposeVisting}
+                                                </div>
+                                            </Grid>
+                                        </ConditionalDisplay>
+                                        <ConditionalDisplay condition={getQRDetails?.FirstName ? true : false}>
+                                            <Grid xs={6} md={6} >
+                                                <label style={{ fontWeight: "bold" }}>
+                                                    Reference Name
+                                                </label>
+                                                <div style={{ fontWeight: "500", fontSize: "15px" }}>
+
+                                                    {getQRDetails?.FirstName}
+                                                </div>
+                                            </Grid>
+                                        </ConditionalDisplay>
+                                        <ConditionalDisplay condition={getQRDetails?.MinisterName ? true : false}>
+                                            <Grid xs={6} md={6} >
+                                                <label style={{ fontWeight: "bold" }}>
+                                                    Place Of Visiting
+                                                </label>
+                                                <div style={{ fontWeight: "500", fontSize: "15px" }}>
+                                                    {getQRDetails?.MinisterName}
+                                                </div>
+                                            </Grid>
+                                        </ConditionalDisplay>
+
+                                        <ConditionalDisplay condition={getQRDetails?.MinisterName ? true : false}>
+                                            <Grid xs={6} md={6} >
+                                                <label style={{ fontWeight: "bold" }}>
+                                                    Minister Name                                         </label>
+                                                <div style={{ fontWeight: "500", fontSize: "15px" }}>
+                                                    {getQRDetails?.MinisterName}
+                                                </div>
+                                            </Grid>
+                                        </ConditionalDisplay>
+
+                                        <ConditionalDisplay condition={getQRDetails?.MiddleName ? true : false}>
+                                            <Grid xs={6} md={6} >
+                                                <label style={{ fontWeight: "bold" }}>
+                                                    Place Of Duty                                       </label>
+                                                <div style={{ fontWeight: "500", fontSize: "15px" }}>
+                                                    {getQRDetails?.MiddleName}
+                                                </div>
+                                            </Grid>
+                                        </ConditionalDisplay>
+                                        
+
+                                    </Grid>
+                                    <Grid xs={4} md={4}>
+                                        <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                                            <img src={getQRDetails?.qrcode} alt='qrcode' style={{ width: '100%', border: '1px solid #2f3746' }} />
+                                        </Typography>
+                                    </Grid>
                                 </Grid>
-                                <Grid xs={4} md={4}>
-                                    <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                                        <img src={getQRDetails?.qrcode} alt='qrcode' style={{ width: '100%', border: '1px solid #2f3746' }} />
-                                    </Typography>
-                                </Grid>
-                            </Grid>
+                                <Grid container spacing={2}>
+                                            <Grid xs={6} md={6} >
+                                                <br></br>
+                                                <br></br>
+                                                <br></br>
+                                                <label style={{ fontWeight: "bold" }}> Issuing Authority</label>
+
+                                            </Grid>
+                                            <Grid xs={6} md={6} >
+                                                <br></br>
+
+                                                <div style={{ fontWeight: "500", fontSize: "15px" }}>
+
+                                                    Dr.V.Narasimha Charyulu
+                                                </div>
+                                                <label style={{ fontWeight: "bold" }}>
+                                                    Secretary To Legislature                                      </label>
+
+                                            </Grid>
+                                        </Grid>
                             </CardContent >
                             <CardActions>
 
