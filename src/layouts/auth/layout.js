@@ -97,7 +97,7 @@ export const Layout = (props) => {
             </Typography> */}
             <img
               alt=""
-              src="/assets/auth-illustration.svg"
+              src="/assets/logos/tel" style={{width:'100%', height:'100%'}}
             />
           </Box>
         </Grid>
