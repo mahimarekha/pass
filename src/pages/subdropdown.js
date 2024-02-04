@@ -227,7 +227,11 @@ const Page = (props) => {
             name: 'To Date',
             property: 'ToDate'
         },
-
+        {
+            name: 'Delete',
+            property: 'Delete'
+            
+        },
 
 
     ];
@@ -318,6 +322,13 @@ const Page = (props) => {
             setSessionList([]);
         }
     }, []);
+    const reset = ()=>{
+        setMultipleRequest([]);
+                formik.resetForm()
+                formReset();
+                handleClose();
+                setImgSrc('');
+        }
     const handleRedirect = () => {
 
         props.history.push("/addcounter")
@@ -431,6 +442,15 @@ const Page = (props) => {
         setVisitingPasses(visitingPasses);
         setOpen(true);
     }
+    const deleteVisitingPasses = (details, index) => {
+        const values = multipleRequest;
+        values.splice(index, 1);
+        console.log(values)
+        setMultipleRequest(prvArray => [...values]);
+        
+
+        
+    };
     // const deleteVisitingPasses = (visitingPassesdelete) => {
     //     if (visitingPassesdelete) {
     //         VisitingPassesService.deleteVisitingPasses(visitingPassesdelete).then((res) => {
@@ -949,6 +969,7 @@ const Page = (props) => {
                                                     count={multipleRequest.length}
                                                     items={multipleRequest}
                                                     editDetails={editVisitingPasses}
+                                                    deleteContact={deleteVisitingPasses}
                                                     // qrCode={getQrCodeList}
                                                     onDeselectAll={customersSelection.handleDeselectAll}
                                                     onDeselectOne={customersSelection.handleDeselectOne}
@@ -962,7 +983,7 @@ const Page = (props) => {
                                                     selected={customersSelection.selected}
                                                 />  <DialogActions >
 
-                                                    <Button onClick={handleClose} variant="contained" color="error">Cancel</Button>
+                                                    <Button onClick={reset} variant="contained" color="error">Reset</Button>
                                                     <Button onClick={multiple} variant="contained" color="success">Save</Button>
 
 

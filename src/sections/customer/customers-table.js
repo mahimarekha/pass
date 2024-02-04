@@ -68,14 +68,20 @@ export const CustomersTable = (props) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {items.map((customer, index) => {
+            {/* <ul>
+    {todos.map(({todo, index}) => (
+      <li key={index}>{todo}</li>
+    ))}
+    </ul> */}
+              {items.map((customer, itemindex) => {
+                
                 // const isSelected = selected.includes();
               //  const createdAt = format(customer.CreateDateTime, 'dd/MM/yyyy');
 
                 return (
                   <TableRow
                     hover
-                    key={index}
+                    key={itemindex}
                     // selected={isSelected}
                   >
                   
@@ -91,7 +97,7 @@ export const CustomersTable = (props) => {
                       if(headers.property === 'Delete'){
                         return (<TableCell
                           key={index}>
-                    <DeleteIcon style={{ cursor: 'pointer' }} onClick={() => deleteContact(customer)}>
+                    <DeleteIcon style={{ cursor: 'pointer' }} onClick={() => deleteContact(customer, itemindex)}>
                     </DeleteIcon>
                         </TableCell>);
                       }
@@ -171,6 +177,7 @@ CustomersTable.propTypes = {
   deleteMinister:PropTypes.func,
   editVisitingPlaces:PropTypes.func,
   deleteVisitingPlaces:PropTypes.func,
+  
   editPass:PropTypes.func,
   editDesignations:PropTypes.func,
   editUsers:PropTypes.func,

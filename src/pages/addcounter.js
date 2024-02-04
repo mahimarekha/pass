@@ -236,6 +236,11 @@ const Page = (props) => {
             name: 'To Date',
             property: 'ToDate'
         },
+        {
+            name: 'Delete',
+            property: 'Delete'
+            
+        },
 
 
 
@@ -299,6 +304,7 @@ const Page = (props) => {
         // Remarks: '',
         SessionId: '',
     });
+    
     const [validToDate, setValidToDate] = useState('');
     // const [fromDate, setFromDate] = useState('');
     const current = dayjs().format('YYYY-MM-DDTHH:mm:ss');
@@ -354,6 +360,7 @@ const Page = (props) => {
             setSessionList([]);
         }
     }, []);
+   
     const handleRedirect = () => {
 
         props.history.push("/addcounter")
@@ -382,7 +389,6 @@ const Page = (props) => {
             reader.readAsDataURL(file);
         }
     };
-
     const checkPermission = (e) => {
         console.log(e.target.value)
         let monthName;
@@ -748,6 +754,19 @@ const Page = (props) => {
         setVisitingPasses(visitingPasses);
         setOpen(true);
     }
+    // function MyFunctionComponent() {
+    //     const sayHello = () => {
+    //       alert('Hello, world!');
+    //     };
+    const deleteVisitingPasses = (details, index) => {
+        const values = multipleRequest;
+        values.splice(index, 1);
+        console.log(values)
+        setMultipleRequest(prvArray => [...values]);
+        
+
+        
+    };
     // const deleteVisitingPasses = (visitingPassesdelete) => {
     //     if (visitingPassesdelete) {
     //         VisitingPassesService.deleteVisitingPasses(visitingPassesdelete).then((res) => {
@@ -866,6 +885,13 @@ const Page = (props) => {
     const handleChange = (event)=>{
         setIsShowCalender(event.target.checked);
     }
+    const reset = ()=>{
+    setMultipleRequest([]);
+            formik.resetForm()
+            formReset();
+            handleClose();
+            setImgSrc('');
+    }
     const multiple = () => {
         if (!multipleRequest.length) {
             alert("Please Enter Required Details");
@@ -880,7 +906,7 @@ const Page = (props) => {
         VisitingPassesService.cretePostVisitingPasses(updatedRequests).then((res) => {
             const data = res.length > 0 ? res[res.length - 1] : null
             setMultipleRequest([]);
-            getVisitingPassesList();
+            // getVisitingPassesList();
             formik.resetForm()
             formReset();
             handleClose();
@@ -963,6 +989,24 @@ const Page = (props) => {
                                                         </Select>
                                                     </FormControl>
                                                 </Grid>
+                                                <ConditionalDisplay condition={pass.name}>
+                                                <Grid xs={6} md={3}>
+                                                    <TextField
+                                                        InputProps={{ style: { width: 220 } }}
+
+                                                        margin="dense"
+                                                        id="FullName"
+                                                        name="FullName"
+                                                        label="Visitor Name"
+                                                        type="text"
+                                                        variant="standard"
+                                                        value={formik.values.FullName}
+                                                        onChange={formik.handleChange}
+                                                        error={formik.touched.FullName && Boolean(formik.errors.FullName)}
+                                                        helperText={formik.touched.FullName && formik.errors.FullName}
+                                                    />
+                                                </Grid>
+                                                </ConditionalDisplay>
                                                 <ConditionalDisplay condition={pass.ministor}>
                                                     <Grid xs={6} md={3}>
                                                         <FormControl variant="standard" fullWidth>
@@ -993,7 +1037,7 @@ const Page = (props) => {
                                                   <ConditionalDisplay condition={pass.designation}>
                                                   <Grid xs={6} md={3}>
                                                   <TextField
-                                                        InputProps={{ style: { width: 225 } }}
+                                                        InputProps={{ style: { width: 220 } }}
 
                                                         margin="dense"
                                                         id="DesignationName"
@@ -1026,24 +1070,7 @@ const Page = (props) => {
                                                     />
                                                 </Grid>
                                                 </ConditionalDisplay>
-                                                  <ConditionalDisplay condition={pass.name}>
-                                                <Grid xs={6} md={3}>
-                                                    <TextField
-                                                        InputProps={{ style: { width: 235 } }}
-
-                                                        margin="dense"
-                                                        id="FullName"
-                                                        name="FullName"
-                                                        label="Visitor Name"
-                                                        type="text"
-                                                        variant="standard"
-                                                        value={formik.values.FullName}
-                                                        onChange={formik.handleChange}
-                                                        error={formik.touched.FullName && Boolean(formik.errors.FullName)}
-                                                        helperText={formik.touched.FullName && formik.errors.FullName}
-                                                    />
-                                                </Grid>
-                                                </ConditionalDisplay>
+                                                
                                                 <ConditionalDisplay condition={pass.mobileNo}>
                                                 <Grid xs={6} md={6}>
                                                     <TextField
@@ -1411,6 +1438,7 @@ const Page = (props) => {
                                                     count={multipleRequest.length}
                                                     items={multipleRequest}
                                                     editDetails={editVisitingPasses}
+                                                    deleteContact={deleteVisitingPasses}
                                                     // qrCode={getQrCodeList}
                                                     onDeselectAll={customersSelection.handleDeselectAll}
                                                     onDeselectOne={customersSelection.handleDeselectOne}
@@ -1424,7 +1452,7 @@ const Page = (props) => {
                                                     selected={customersSelection.selected}
                                                 />  <DialogActions >
 
-                                                    <Button onClick={handleClose} variant="contained" color="error">Cancel</Button>
+                                                    <Button onClick={reset} variant="contained" color="error">Reset</Button>
                                                     <Button onClick={multiple} variant="contained" color="success">Save</Button>
 
 
