@@ -1055,7 +1055,7 @@ const Page = (props) => {
                                                   <ConditionalDisplay condition={pass.department}>
                                                   <Grid xs={6} md={3}>
                                                   <TextField
-                                                        InputProps={{ style: { width: 225 } }}
+                                                        InputProps={{ style: { width: 220 } }}
 
                                                         margin="dense"
                                                         id="DepartmentName"
@@ -1074,7 +1074,7 @@ const Page = (props) => {
                                                 <ConditionalDisplay condition={pass.mobileNo}>
                                                 <Grid xs={6} md={6}>
                                                     <TextField
-                                                        InputProps={{ style: { width: 245 } }}
+                                                        InputProps={{ style: { width: 220 } }}
 
                                                         margin="dense"
                                                         id="MobileNumber"
@@ -1131,7 +1131,7 @@ const Page = (props) => {
                                                 <ConditionalDisplay condition={pass.validUpto}>
                                                 <Grid xs={6} md={4} style={{ marginTop: "30px" }}>
                                                     <LocalizationProvider dateAdapter={AdapterDayjs} >
-                                                        {pass.showDateTime ?  <DateTimePicker InputProps={{ style: { width: 230 } }}
+                                                        {pass.showDateTime ?  <DateTimePicker InputProps={{ style: { width: 220 } }}
                                                             id="FromDate"
                                                             slotProps={{ textField: { size: "small", error: false } }}
                                                             name="FromDate"
@@ -1201,7 +1201,7 @@ const Page = (props) => {
                                                 <Grid xs={6} md={4} style={{ marginTop: "30px" }}>
                                                     {isShowCalender? <LocalizationProvider dateAdapter={AdapterDayjs}>
                                                         {pass.showDateTime ? 
-                                                        <DateTimePicker InputProps={{ style: { width: 230 } }}
+                                                        <DateTimePicker InputProps={{ style: { width: 220 } }}
                                                             disablePast
                                                             onChange={(value) => {
                                                                 formik.setFieldValue("date", value, true)
@@ -1220,7 +1220,7 @@ const Page = (props) => {
                                                             value={toDate}
                                                             error={formik.touched.ToDate && Boolean(formik.errors.ToDate)}
                                                             helperText={formik.touched.ToDate && formik.errors.ToDate}
-                                                        /> : <DatePicker InputProps={{ style: { width: 230 } }}
+                                                        /> : <DatePicker InputProps={{ style: { width: 220 } }}
                                                         disablePast
                                                         onChange={(value) => {
                                                             formik.setFieldValue("date", value, true)
@@ -1242,7 +1242,7 @@ const Page = (props) => {
                                                     />}
 
                                                     </LocalizationProvider>:<TextField
-                                                        InputProps={{ style: { width: 245 } }}
+                                                        InputProps={{ style: { width: 220 } }}
                                                         margin="dense"
                                                         id="PurposeVisting"
                                                         name="ToDate"
@@ -1274,7 +1274,7 @@ const Page = (props) => {
                                                 <ConditionalDisplay condition={pass.purposeOfVisit}>
                                                 <Grid xs={6} md={3} style={{ marginTop: "30px" }}>
                                                     <TextField
-                                                        InputProps={{ style: { width: 245 } }}
+                                                        InputProps={{ style: { width: 220 } }}
                                                         margin="dense"
                                                         id="PurposeVisting"
                                                         name="PurposeVisting"
@@ -1291,7 +1291,7 @@ const Page = (props) => {
                                                 <ConditionalDisplay condition={pass.placeOfDuty}>
                                                 <Grid xs={6} md={4}>
                                                     <TextField
-                                                        InputProps={{ style: { width: 245 } }}
+                                                        InputProps={{ style: { width: 220 } }}
 
                                                         margin="dense"
                                                         id="MiddleName"
@@ -1309,7 +1309,7 @@ const Page = (props) => {
                                                 <ConditionalDisplay condition={pass.organization}>
                                                 <Grid xs={6} md={4}>
                                                     <TextField
-                                                        InputProps={{ style: { width: 245 } }}
+                                                        InputProps={{ style: { width: 220 } }}
 
                                                         margin="dense"
                                                         id="LastName"
@@ -1332,7 +1332,7 @@ const Page = (props) => {
                                                 
                                                 <Grid xs={6} md={4}>
                                                     <TextField
-                                                        InputProps={{ style: { width: 245 } }}
+                                                        InputProps={{ style: { width: 220 } }}
 
                                                         margin="dense"
                                                         id="FirstName"
@@ -1366,7 +1366,7 @@ const Page = (props) => {
                                                     <Button variant="contained" onClick={handleClickOpen1}>Capture From WebCam</Button> 
                                                   
                                                     <div>
-                                                    <span style={{textAlign:'center'}}>OR</span> 
+                                                    <span style={{ paddingLeft: "83px"}}>OR</span> 
 
                                                     </div>
 
@@ -1376,7 +1376,7 @@ const Page = (props) => {
                                                 </ConditionalDisplay>
                                                 <ConditionalDisplay condition={pass.fileupload}>
                                                 <Grid xs={6} md={6}>
-                                                    <label style={{ fontSize: '15px', color: 'black' }} >Upload Document</label>
+                                                    <label style={{ fontSize: '15px', color: 'black' }} >Upload Document:</label>
                                                     <div>
                                                         <input type="file" name="name" style={{ "display": "inline-block", "width": "245px", "padding": "10px 20px", "backgroundColor": "#6366F1", "color": "#fff", "border": "none", "borderRadius": "12px", "cursor": "pointer" }} onChange={handleDocumentUpload} />
 

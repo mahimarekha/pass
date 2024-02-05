@@ -476,7 +476,7 @@ const Page = (props) => {
     }
     const getVisitingPlacesList = () => {
         VisitingPlacesService.getAllVisitingPlaces().then((res) => {
-            debugger
+            
             const filterVisitingPlace = res.filter(resut=>(resut.VisitingPlacesId === 1017 || resut.VisitingPlacesId === 1018));
             
             setVisitingPlacesList(filterVisitingPlace);
@@ -697,7 +697,7 @@ const Page = (props) => {
                                                
                                                 <Grid xs={6} md={3}>
                                                     <TextField
-                                                        InputProps={{ style: { width: 230 } }}
+                                                        InputProps={{ style: { width: 220 } }}
 
                                                         margin="dense"
                                                         id="FullName"
@@ -713,7 +713,7 @@ const Page = (props) => {
                                                 </Grid>
                                                 <Grid xs={6} md={3}>
                                                     <TextField
-                                                        InputProps={{ style: { width: 245 } }}
+                                                        InputProps={{ style: { width: 220 } }}
 
                                                         margin="dense"
                                                         id="MobileNumber"
@@ -729,6 +729,8 @@ const Page = (props) => {
                                                         helperText={formik.touched.MobileNumber && formik.errors.MobileNumber}
                                                     />
                                                 </Grid>
+                                                <br></br>
+                                                <br></br>
                                                 <Grid xs={6} md={3}>
                                                     <FormControl variant="standard" fullWidth>
                                                         <InputLabel id="studentName">Session Name</InputLabel>
@@ -750,9 +752,9 @@ const Page = (props) => {
                                                         </Select>
                                                     </FormControl>
                                                 </Grid>
-                                                <Grid xs={6} md={3} style={{marginTop:"30px"}}>
+                                                <Grid xs={6} md={3} >
                                                     <LocalizationProvider dateAdapter={AdapterDayjs} >
-                                                        <DatePicker InputProps={{ style: { width: 245 } }}
+                                                        <DatePicker InputProps={{ style: { width: 210 } }}
 
                                                             id="FromDate"
                                                             slotProps={{ textField: { size: "small", error: false } }}
@@ -766,7 +768,7 @@ const Page = (props) => {
                                                                 setFromDate(value.format('YYYY-MM-DDTHH:mm:ss'));
                                                                 setValidToDate(dayjs().add(dayDifference, 'day'));
                                                             }}
-                                                            sx={{ width: 230 }}
+                                                            sx={{ width: 220 }}
                                                             InputLabelProps={{
                                                                 shrink: true,
                                                             }}
@@ -798,9 +800,9 @@ const Page = (props) => {
                                                             helperText={formik.touched.FromDate && formik.errors.FromDate} /> */}
                                                     </LocalizationProvider>
                                                 </Grid>
-                                                <Grid xs={6} md={3} style={{marginTop:"30px"}}>
+                                                <Grid xs={6} md={3} >
                                                     <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                                        <DatePicker InputProps={{ style: { width: 245 } }}
+                                                        <DatePicker InputProps={{ style: { width: 220 } }}
                                                             disablePast
                                                             onChange={(value) => {
                                                                 formik.setFieldValue("date", value, true)
@@ -812,7 +814,7 @@ const Page = (props) => {
                                                             name="ToDate"
                                                             label="Validity UpTo"
                                                             type="date"
-                                                            sx={{ width: 230 }}
+                                                            sx={{ width: 220 }}
                                                             InputLabelProps={{
                                                                 shrink: true,
                                                             }}
@@ -825,9 +827,9 @@ const Page = (props) => {
 
 
                                                 </Grid>
-                                                <Grid xs={6} md={3} style={{marginTop:"30px"}}>
+                                                <Grid xs={6} md={3} >
                                                     <TextField
-                                                        InputProps={{ style: { width: 245 } }}
+                                                        InputProps={{ style: { width: 220 } }}
                                                         margin="dense"
                                                         id="PurposeVisting"
                                                         name="PurposeVisting"
@@ -845,7 +847,7 @@ const Page = (props) => {
                                                 </Grid>
                                                 <Grid xs={6} md={4}>
                                                     <TextField
-                                                        InputProps={{ style: { width: 245 } }}
+                                                        InputProps={{ style: { width: 220 } }}
 
                                                         margin="dense"
                                                         id="FirstName"
@@ -895,19 +897,23 @@ const Page = (props) => {
                                                     <span style={{ fontSize: '17px', color: 'rgb(16 182 128)' }} >Doc Upload :</span>
                                                 </Grid>
                                                 <Grid xs={6} md={6}>
-                                                    <label style={{ fontSize: '15px', color: 'black' }} >Upload Photo</label>
+                                                    <label style={{ fontSize: '15px', color: 'black' }} >Upload Photo:</label>
                                                     <div>
                                                         {imgSrc ? (
                                                             <img src={imgSrc} alt="webcam" height={100} width={100} />
                                                         ) : ''
                                                         }
                                                     </div>
-                                                    <Button variant="contained" onClick={handleClickOpen1}>Capture From WebCam</Button>  OR
+                                                    <Button variant="contained" onClick={handleClickOpen1}>Capture From WebCam</Button> 
+                                                    <div>
+                                                    <span style={{ paddingLeft: "83px"}}>OR</span> 
+
+                                                    </div>
                                                     <input type="file" style={{"width":"230px", "display": "inline-block", "padding": "10px 20px", "backgroundColor": "#6366F1", "color": "#fff", "border": "none", "borderRadius": "12px", "cursor": "pointer" }} onChange={handleImageUpload} />
 
                                                 </Grid>
                                                 <Grid xs={6} md={6}>
-                                                    <label style={{ fontSize: '15px', color: 'black' }} >Upload Document</label>
+                                                    <label style={{ fontSize: '15px', color: 'black' }} >Upload Document:</label>
                                                     <div>
                                                         <input type="file" name="name" style={{ "display": "inline-block", "width": "245px", "padding": "10px 20px", "backgroundColor": "#6366F1", "color": "#fff", "border": "none", "borderRadius": "12px", "cursor": "pointer" }} onChange={handleDocumentUpload} />
 
