@@ -639,7 +639,7 @@ const Page = (props) => {
 
                                             <Grid container spacing={2}>
                                                 <Grid xs={6} md={3}>
-                                                    <FormControl variant="standard" fullWidth>
+                                                    <FormControl variant="standard" style={{width:"220px"}}>
                                                         <InputLabel id="studentName">VisitingPlaces Id</InputLabel>
                                                         <Select
                                                             labelId="VisitingPlacesId"
@@ -668,8 +668,8 @@ const Page = (props) => {
                                                     </FormControl>
                                                 </Grid>
                                                 
-                                                 <Grid xs={6} md={3}>
-                                                 <FormControl variant="standard" fullWidth>
+                                                 <Grid xs={12} sm={12} md={3}>
+                                                 <FormControl variant="standard" style={{width:"220px"}}>
                                                      <InputLabel id="studentName">Select Name</InputLabel>
                                                      <Select
                                                          labelId="MinID"
@@ -695,7 +695,7 @@ const Page = (props) => {
                                              </Grid>
                                             
                                                
-                                                <Grid xs={6} md={3}>
+                                                <Grid xs={12} sm={12} md={3}>
                                                     <TextField
                                                         InputProps={{ style: { width: 220 } }}
 
@@ -711,7 +711,7 @@ const Page = (props) => {
                                                         helperText={formik.touched.FullName && formik.errors.FullName}
                                                     />
                                                 </Grid>
-                                                <Grid xs={6} md={3}>
+                                                <Grid xs={12} sm={12} md={3}>
                                                     <TextField
                                                         InputProps={{ style: { width: 220 } }}
 
@@ -731,8 +731,8 @@ const Page = (props) => {
                                                 </Grid>
                                                 <br></br>
                                                 <br></br>
-                                                <Grid xs={6} md={3}>
-                                                    <FormControl variant="standard" fullWidth>
+                                                <Grid xs={12} sm={12} md={3}>
+                                                    <FormControl variant="standard" style={{width:"220px"}}>
                                                         <InputLabel id="studentName">Session Name</InputLabel>
                                                         <Select
                                                             labelId="SessionId"
@@ -752,9 +752,9 @@ const Page = (props) => {
                                                         </Select>
                                                     </FormControl>
                                                 </Grid>
-                                                <Grid xs={6} md={3} >
+                                                <Grid xs={12} sm={12} md={3} >
                                                     <LocalizationProvider dateAdapter={AdapterDayjs} >
-                                                        <DatePicker InputProps={{ style: { width: 210 } }}
+                                                        <DatePicker InputProps={{ style: { width: 220 } }}
 
                                                             id="FromDate"
                                                             slotProps={{ textField: { size: "small", error: false } }}
@@ -800,7 +800,7 @@ const Page = (props) => {
                                                             helperText={formik.touched.FromDate && formik.errors.FromDate} /> */}
                                                     </LocalizationProvider>
                                                 </Grid>
-                                                <Grid xs={6} md={3} >
+                                                <Grid xs={12} sm={12} md={3} >
                                                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                                                         <DatePicker InputProps={{ style: { width: 220 } }}
                                                             disablePast
@@ -827,7 +827,7 @@ const Page = (props) => {
 
 
                                                 </Grid>
-                                                <Grid xs={6} md={3} >
+                                                <Grid xs={12} sm={12} md={3} >
                                                     <TextField
                                                         InputProps={{ style: { width: 220 } }}
                                                         margin="dense"
@@ -896,7 +896,7 @@ const Page = (props) => {
                                                 <Grid item xs={12} style={{ marginTop: '10px' }}>
                                                     <span style={{ fontSize: '17px', color: 'rgb(16 182 128)' }} >Doc Upload :</span>
                                                 </Grid>
-                                                <Grid xs={6} md={6}>
+                                                <Grid  md={6} xs={12} sm={12} >
                                                     <label style={{ fontSize: '15px', color: 'black' }} >Upload Photo:</label>
                                                     <div>
                                                         {imgSrc ? (

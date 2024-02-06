@@ -961,8 +961,8 @@ const Page = (props) => {
 
                                             <Grid container spacing={2}>
                                                 
-                                                <Grid xs={6} md={3}>
-                                                    <FormControl variant="standard" fullWidth>
+                                                <Grid xs={12} sm={12} md={3}>
+                                                    <FormControl variant="standard"  style={{width:"220px"}}>
                                                         <InputLabel id="studentName">VisitingPlaces Id</InputLabel>
                                                         <Select
                                                             labelId="VisitingPlacesId"
@@ -990,7 +990,7 @@ const Page = (props) => {
                                                     </FormControl>
                                                 </Grid>
                                                 <ConditionalDisplay condition={pass.name}>
-                                                <Grid xs={6} md={3}>
+                                                <Grid xs={12} sm={12} md={3}>
                                                     <TextField
                                                         InputProps={{ style: { width: 220 } }}
 
@@ -1008,7 +1008,7 @@ const Page = (props) => {
                                                 </Grid>
                                                 </ConditionalDisplay>
                                                 <ConditionalDisplay condition={pass.ministor}>
-                                                    <Grid xs={6} md={3}>
+                                                    <Grid xs={12} sm={12} md={3}>
                                                         <FormControl variant="standard" fullWidth>
                                                             <InputLabel id="studentName">Minister Name</InputLabel>
                                                             <Select
@@ -1035,7 +1035,7 @@ const Page = (props) => {
                                                     </Grid>
                                                   </ConditionalDisplay>
                                                   <ConditionalDisplay condition={pass.designation}>
-                                                  <Grid xs={6} md={3}>
+                                                  <Grid xs={12} sm={12} md={3}>
                                                   <TextField
                                                         InputProps={{ style: { width: 220 } }}
 
@@ -1053,7 +1053,7 @@ const Page = (props) => {
                                                 </Grid>
                                                 </ConditionalDisplay>
                                                   <ConditionalDisplay condition={pass.department}>
-                                                  <Grid xs={6} md={3}>
+                                                  <Grid xs={12} sm={12} md={3}>
                                                   <TextField
                                                         InputProps={{ style: { width: 220 } }}
 
@@ -1072,7 +1072,7 @@ const Page = (props) => {
                                                 </ConditionalDisplay>
                                                 
                                                 <ConditionalDisplay condition={pass.mobileNo}>
-                                                <Grid xs={6} md={6}>
+                                                <Grid xs={12} sm={12} md={6}>
                                                     <TextField
                                                         InputProps={{ style: { width: 220 } }}
 
@@ -1092,8 +1092,8 @@ const Page = (props) => {
                                                 </Grid>
                                                 </ConditionalDisplay>
                                                 <ConditionalDisplay condition={pass.session}>
-                                                <Grid xs={6} md={6}>
-                                                    <FormControl variant="standard" fullWidth>
+                                                <Grid xs={12} sm={12} md={6}>
+                                                    <FormControl variant="standard" style={{width:"220px"}}>
                                                         <InputLabel id="studentName">Session Name</InputLabel>
                                                         <Select
                                                             labelId="SessionId"
@@ -1115,7 +1115,7 @@ const Page = (props) => {
                                                 </Grid>
                                                 </ConditionalDisplay>
                                                 <ConditionalDisplay condition={pass.validUpto}>
-                                                <Grid xs={6} md={4} style={{ marginTop: "30px" }}>
+                                                <Grid xs={12} sm={12} md={4} style={{ marginTop: "30px" }}>
                                                 <FormControlLabel
         label="Show ToDate as Calendar"
         control={<Checkbox
@@ -1129,7 +1129,7 @@ const Page = (props) => {
                                                 </ConditionalDisplay>
                                                 
                                                 <ConditionalDisplay condition={pass.validUpto}>
-                                                <Grid xs={6} md={4} style={{ marginTop: "30px" }}>
+                                                <Grid xs={12} sm={12} md={4} style={{ marginTop: "30px" }}>
                                                     <LocalizationProvider dateAdapter={AdapterDayjs} >
                                                         {pass.showDateTime ?  <DateTimePicker InputProps={{ style: { width: 220 } }}
                                                             id="FromDate"
@@ -1198,7 +1198,7 @@ const Page = (props) => {
                                                 </ConditionalDisplay>
 
                                                 <ConditionalDisplay condition={pass.validUpto}>
-                                                <Grid xs={6} md={4} style={{ marginTop: "30px" }}>
+                                                <Grid xs={12} sm={12} md={4} style={{ marginTop: "30px" }}>
                                                     {isShowCalender? <LocalizationProvider dateAdapter={AdapterDayjs}>
                                                         {pass.showDateTime ? 
                                                         <DateTimePicker InputProps={{ style: { width: 220 } }}
@@ -1272,7 +1272,7 @@ const Page = (props) => {
                                                 </ConditionalDisplay>
                                                 
                                                 <ConditionalDisplay condition={pass.purposeOfVisit}>
-                                                <Grid xs={6} md={3} style={{ marginTop: "30px" }}>
+                                                <Grid xs={12} sm={12} md={3} style={{ marginTop: "30px" }}>
                                                     <TextField
                                                         InputProps={{ style: { width: 220 } }}
                                                         margin="dense"
@@ -1289,7 +1289,7 @@ const Page = (props) => {
                                                 </Grid>
                                                 </ConditionalDisplay>
                                                 <ConditionalDisplay condition={pass.placeOfDuty}>
-                                                <Grid xs={6} md={4}>
+                                                <Grid xs={12} sm={12} md={4}>
                                                     <TextField
                                                         InputProps={{ style: { width: 220 } }}
 
@@ -1307,7 +1307,7 @@ const Page = (props) => {
                                                 </Grid>
                                                 </ConditionalDisplay>
                                                 <ConditionalDisplay condition={pass.organization}>
-                                                <Grid xs={6} md={4}>
+                                                <Grid xs={12} sm={12} md={4}>
                                                     <TextField
                                                         InputProps={{ style: { width: 220 } }}
 
@@ -1330,7 +1330,7 @@ const Page = (props) => {
                                                 </Grid>
 
                                                 
-                                                <Grid xs={6} md={4}>
+                                                <Grid xs={12} sm={12} md={4}>
                                                     <TextField
                                                         InputProps={{ style: { width: 220 } }}
 
@@ -1355,7 +1355,7 @@ const Page = (props) => {
                                                     <span style={{ fontSize: '17px', color: 'rgb(16 182 128)' }} >Doc Upload :</span>
                                                 </Grid>
                                                 <ConditionalDisplay condition={pass.fileupload}>
-                                                <Grid xs={6} md={6}>
+                                                <Grid xs={12} md={4}  sm={12} >
                                                     <label style={{ fontSize: '15px', color: 'black' }} >Upload Photo:</label>
                                                     <div>
                                                         {imgSrc ? (
@@ -1426,7 +1426,6 @@ const Page = (props) => {
                                                 </Grid> */}
                                                 <Grid xs={12} md={12} style={{ textAlign: 'end' }}>
                                                     {visitingPasses.VisitingPassesId ? <Button onClick={handleClose} style={{ marginRight: '10px' }} variant="contained" color="error">Cancel</Button> : ''}
-
 
                                                     <Button variant="contained" type="submit">{visitingPasses.VisitingPassesId ? 'Update' : 'Add More'}</Button>
 
