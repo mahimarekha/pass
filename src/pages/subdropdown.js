@@ -640,11 +640,11 @@ const Page = (props) => {
                                             <Grid container spacing={2}>
                                                 <Grid xs={6} md={3}>
                                                     <FormControl variant="standard" style={{width:"220px"}}>
-                                                        <InputLabel id="studentName">VisitingPlaces Id</InputLabel>
+                                                        <InputLabel id="studentName">Visiting Places </InputLabel>
                                                         <Select
                                                             labelId="VisitingPlacesId"
                                                             id="VisitingPlacesId"
-                                                            label="VisitingPlaces Id"
+                                                            label="VisitingPlaces "
                                                             name="VisitingPlacesId"
 
                                                             value={formik.values.VisitingPlacesId}

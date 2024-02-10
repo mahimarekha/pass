@@ -508,7 +508,7 @@ const Page = (props) => {
                       
                            
                                 <Typography variant="h4">
-                                 Approval
+                                DEPT Pass Approval
                                 </Typography>
                                
                                     {/* <Grid container spacing={2} columns={12} style={{ margin: 10 }}  >

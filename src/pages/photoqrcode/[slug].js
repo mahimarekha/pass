@@ -325,7 +325,7 @@ const Page = () => {
         <>
             {qrList.map((getQRDetails, index) => (
                 <Container maxWidth="sm" id="divToPrint" key={index}>
-                    <Card variant='outlined' style={{ width: 600, height: 500 }}
+                    <Card variant='outlined' style={{ width: 600, height: 540 }}
 
                         sx={{
                             boxShadow: 3,
@@ -389,7 +389,7 @@ const Page = () => {
                                             Visitor Name
                                         </label>
 
-                                        <div style={{ fontWeight: "500", fontSize: "17px", textTransform: "uppercase" }}>
+                                        <div style={{ fontWeight: "500", fontSize: "12px", textTransform: "uppercase" }}>
                                             {getQRDetails?.FullName}
                                         </div>
 
@@ -570,7 +570,7 @@ const Page = () => {
             <Dialog open={open} >
                 {qrList.map((getQRDetails, index) => (
                     <Container maxWidth="sm" id="divToPrint" key={index}>
-                        <Card variant='outlined' style={{ width: 600, height: 500 }}
+                        <Card variant='outlined' style={{ width: 600, height: 540 }}
 
                             sx={{
                                 boxShadow: 3,
@@ -623,7 +623,7 @@ const Page = () => {
                                                 Visitor Name
                                             </label>
 
-                                            <div style={{ fontWeight: "500", fontSize: "17px", textTransform: "uppercase" }}>
+                                            <div style={{ fontWeight: "500", fontSize: "12px", textTransform: "uppercase" }}>
                                                 {getQRDetails?.FullName}
                                             </div>
 

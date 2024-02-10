@@ -878,6 +878,8 @@ const Page = (props) => {
             else {
                 delete values.VisitingPassesId;
                 setMultipleRequest(prvArray => [...prvArray, values]);
+                resetForm();
+                    formReset();
             }
         },
     });
@@ -963,7 +965,7 @@ const Page = (props) => {
                                                 
                                                 <Grid xs={12} sm={12} md={3}>
                                                     <FormControl variant="standard"  style={{width:"220px"}}>
-                                                        <InputLabel id="studentName">VisitingPlaces Id</InputLabel>
+                                                        <InputLabel id="studentName">VisitingPlaces </InputLabel>
                                                         <Select
                                                             labelId="VisitingPlacesId"
                                                             id="VisitingPlacesId"
@@ -1427,7 +1429,7 @@ const Page = (props) => {
                                                 <Grid xs={12} md={12} style={{ textAlign: 'end' }}>
                                                     {visitingPasses.VisitingPassesId ? <Button onClick={handleClose} style={{ marginRight: '10px' }} variant="contained" color="error">Cancel</Button> : ''}
 
-                                                    <Button variant="contained" type="submit">{visitingPasses.VisitingPassesId ? 'Update' : 'Add More'}</Button>
+                                                    <Button  variant="contained" type="submit">{visitingPasses.VisitingPassesId ? 'Update' : 'Add More'}</Button>
 
                                                 </Grid>
                                             </Grid>

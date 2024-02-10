@@ -248,7 +248,11 @@ const Page = (props) => {
     {
         name: 'Approval Status',
         property: 'ApprovalStatus'
-    }
+    },
+    // {
+    //     name: 'Uploaded document',
+    //     property: 'MobileNumber'
+    // }
 
     ];
     const dataAddheadersList = [
@@ -603,7 +607,7 @@ const Page = (props) => {
                         >
                             <Stack spacing={1}>
                                 <Typography variant="h4">
-                                    Counter Pass
+                                CP Application Received
                                 </Typography>
                                 <Stack
                                     alignItems="center"

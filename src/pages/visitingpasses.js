@@ -550,7 +550,7 @@ const Page = (props) => {
                         >
                             <Stack spacing={1}>
                                 <Typography variant="h4">
-                                    Request Pass
+                                DEPT Online Pass
                                 </Typography>
                                 <Stack
                                     alignItems="center"
@@ -812,6 +812,7 @@ const Page = (props) => {
                                                         helperText={formik.touched.PurposeVisting && formik.errors.PurposeVisting}
                                                     />
                                                 </Grid>
+                                                
                                                 <Grid xs={6} md={4}>
                                                     <FormControl variant="standard" fullWidth>
                                                         <InputLabel id="studentName">Session Name</InputLabel>
@@ -827,8 +828,8 @@ const Page = (props) => {
                                                             <MenuItem value="">
                                                                 <em>None</em>
                                                             </MenuItem>
-                                                            {sessionList.map(({ index, SessionID, Sno }) => (
-                                                                <MenuItem key={index} value={Sno}>{SessionID}
+                                                            {sessionList.map(({ index, Remarks, SessionID, Sno }) => (
+                                                                <MenuItem key={index} value={Sno}>{Remarks}
                                                                 </MenuItem>
                                                             ))}
                                                         </Select>

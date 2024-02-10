@@ -92,7 +92,7 @@ export const items = [
   },
  
   {
-    title: 'Counter Pass',
+    title: 'CP Application Received',
     path: '/counterpass',
     role:['Admin','Counter pass'],
    icon: (
@@ -102,7 +102,7 @@ export const items = [
       )
   },
   {
-    title: 'Add Counter Pass',
+    title: 'Applay For CP',
     path: '/addcounter',
     role:['Admin','Counter pass'],
      icon: (
@@ -122,7 +122,7 @@ export const items = [
       )
   },
   {
-    title: 'Request Pass',
+    title: 'DEPT Online Pass',
     path: '/visitingpasses',
     role:['Admin',"Apply for Pass","Approver","Secretary","Counter pass"],
     icon: (
@@ -132,7 +132,7 @@ export const items = [
     )
   },
   {
-    title: 'Approval',
+    title: 'DEPT Pass Approval',
     path: '/approval',
     role:['Admin',"Approver"],
     icon: (

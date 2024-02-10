@@ -32,7 +32,7 @@ export const CustomersTable = (props) => {
     onDeselectAll,
     headersList,
     onDeselectOne,
-    onPageChange = () => {},
+    onPageChange = () => { },
     onRowsPerPageChange,
     onSelectAll,
     onSelectOne,
@@ -54,94 +54,102 @@ export const CustomersTable = (props) => {
   return (
     <Card>
       <Scrollbar>
-        <TableContainer style={{maxHeight:maxheight}}>
-        <Box sx={{ minWidth: 800 }}>
-          <Table stickyHeader>
-            <TableHead>
-              <TableRow>
-                {headersList.map((headers, index) => {
-                  return  (<TableCell
-                    key={index} >
-                  {headers.name}
-                </TableCell>)
-                })}
-              </TableRow>
-            </TableHead>
-            <TableBody>
-            {/* <ul>
+        <TableContainer style={{ maxHeight: maxheight }}>
+          <Box sx={{ minWidth: 800 }}>
+            <Table stickyHeader>
+              <TableHead>
+                <TableRow>
+                  {headersList.map((headers, index) => {
+                    return (<TableCell
+                      key={index} >
+                      {headers.name}
+                    </TableCell>)
+                  })}
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {/* <ul>
     {todos.map(({todo, index}) => (
       <li key={index}>{todo}</li>
     ))}
     </ul> */}
-              {items.map((customer, itemindex) => {
-                
-                // const isSelected = selected.includes();
-              //  const createdAt = format(customer.CreateDateTime, 'dd/MM/yyyy');
+                {items.map((customer, itemindex) => {
 
-                return (
-                  <TableRow
-                    hover
-                    key={itemindex}
+                  // const isSelected = selected.includes();
+                  //  const createdAt = format(customer.CreateDateTime, 'dd/MM/yyyy');
+
+                  return (
+                    <TableRow
+                      hover
+                      key={itemindex}
                     // selected={isSelected}
-                  >
-                  
-                     {headersList.map((headers, index) => {
-                      if(headers.property === 'Edit'){
-                        return (<TableCell
-                          key={index}>
-                     <EditIcon style={{ cursor: 'pointer' }} onClick={() => editDetails(customer)} >
-                              </EditIcon >
-                        </TableCell>);
-                      }
+                    >
 
-                      if(headers.property === 'Delete'){
-                        return (<TableCell
-                          key={index}>
-                    <DeleteIcon style={{ cursor: 'pointer' }} onClick={() => deleteContact(customer, itemindex)}>
-                    </DeleteIcon>
-                        </TableCell>);
-                      }
-                      if(headers.property === 'QrCode'){
-                        return (<TableCell
-                          key={index}>
-                            <DownloadIcon style={{ cursor: 'pointer' }} onClick={() => qrCode(customer)} />
-                    {customer.VisitingStatus==='Approved'?<DownloadIcon style={{ cursor: 'pointer' }} onClick={() => qrCode(customer)} />:'Not Avilable'}
-
-                        </TableCell>);
-                      }
-                      if(headers.property === 'ApprovalStatus'){
-
-                        if(customer.VisitingStatus === 'Pending' && userDetails && (userDetails.RoleName ==='Admin' || userDetails.RoleName ==='Approver')){
+                      {headersList.map((headers, index) => {
+                        if (headers.property === 'Edit') {
                           return (<TableCell
                             key={index}>
-                            <><CheckIcon style={{ cursor: 'pointer',color:'green' }} onClick={() => accepect(customer)} />  <CloseIcon style={{ cursor: 'pointer',color:'red' }} onClick={() => reject(customer)} /></> 
-  
+                            <EditIcon style={{ cursor: 'pointer' }} onClick={() => editDetails(customer)} >
+                            </EditIcon >
                           </TableCell>);
                         }
-                        if(customer.VisitingStatus === 'Approved'){
+
+                        if (headers.property === 'Delete') {
+                          return (<TableCell
+                            key={index}>
+                            <DeleteIcon style={{ cursor: 'pointer' }} onClick={() => deleteContact(customer, itemindex)}>
+                            </DeleteIcon>
+                          </TableCell>);
+                        }
+                        if (headers.property === 'Image') {
+                          return (<TableCell 
+                            key={index}>
+                            <img src={customer.UploadPath } alt={"doc"} />
+                            
+                            
+                          </TableCell>);
+                        }
+                        if (headers.property === 'QrCode') {
+                          return (<TableCell
+                            key={index}>
+                            <DownloadIcon style={{ cursor: 'pointer' }} onClick={() => qrCode(customer)} />
+                            {customer.VisitingStatus === 'Approved' ? <DownloadIcon style={{ cursor: 'pointer' }} onClick={() => qrCode(customer)} /> : 'Not Avilable'}
+
+                          </TableCell>);
+                        }
+                        if (headers.property === 'ApprovalStatus') {
+
+                          if (customer.VisitingStatus === 'Pending' && userDetails && (userDetails.RoleName === 'Admin' || userDetails.RoleName === 'Approver')) {
+                            return (<TableCell
+                              key={index}>
+                              <><CheckIcon style={{ cursor: 'pointer', color: 'green' }} onClick={() => accepect(customer)} />  <CloseIcon style={{ cursor: 'pointer', color: 'red' }} onClick={() => reject(customer)} /></>
+
+                            </TableCell>);
+                          }
+                          if (customer.VisitingStatus === 'Approved') {
+
+                            return (<TableCell
+                              key={index}>
+                              <DownloadIcon style={{ cursor: 'pointer' }} onClick={() => qrCode(customer)} />
+                            </TableCell>);
+                          }
+                        }
+
 
                         return (<TableCell
                           key={index}>
-                           <DownloadIcon style={{ cursor: 'pointer' }} onClick={() => qrCode(customer)} />
+
+                          {customer[headers.property]}
                         </TableCell>);
-                        }
-                      }
-                     
+                      })}
 
-                  return  (<TableCell
-                    key={index}>
-                    
-                  {customer[headers.property]}
-                </TableCell>);
+                    </TableRow>
+                  );
                 })}
-                   
-                  </TableRow>
-                );
-              })}
-            </TableBody>
-          </Table>
+              </TableBody>
+            </Table>
 
-        </Box>
+          </Box>
         </TableContainer>
       </Scrollbar>
       <TablePagination
@@ -159,7 +167,7 @@ export const CustomersTable = (props) => {
 
 CustomersTable.propTypes = {
   count: PropTypes.number,
-  headersList:PropTypes.array,
+  headersList: PropTypes.array,
   items: PropTypes.array,
   onDeselectAll: PropTypes.func,
   onDeselectOne: PropTypes.func,
@@ -170,19 +178,19 @@ CustomersTable.propTypes = {
   page: PropTypes.number,
   rowsPerPage: PropTypes.number,
   selected: PropTypes.array,
-  editDepartment:PropTypes.func,
-  deleteDepartment:PropTypes.func,
-  editRole:PropTypes.func,
-  editMinister:PropTypes.func,
-  deleteMinister:PropTypes.func,
-  editVisitingPlaces:PropTypes.func,
-  deleteVisitingPlaces:PropTypes.func,
-  
-  editPass:PropTypes.func,
-  editDesignations:PropTypes.func,
-  editUsers:PropTypes.func,
-  deleteUsers:PropTypes.func,
-  editVisitingPasses:PropTypes.func,
-  editSession:PropTypes.func,
-  getQrCodeList:PropTypes.func,
+  editDepartment: PropTypes.func,
+  deleteDepartment: PropTypes.func,
+  editRole: PropTypes.func,
+  editMinister: PropTypes.func,
+  deleteMinister: PropTypes.func,
+  editVisitingPlaces: PropTypes.func,
+  deleteVisitingPlaces: PropTypes.func,
+
+  editPass: PropTypes.func,
+  editDesignations: PropTypes.func,
+  editUsers: PropTypes.func,
+  deleteUsers: PropTypes.func,
+  editVisitingPasses: PropTypes.func,
+  editSession: PropTypes.func,
+  getQrCodeList: PropTypes.func,
 };
