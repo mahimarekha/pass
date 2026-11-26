@@ -117,6 +117,14 @@ export const CustomersTable = (props) => {
 
                           </TableCell>);
                         }
+                        if (headers.property === 'DownloadPass') {
+                          return (<TableCell
+                            key={index}>
+                            {customer.VisitingStatus === 'Approved' && customer.QRCodeNumber
+                              ? <DownloadIcon titleAccess="Download Pass" style={{ cursor: 'pointer' }} onClick={() => qrCode(customer)} />
+                              : (customer.VisitingStatus || 'Not Available')}
+                          </TableCell>);
+                        }
                         if (headers.property === 'ApprovalStatus') {
 
                           if (customer.VisitingStatus === 'Pending' && userDetails && (userDetails.RoleName === 'Admin' || userDetails.RoleName === 'Approver')) {

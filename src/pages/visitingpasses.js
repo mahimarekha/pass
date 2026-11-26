@@ -220,16 +220,18 @@ const Page = (props) => {
             property: 'FromDate'
         },
         {
-            name: 'From Date',
+            name: 'To Date',
             property: 'ToDate'
         },
-       
+
         {
             name: 'Visiting Places Name ',
             property: 'VisitingPlace'
         },
-
-        
+        {
+            name: 'Download Pass',
+            property: 'DownloadPass'
+        },
         {
             name: 'Edit',
             property: 'Edit'
@@ -441,11 +443,11 @@ const Page = (props) => {
         });
     }
 
-    // const getQrCodeList = (data) => {
-    //     if (data && data.QRCodeNumber) {
-    //         router.push('/qrcode/' + data.QRCodeNumber);
-    //     }
-    // }
+    const getQrCodeList = (data) => {
+        if (data && data.QRCodeNumber) {
+            router.push('/qrcode/' + data.QRCodeNumber);
+        }
+    }
     const formReset = () => {
         setVisitingPasses({
             DepId: userDetails ? userDetails.Depid : '',
@@ -961,7 +963,7 @@ const Page = (props) => {
                             count={visitingPassesList.length}
                             items={visitingPassesList}
                             editDetails={editVisitingPasses}
-                            // qrCode={getQrCodeList}
+                            qrCode={getQrCodeList}
                             onDeselectAll={customersSelection.handleDeselectAll}
                             onDeselectOne={customersSelection.handleDeselectOne}
                             onPageChange={handlePageChange}
